@@ -1,85 +1,77 @@
+
 import { motion } from "motion/react";
+import cmLogo from "../assets/cm-logo.png";
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-900 to-black">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-gray-600/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.5, 0.3, 0.5],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      </div>
+    <section
+      id="home"
+      className="relative min-h-screen overflow-hidden bg-[#FFF7F2] text-[#2B1717]"
+    >
+      {/* Navigation */}
+      <header className="relative z-20 mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-5 px-6 py-6">
+        <a href="#home" className="flex items-center">
+          <img
+            src={cmLogo}
+            alt="Cynthia Melki Andraos logo"
+            className="h-16 w-auto max-w-[220px] object-contain"
+          />
+        </a>
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-5xl">
+        <nav className="flex flex-wrap items-center gap-5 text-sm md:gap-8">
+          <a href="#home" className="text-[#842E3D]">Home</a>
+          <a href="#about" className="hover:text-[#842E3D]">About</a>
+          <a href="#projects" className="hover:text-[#842E3D]">Portfolio</a>
+          <a href="#skills" className="hover:text-[#842E3D]">Skills</a>
+          <a href="#contact" className="hover:text-[#842E3D]">Contact</a>
+        </nav>
+
+        <a
+          href="#contact"
+          className="rounded-full bg-[#842E3D] px-6 py-3 text-sm text-white hover:bg-[#68212F]"
+        >
+          Let's Talk →
+        </a>
+      </header>
+
+      {/* Decorative background */}
+      <div className="pointer-events-none absolute -left-28 top-40 h-72 w-72 rounded-full bg-[#842E3D]/10" />
+      <div className="pointer-events-none absolute -right-28 bottom-0 h-96 w-96 rounded-full bg-[#842E3D]/10" />
+
+      {/* Main content */}
+      <div className="relative z-10 mx-auto flex min-h-[75vh] max-w-7xl items-center px-6 py-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          className="max-w-3xl"
         >
-          <h1 className="text-6xl md:text-8xl mb-4 bg-gradient-to-r from-gray-400 via-gray-300 to-white bg-clip-text text-transparent">
-            Cynthia Andraos
-          </h1>
-          <p className="text-2xl md:text-3xl text-gray-300 mb-6">
-            Graphic Designer
+          <p className="mb-2 font-serif text-5xl italic text-[#842E3D] md:text-7xl">
+            Hello,
           </p>
-          <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto italic">
-            "Creating Impactful Visual Identities Through Skill, Strategy & Creativity"
-          </p>
-        </motion.div>
 
-        <motion.div
-          className="mt-12 flex gap-4 justify-center flex-wrap"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
+          <h1 className="font-serif text-6xl leading-tight md:text-8xl">
+            I'm Cynthia
+          </h1>
+
+          <h2 className="mb-6 font-serif text-4xl italic text-[#842E3D] md:text-6xl">
+            Graphic Designer
+          </h2>
+
+          <p className="mb-8 max-w-lg text-lg leading-relaxed">
+            I turn ideas into visual stories.
+            Through creative design, I bring brands to life.
+          </p>
+
           <a
             href="#projects"
-            className="px-8 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+            className="inline-flex items-center gap-3 rounded-full bg-[#842E3D] px-7 py-4 text-white transition-colors hover:bg-[#68212F]"
           >
-            View Projects
-          </a>
-          <a
-            href="#contact"
-            className="px-8 py-3 bg-transparent border-2 border-gray-500 hover:bg-gray-500/10 text-gray-300 rounded-lg transition-colors"
-          >
-            Get in Touch
+            Explore My Work
+            <span aria-hidden="true">↓</span>
           </a>
         </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <div className="w-6 h-10 border-2 border-gray-500 rounded-full flex justify-center pt-2">
-          <div className="w-1 h-2 bg-gray-500 rounded-full" />
-        </div>
-      </motion.div>
     </section>
   );
 }
