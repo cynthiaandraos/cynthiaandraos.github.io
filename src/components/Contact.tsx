@@ -6,8 +6,11 @@ import {
   MapPin,
   Send,
   ArrowUpRight,
+  Instagram,
+  Linkedin,
 } from "lucide-react";
 import { useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -17,10 +20,12 @@ export function Contact() {
     message: "",
   });
 
+  const [recipient, setRecipient] = useState(
+    "designer.rc@outlook.com"
+  );
+
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement
-    >
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData({
       ...formData,
@@ -29,7 +34,7 @@ export function Contact() {
   };
 
   const handleSubmit = (
-    e: React.FormEvent<HTMLFormElement>
+    e: FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
 
@@ -44,7 +49,7 @@ export function Contact() {
     );
 
     window.location.href =
-      `mailto:designer.rc@outlook.com?subject=${subject}&body=${body}`;
+      `mailto:${recipient}?subject=${subject}&body=${body}`;
   };
 
   const inputStyle =
@@ -64,6 +69,7 @@ export function Contact() {
       <div className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full border border-white/15" />
 
       <div className="relative mx-auto max-w-7xl">
+
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
@@ -97,7 +103,8 @@ export function Contact() {
         </motion.div>
 
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-2">
-          {/* CONTACT INFORMATION */}
+
+          {/* Contact information */}
           <motion.div
             initial={{ opacity: 0, x: -25 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -121,21 +128,41 @@ export function Contact() {
             </p>
 
             <div className="space-y-7">
-              {/* Email */}
+
+              {/* Design email */}
               <div className="flex items-center gap-5">
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/10">
                   <Mail size={24} strokeWidth={1.5} />
                 </div>
 
-                <div>
+                <div className="min-w-0">
                   <p className="mb-1 text-sm text-white/60">
-                    Email
+                    Design Email
                   </p>
                   <a
                     href="mailto:designer.rc@outlook.com"
-                    className="break-all text-lg hover:text-[#F0C9CB]"
+                    className="break-all text-base hover:text-[#F0C9CB] sm:text-lg"
                   >
                     designer.rc@outlook.com
+                  </a>
+                </div>
+              </div>
+
+              {/* Personal email */}
+              <div className="flex items-center gap-5">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/10">
+                  <Mail size={24} strokeWidth={1.5} />
+                </div>
+
+                <div className="min-w-0">
+                  <p className="mb-1 text-sm text-white/60">
+                    Personal Email
+                  </p>
+                  <a
+                    href="mailto:cynthiamelky49@gmail.com"
+                    className="break-all text-base hover:text-[#F0C9CB] sm:text-lg"
+                  >
+                    cynthiamelky49@gmail.com
                   </a>
                 </div>
               </div>
@@ -174,9 +201,39 @@ export function Contact() {
                   </p>
                 </div>
               </div>
+
             </div>
 
-            <div className="mt-12">
+            {/* Social media */}
+            <div className="mt-10">
+              <p className="mb-4 text-sm text-white/70">
+                Find me on social media
+              </p>
+
+              <div className="flex items-center gap-4">
+                <a
+                  href="https://www.instagram.com/rcd.esign/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="RC Designer Instagram"
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition hover:bg-[#F0C9CB] hover:text-[#681523]"
+                >
+                  <Instagram size={22} />
+                </a>
+
+                <a
+                  href="https://www.linkedin.com/in/cynthia-melky-3206ab3a5/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn profile"
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition hover:bg-[#F0C9CB] hover:text-[#681523]"
+                >
+                  <Linkedin size={22} />
+                </a>
+              </div>
+            </div>
+
+            <div className="mt-10">
               <a
                 href="mailto:designer.rc@outlook.com"
                 className="inline-flex items-center gap-3 rounded-full bg-[#FFF7F2] px-7 py-4 font-medium text-[#681523] transition-colors hover:bg-[#F0C9CB]"
@@ -187,7 +244,7 @@ export function Contact() {
             </div>
           </motion.div>
 
-          {/* CONTACT FORM */}
+          {/* Contact form */}
           <motion.div
             initial={{ opacity: 0, x: 25 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -215,6 +272,7 @@ export function Contact() {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Your Name"
+                aria-label="Your Name"
                 required
                 className={inputStyle}
               />
@@ -225,6 +283,7 @@ export function Contact() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Your Email"
+                aria-label="Your Email"
                 required
                 className={inputStyle}
               />
@@ -235,6 +294,7 @@ export function Contact() {
                 value={formData.subject}
                 onChange={handleChange}
                 placeholder="Subject"
+                aria-label="Subject"
                 required
                 className={inputStyle}
               />
@@ -244,10 +304,37 @@ export function Contact() {
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Tell me about your project..."
+                aria-label="Your Message"
                 required
                 rows={5}
                 className={`${inputStyle} resize-none`}
               />
+
+              {/* Choose email recipient */}
+              <div>
+                <label
+                  htmlFor="contact-recipient"
+                  className="mb-2 block text-sm text-white/80"
+                >
+                  Send your message to
+                </label>
+
+                <select
+                  id="contact-recipient"
+                  value={recipient}
+                  onChange={(e) =>
+                    setRecipient(e.target.value)
+                  }
+                  className="w-full rounded-xl border border-white/25 bg-[#681523] px-5 py-4 text-white focus:border-white focus:outline-none"
+                >
+                  <option value="designer.rc@outlook.com">
+                    Design Email
+                  </option>
+                  <option value="cynthiamelky49@gmail.com">
+                    Personal Email
+                  </option>
+                </select>
+              </div>
 
               <button
                 type="submit"
@@ -259,7 +346,8 @@ export function Contact() {
 
               <p className="text-center text-xs leading-relaxed text-white/60">
                 This opens your email app with the
-                message ready to send.
+                message ready to send. Please click Send
+                in your email app to complete your message.
               </p>
             </form>
           </motion.div>
