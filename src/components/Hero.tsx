@@ -1,6 +1,6 @@
 
 import { motion } from "motion/react";
-import cmLogo from "../assets/cm-logo.png";
+import cmLogo from "../assets/Burgundy CM Graphic Designer Logo.png";
 
 export function Hero() {
   return (
