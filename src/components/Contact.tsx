@@ -1,5 +1,5 @@
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import {
   Mail,
   Phone,
@@ -13,6 +13,8 @@ import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 
 export function Contact() {
+  const reduceMotion = useReducedMotion();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -59,6 +61,17 @@ export function Contact() {
     "focus:border-white focus:outline-none " +
     "transition-colors";
 
+  const reveal = {
+    hidden: {
+      opacity: 0,
+      y: reduceMotion ? 0 : 35,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
   return (
     <section
       id="contact"
@@ -72,10 +85,14 @@ export function Contact() {
 
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{
+            duration: 0.8,
+            ease: "easeOut",
+          }}
           className="mb-16 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#F0C9CB]">
@@ -106,10 +123,19 @@ export function Contact() {
 
           {/* Contact information */}
           <motion.div
-            initial={{ opacity: 0, x: -25 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            initial={{
+              opacity: 0,
+              x: reduceMotion ? 0 : -40,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{
+              duration: 0.85,
+              ease: "easeOut",
+            }}
           >
             <h3
               className="mb-6 text-4xl"
@@ -130,7 +156,14 @@ export function Contact() {
             <div className="space-y-7">
 
               {/* Design email */}
-              <div className="flex items-center gap-5">
+              <motion.div
+                variants={reveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="flex items-center gap-5"
+              >
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/10">
                   <Mail size={24} strokeWidth={1.5} />
                 </div>
@@ -146,10 +179,17 @@ export function Contact() {
                     designer.rc@outlook.com
                   </a>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Personal email */}
-              <div className="flex items-center gap-5">
+              <motion.div
+                variants={reveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="flex items-center gap-5"
+              >
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/10">
                   <Mail size={24} strokeWidth={1.5} />
                 </div>
@@ -165,10 +205,17 @@ export function Contact() {
                     cynthiamelky49@gmail.com
                   </a>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Phone */}
-              <div className="flex items-center gap-5">
+              <motion.div
+                variants={reveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.15 }}
+                className="flex items-center gap-5"
+              >
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/10">
                   <Phone size={24} strokeWidth={1.5} />
                 </div>
@@ -184,10 +231,17 @@ export function Contact() {
                     +961 76 355 977
                   </a>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Location */}
-              <div className="flex items-center gap-5">
+              <motion.div
+                variants={reveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="flex items-center gap-5"
+              >
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/10">
                   <MapPin size={24} strokeWidth={1.5} />
                 </div>
@@ -200,56 +254,95 @@ export function Contact() {
                     Byblos, Lebanon
                   </p>
                 </div>
-              </div>
-
+              </motion.div>
             </div>
 
             {/* Social media */}
-            <div className="mt-10">
+            <motion.div
+              variants={reveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="mt-10"
+            >
               <p className="mb-4 text-sm text-white/70">
                 Find me on social media
               </p>
 
               <div className="flex items-center gap-4">
-                <a
+                <motion.a
                   href="https://www.instagram.com/rcd.esign/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="RC Designer Instagram"
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition hover:bg-[#F0C9CB] hover:text-[#681523]"
+                  whileHover={
+                    reduceMotion
+                      ? undefined
+                      : { y: -4, scale: 1.08 }
+                  }
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-[#F0C9CB] hover:text-[#681523]"
                 >
                   <Instagram size={22} />
-                </a>
+                </motion.a>
 
-                <a
+                <motion.a
                   href="https://www.linkedin.com/in/cynthia-melky-3206ab3a5/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn profile"
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition hover:bg-[#F0C9CB] hover:text-[#681523]"
+                  whileHover={
+                    reduceMotion
+                      ? undefined
+                      : { y: -4, scale: 1.08 }
+                  }
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-[#F0C9CB] hover:text-[#681523]"
                 >
                   <Linkedin size={22} />
-                </a>
+                </motion.a>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="mt-10">
-              <a
+            {/* Email button */}
+            <motion.div
+              variants={reveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="mt-10"
+            >
+              <motion.a
                 href="mailto:designer.rc@outlook.com"
+                whileHover={
+                  reduceMotion
+                    ? undefined
+                    : { y: -4, scale: 1.04 }
+                }
                 className="inline-flex items-center gap-3 rounded-full bg-[#FFF7F2] px-7 py-4 font-medium text-[#681523] transition-colors hover:bg-[#F0C9CB]"
               >
                 Email Me
                 <ArrowUpRight size={19} />
-              </a>
-            </div>
+              </motion.a>
+            </motion.div>
           </motion.div>
 
           {/* Contact form */}
           <motion.div
-            initial={{ opacity: 0, x: 25 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            initial={{
+              opacity: 0,
+              x: reduceMotion ? 0 : 40,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{
+              duration: 0.85,
+              delay: 0.1,
+              ease: "easeOut",
+            }}
             className="rounded-3xl border border-white/20 bg-white/5 p-6 md:p-9"
           >
             <h3
@@ -336,13 +429,23 @@ export function Contact() {
                 </select>
               </div>
 
-              <button
+              <motion.button
                 type="submit"
+                whileHover={
+                  reduceMotion
+                    ? undefined
+                    : { scale: 1.02 }
+                }
+                whileTap={
+                  reduceMotion
+                    ? undefined
+                    : { scale: 0.98 }
+                }
                 className="flex w-full items-center justify-center gap-3 rounded-full bg-[#FFF7F2] px-7 py-4 font-medium text-[#681523] transition-colors hover:bg-[#F0C9CB]"
               >
                 <Send size={19} />
                 Prepare Email
-              </button>
+              </motion.button>
 
               <p className="text-center text-xs leading-relaxed text-white/60">
                 This opens your email app with the
@@ -354,7 +457,17 @@ export function Contact() {
         </div>
 
         {/* Bottom statement */}
-        <div className="mt-20 border-t border-white/20 pt-10 text-center">
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{
+            duration: 0.8,
+            ease: "easeOut",
+          }}
+          className="mt-20 border-t border-white/20 pt-10 text-center"
+        >
           <p
             className="text-2xl italic text-[#F0C9CB] md:text-3xl"
             style={{
@@ -363,7 +476,7 @@ export function Contact() {
           >
             Let's create something beautiful together.
           </p>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
