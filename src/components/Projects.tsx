@@ -54,6 +54,7 @@ export function Projects() {
       className="relative overflow-hidden bg-[#FFF7F2] px-6 py-24"
     >
       <div className="relative mx-auto max-w-7xl">
+        {/* Portfolio heading */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -83,6 +84,7 @@ export function Projects() {
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
+        {/* Six logo projects */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.article
@@ -96,7 +98,14 @@ export function Projects() {
               }}
               className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
             >
-              <div className="aspect-square overflow-hidden bg-[#F8F0EC]">
+              {/* Golden Mark gets a white card background */}
+              <div
+                className={`aspect-square overflow-hidden ${
+                  project.id === 2
+                    ? "bg-white"
+                    : "bg-[#F8F0EC]"
+                }`}
+              >
                 <img
                   src={project.image}
                   alt={project.title}
@@ -105,6 +114,7 @@ export function Projects() {
                 />
               </div>
 
+              {/* Project information */}
               <div className="p-6">
                 <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                   {project.category}
@@ -124,6 +134,7 @@ export function Projects() {
           ))}
         </div>
 
+        {/* Bottom text */}
         <div className="mt-16 text-center">
           <p
             className="text-2xl italic text-[#850F25] md:text-3xl"
