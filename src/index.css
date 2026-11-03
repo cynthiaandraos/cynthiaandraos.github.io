@@ -1,26 +1,12 @@
 
-@import "tailwindcss";
-
-:root {
-  font-family: Arial, Helvetica, sans-serif;
-  color: #251616;
-  background: #FFF7F2;
-}
-
+/* Smooth scrolling between sections */
 html {
   scroll-behavior: smooth;
 }
 
-body {
-  margin: 0;
-  min-width: 320px;
-  background: #FFF7F2;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-img {
-  max-width: 100%;
+/* Respect visitors who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
