@@ -1,5 +1,9 @@
 
-import { motion, AnimatePresence } from "motion/react";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+} from "motion/react";
 import { X, ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -53,7 +57,9 @@ export function Projects() {
   const [selectedProject, setSelectedProject] =
     useState<(typeof projects)[number] | null>(null);
 
-  // Close the preview when Escape is pressed
+  const reduceMotion = useReducedMotion();
+
+  // Close preview with Escape and prevent background scrolling
   useEffect(() => {
     if (!selectedProject) return;
 
@@ -74,6 +80,28 @@ export function Projects() {
     };
   }, [selectedProject]);
 
+  // Smooth reveal animation
+  const reveal = {
+    hidden: {
+      opacity: 0,
+      y: reduceMotion ? 0 : 45,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
+  // Project cards animate one after another
+  const gridAnimation = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: reduceMotion ? 0 : 0.14,
+      },
+    },
+  };
+
   return (
     <section
       id="projects"
@@ -83,10 +111,14 @@ export function Projects() {
 
         {/* Portfolio heading */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{
+            duration: 0.8,
+            ease: "easeOut",
+          }}
           className="mb-14 text-center"
         >
           <p className="mb-4 text-sm uppercase tracking-[0.35em] text-[#A45D69]">
@@ -108,22 +140,41 @@ export function Projects() {
             brand identity, and visual storytelling.
           </p>
 
-          <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
+          <motion.div
+            initial={{ scaleX: reduceMotion ? 1 : 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.9,
+              delay: 0.3,
+              ease: "easeOut",
+            }}
+            className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40"
+          />
         </motion.div>
 
         {/* Six logo projects */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => (
+        <motion.div
+          variants={gridAnimation}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.08 }}
+          className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+        >
+          {projects.map((project) => (
             <motion.article
               key={project.id}
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              variants={reveal}
               transition={{
-                duration: 0.6,
-                delay: index * 0.1,
+                duration: 0.7,
+                ease: "easeOut",
               }}
-              className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              whileHover={
+                reduceMotion
+                  ? undefined
+                  : { y: -8 }
+              }
+              className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
               <button
                 type="button"
@@ -143,13 +194,20 @@ export function Projects() {
                     src={project.image}
                     alt={project.title}
                     loading="lazy"
-                    className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                    className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
                   />
 
                   {/* View project icon */}
-                  <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#681523] shadow-sm transition-transform group-hover:scale-110">
+                  <motion.div
+                    whileHover={
+                      reduceMotion
+                        ? undefined
+                        : { rotate: 45, scale: 1.1 }
+                    }
+                    className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#681523] shadow-sm"
+                  >
                     <ArrowUpRight size={20} />
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Project information */}
@@ -175,10 +233,20 @@ export function Projects() {
               </button>
             </motion.article>
           ))}
-        </div>
+        </motion.div>
 
         {/* Bottom statement */}
-        <div className="mt-16 text-center">
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{
+            duration: 0.8,
+            ease: "easeOut",
+          }}
+          className="mt-16 text-center"
+        >
           <p
             className="text-2xl italic text-[#850F25] md:text-3xl"
             style={{
@@ -187,7 +255,7 @@ export function Projects() {
           >
             Every design tells a story.
           </p>
-        </div>
+        </motion.div>
       </div>
 
       {/* Full project preview */}
@@ -204,9 +272,21 @@ export function Projects() {
             role="presentation"
           >
             <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.96 }}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 30,
+                scale: reduceMotion ? 1 : 0.96,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+              }}
+              exit={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 20,
+                scale: reduceMotion ? 1 : 0.96,
+              }}
               transition={{ duration: 0.3 }}
               role="dialog"
               aria-modal="true"
