@@ -4,8 +4,8 @@
   import path from 'path';
 
   export default defineConfig({
+    base: '/Portfolioforgraphicdesigner/',
     plugins: [react()],
-    resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
         'vaul@1.1.2': 'vaul',
@@ -54,7 +54,7 @@
     },
     build: {
       target: 'esnext',
-      outDir: 'build',
+      outDir: 'dist',
     },
     server: {
       port: 3000,
