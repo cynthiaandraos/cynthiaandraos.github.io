@@ -1,5 +1,7 @@
 
 import { motion } from "motion/react";
+import { Download } from "lucide-react";
+
 import caLogo from "../assets/CA-logo.png";
 import cynthiaPhoto from "../assets/cynthia.jpg";
 
@@ -57,7 +59,7 @@ export function Hero() {
             Creative Portfolio / Graphic Design
           </p>
 
-          {/* New elegant headline */}
+          {/* Elegant headline */}
           <h1
             style={{
               fontFamily: "'Bodoni Moda', Georgia, serif",
@@ -80,6 +82,7 @@ export function Hero() {
             to life.
           </p>
 
+          {/* Homepage buttons */}
           <div className="mt-8 flex flex-wrap gap-4">
             <a
               href="#projects"
@@ -94,6 +97,16 @@ export function Hero() {
             >
               CONTACT ME
             </a>
+
+            {/* Download original CV */}
+            <a
+              href={`${import.meta.env.BASE_URL}Cynthia-Andraos-CV.pdf`}
+              download="Cynthia-Andraos-CV.pdf"
+              className="inline-flex items-center gap-3 border border-[#850F25] bg-[#FFF7F2] px-7 py-4 text-sm font-semibold text-[#850F25] transition hover:bg-[#F3D9D9]"
+            >
+              <Download size={18} />
+              DOWNLOAD MY CV
+            </a>
           </div>
         </motion.div>
 
@@ -105,6 +118,7 @@ export function Hero() {
           className="relative z-10 mt-12 w-full md:absolute md:bottom-0 md:right-6 md:mt-0 md:w-[46%]"
         >
           <div className="absolute inset-8 rounded-full bg-[#E9B7B7]/50 blur-3xl" />
+
           <img
             src={cynthiaPhoto}
             alt="Cynthia Andraos, Graphic Designer"
