@@ -1,28 +1,49 @@
 
 import { motion } from "motion/react";
 
-import houseOfBeauty from "figma:asset/dff9deed159c10ff39a7986d339e36135ec2a8dc.png";
-import jouyLogo from "figma:asset/6107f87a0c932a3ae898809e94b332eb6ca45fe5.png";
-import myFitness from "figma:asset/14c3aa15315c95a218e92e58a564a27862051855.png";
+import domina from "../assets/domina.jpeg";
+import goldenMark from "../assets/golden-mark.png";
+import houseOfBeauty from "../assets/house-of-beauty.jpg";
+import jouy from "../assets/jouy.jpg";
+import myFitness from "../assets/my-fitness.jpg";
+import manymoda from "../assets/manymoda.jpg";
 
 const projects = [
   {
     id: 1,
-    title: "House of Beauty",
-    category: "Logo Design & Branding",
-    image: houseOfBeauty,
+    title: "Domina Real Estate",
+    category: "Real Estate Branding",
+    image: domina,
   },
   {
     id: 2,
-    title: "مونة إم جوي",
+    title: "Golden Mark",
     category: "Logo Design & Branding",
-    image: jouyLogo,
+    image: goldenMark,
   },
   {
     id: 3,
+    title: "House of Beauty",
+    category: "Beauty Brand Identity",
+    image: houseOfBeauty,
+  },
+  {
+    id: 4,
+    title: "مونة إم جوي",
+    category: "Food Branding & Logo Design",
+    image: jouy,
+  },
+  {
+    id: 5,
     title: "MY Fitness by Myriam",
-    category: "Logo Design & Brand Identity",
+    category: "Fitness Brand Identity",
     image: myFitness,
+  },
+  {
+    id: 6,
+    title: "Manymoda",
+    category: "Fashion Logo Design",
+    image: manymoda,
   },
 ];
 
@@ -32,11 +53,7 @@ export function Projects() {
       id="projects"
       className="relative overflow-hidden bg-[#FFF7F2] px-6 py-24"
     >
-      {/* Decorative background */}
-      <div className="pointer-events-none absolute -right-32 top-20 h-80 w-80 rounded-full bg-[#EBC5C5]/30 blur-3xl" />
-
       <div className="relative mx-auto max-w-7xl">
-        {/* Section heading */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -59,14 +76,13 @@ export function Projects() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-xl leading-relaxed text-[#704B50]">
-            A collection of creative projects exploring
-            visual identity, branding, and design.
+            Explore my creative work in logo design,
+            brand identity, and visual storytelling.
           </p>
 
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
-        {/* Project cards */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.article
@@ -80,39 +96,34 @@ export function Projects() {
               }}
               className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
             >
-              <div className="aspect-[4/3] overflow-hidden bg-[#F8F0EC] p-5">
+              <div className="aspect-square overflow-hidden bg-[#F8F0EC]">
                 <img
                   src={project.image}
                   alt={project.title}
+                  loading="lazy"
                   className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
 
-              <div className="flex items-center justify-between gap-4 p-6">
-                <div>
-                  <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
-                    {project.category}
-                  </p>
+              <div className="p-6">
+                <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
+                  {project.category}
+                </p>
 
-                  <h3
-                    className="text-2xl text-[#681523]"
-                    style={{
-                      fontFamily: "'Bodoni Moda', Georgia, serif",
-                    }}
-                  >
-                    {project.title}
-                  </h3>
-                </div>
-
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#850F25] text-xl text-[#850F25] transition-colors group-hover:bg-[#850F25] group-hover:text-white">
-                  ↗
-                </span>
+                <h3
+                  className="text-2xl text-[#681523]"
+                  style={{
+                    fontFamily: "'Bodoni Moda', Georgia, serif",
+                    fontWeight: 400,
+                  }}
+                >
+                  {project.title}
+                </h3>
               </div>
             </motion.article>
           ))}
         </div>
 
-        {/* Bottom text */}
         <div className="mt-16 text-center">
           <p
             className="text-2xl italic text-[#850F25] md:text-3xl"
