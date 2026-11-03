@@ -1,4 +1,6 @@
 
+@import "tailwindcss";
+
 /* Smooth scrolling between sections */
 html {
   scroll-behavior: smooth;
