@@ -18,7 +18,7 @@ const projects = [
   {
     id: 2,
     title: "Golden Mark",
-    category: "Logo Design & Branding",
+    category: "Real Estate Branding",
     image: goldenMark,
   },
   {
