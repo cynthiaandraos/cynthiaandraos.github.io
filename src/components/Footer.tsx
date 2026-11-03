@@ -1,12 +1,18 @@
 
-import { Instagram, Mail, ArrowUpRight, ArrowUp } from "lucide-react";
+import {
+  Instagram,
+  Mail,
+  ArrowUpRight,
+  ArrowUp,
+} from "lucide-react";
+
 import caLogo from "../assets/CA-logo.png";
 
 export function Footer() {
   return (
     <footer className="bg-[#FFF7F2] text-[#2B1717]">
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-10">
-        <div className="grid gap-10 md:grid-cols-3 md:items-start">
+        <div className="grid gap-10 md:grid-cols-3">
 
           {/* Logo and introduction */}
           <div>
@@ -67,37 +73,51 @@ export function Footer() {
               Have an idea?
             </p>
 
-            <a
-              href="mailto:designer.rc@outlook.com"
-              className="inline-flex items-center gap-2 text-sm hover:text-[#A13A4B]"
-            >
-              <Mail size={18} />
-              designer.rc@outlook.com
-            </a>
-
-            <div className="mt-6 flex items-center gap-3">
-              <a
-                href="https://www.instagram.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-[#751728] text-white transition hover:bg-[#A13A4B]"
-              >
-                <Instagram size={20} />
-              </a>
+            <div className="flex flex-col gap-4 text-sm">
 
               <a
                 href="mailto:designer.rc@outlook.com"
-                aria-label="Email"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-[#DABDB6] text-[#751728] transition hover:bg-[#F3E2DC]"
+                className="flex items-center gap-3 hover:text-[#A13A4B]"
               >
-                <ArrowUpRight size={20} />
+                <Mail size={18} />
+                designer.rc@outlook.com
+              </a>
+
+              <a
+                href="mailto:cynthiamelky49@gmail.com"
+                className="flex items-center gap-3 hover:text-[#A13A4B]"
+              >
+                <Mail size={18} />
+                cynthiamelky49@gmail.com
+              </a>
+
+              <a
+                href="https://www.instagram.com/rcd.esign/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 hover:text-[#A13A4B]"
+              >
+                <Instagram size={18} />
+                @rcd.esign | RC Designer
+                <ArrowUpRight size={15} />
+              </a>
+            </div>
+
+            <div className="mt-6">
+              <a
+                href="https://www.instagram.com/rcd.esign/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit RC Designer on Instagram"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#751728] text-white transition hover:bg-[#A13A4B]"
+              >
+                <Instagram size={20} />
               </a>
             </div>
           </div>
         </div>
 
-        {/* Bottom copyright */}
+        {/* Copyright */}
         <div className="mt-14 flex flex-col items-center justify-between gap-5 border-t border-[#E5CFC8] pt-6 text-center md:flex-row md:text-left">
           <p className="text-xs text-[#765A59]">
             © 2026 Cynthia Andraos. All rights reserved.
