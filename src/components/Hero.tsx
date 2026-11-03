@@ -1,11 +1,25 @@
 
-import { motion } from "motion/react";
-import { Download } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { Download, Menu, X } from "lucide-react";
+import { useState } from "react";
 
 import caLogo from "../assets/CA-logo.png";
 import cynthiaPhoto from "../assets/cynthia.jpg";
 
+const navigation = [
+  { label: "Home", href: "#home" },
+  { label: "Portfolio", href: "#projects" },
+  { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
+  { label: "Services", href: "#services" },
+  { label: "Contact", href: "#contact" },
+];
+
 export function Hero() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <section
       id="home"
@@ -21,8 +35,14 @@ export function Hero() {
       <div className="pointer-events-none absolute -right-24 top-20 h-96 w-96 rounded-full bg-[#F2B9BC]/40 blur-3xl" />
 
       {/* Navigation */}
-      <header className="relative z-30 mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-5">
-        <a href="#home" aria-label="Cynthia Andraos home">
+      <header className="relative z-30 mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-5">
+
+        {/* CA Logo */}
+        <a
+          href="#home"
+          aria-label="Cynthia Andraos home"
+          onClick={closeMenu}
+        >
           <img
             src={caLogo}
             alt="Cynthia Andraos CA Logo"
@@ -30,22 +50,80 @@ export function Hero() {
           />
         </a>
 
-        <nav className="flex flex-wrap items-center justify-center gap-4 text-sm font-medium md:gap-8">
-          <a href="#home">Home</a>
-          <a href="#projects">Portfolio</a>
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#contact">Contact</a>
+        {/* Desktop navigation */}
+        <nav
+          aria-label="Main navigation"
+          className="hidden items-center justify-center gap-5 text-sm font-medium lg:flex xl:gap-8"
+        >
+          {navigation.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="transition-colors hover:text-[#A45D69]"
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
 
+        {/* Desktop availability */}
         <a
           href="#contact"
-          className="flex items-center gap-2 text-xs font-medium md:text-sm"
+          className="hidden items-center gap-2 text-xs font-medium lg:flex xl:text-sm"
         >
           <span className="h-2 w-2 rounded-full bg-[#C72B43]" />
           Available for Projects
         </a>
+
+        {/* Mobile menu button */}
+        <button
+          type="button"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-navigation"
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-[#850F25]/30 text-[#850F25] transition hover:bg-[#F3D9D9] lg:hidden"
+        >
+          {menuOpen ? <X size={25} /> : <Menu size={25} />}
+        </button>
       </header>
+
+      {/* Mobile navigation */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.nav
+            id="mobile-navigation"
+            aria-label="Mobile navigation"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25 }}
+            className="relative z-30 mx-6 rounded-2xl border border-[#E8D2CF] bg-[#FFF7F2] p-5 shadow-xl lg:hidden"
+          >
+            <div className="flex flex-col gap-1">
+              {navigation.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={closeMenu}
+                  className="rounded-xl px-4 py-3 text-sm font-medium transition hover:bg-[#F3D9D9]"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+
+            <a
+              href="#contact"
+              onClick={closeMenu}
+              className="mt-4 flex items-center justify-center gap-2 rounded-full bg-[#850F25] px-5 py-3 text-sm font-medium text-white transition hover:bg-[#65101E]"
+            >
+              <span className="h-2 w-2 rounded-full bg-[#F0C9CB]" />
+              Available for Projects
+            </a>
+          </motion.nav>
+        )}
+      </AnimatePresence>
 
       {/* Homepage */}
       <div className="relative mx-auto flex min-h-[650px] max-w-7xl flex-col justify-center px-6 pb-24 pt-12 md:min-h-[730px]">
@@ -84,6 +162,7 @@ export function Hero() {
 
           {/* Homepage buttons */}
           <div className="mt-8 flex flex-wrap gap-4">
+
             <a
               href="#projects"
               className="inline-flex items-center gap-4 bg-[#850F25] px-7 py-4 text-sm font-semibold text-white transition hover:bg-[#65101E]"
@@ -98,7 +177,7 @@ export function Hero() {
               CONTACT ME
             </a>
 
-            {/* Download original CV */}
+            {/* Working CV download button */}
             <a
               href={`${import.meta.env.BASE_URL}Cynthia-Andraos-CV.pdf`}
               download="Cynthia-Andraos-CV.pdf"
