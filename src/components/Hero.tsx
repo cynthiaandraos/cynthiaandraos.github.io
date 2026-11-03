@@ -9,7 +9,12 @@ export function Hero() {
       id="home"
       className="relative min-h-screen overflow-hidden bg-[#FFF7F2] text-[#681523]"
     >
-      {/* Soft background decoration */}
+      {/* Elegant font */}
+      <style>
+        {`@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500&display=swap');`}
+      </style>
+
+      {/* Background decoration */}
       <div className="pointer-events-none absolute -left-32 top-40 h-96 w-96 rounded-full bg-[#F4C9C9]/40 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 top-20 h-96 w-96 rounded-full bg-[#F2B9BC]/40 blur-3xl" />
 
@@ -24,21 +29,11 @@ export function Hero() {
         </a>
 
         <nav className="flex flex-wrap items-center justify-center gap-4 text-sm font-medium md:gap-8">
-          <a href="#home" className="hover:text-[#B13B4A]">
-            Home
-          </a>
-          <a href="#projects" className="hover:text-[#B13B4A]">
-            Portfolio
-          </a>
-          <a href="#about" className="hover:text-[#B13B4A]">
-            About
-          </a>
-          <a href="#skills" className="hover:text-[#B13B4A]">
-            Skills
-          </a>
-          <a href="#contact" className="hover:text-[#B13B4A]">
-            Contact
-          </a>
+          <a href="#home">Home</a>
+          <a href="#projects">Portfolio</a>
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
         </nav>
 
         <a
@@ -50,9 +45,8 @@ export function Hero() {
         </a>
       </header>
 
-      {/* Main hero */}
-      <div className="relative mx-auto flex min-h-[650px] max-w-7xl items-center px-6 pb-24 pt-12 md:min-h-[730px]">
-        {/* Headline and text */}
+      {/* Homepage */}
+      <div className="relative mx-auto flex min-h-[650px] max-w-7xl flex-col justify-center px-6 pb-24 pt-12 md:min-h-[730px]">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -63,9 +57,17 @@ export function Hero() {
             Creative Portfolio / Graphic Design
           </p>
 
-          <h1 className="text-[clamp(3.3rem,8vw,8.5rem)] font-black uppercase leading-[0.88] tracking-[-0.065em] text-[#850F25]">
-            CYNTHIA
-            <span className="block">ANDRAOS</span>
+          {/* New elegant headline */}
+          <h1
+            style={{
+              fontFamily: "'Bodoni Moda', Georgia, serif",
+              fontWeight: 400,
+              letterSpacing: "-0.045em",
+            }}
+            className="text-[clamp(3.2rem,7vw,7.5rem)] leading-[0.98] text-[#850F25]"
+          >
+            Cynthia
+            <span className="block">Andraos</span>
           </h1>
 
           <p className="mt-7 text-xl font-medium uppercase tracking-[0.35em] md:text-2xl">
@@ -95,7 +97,7 @@ export function Hero() {
           </div>
         </motion.div>
 
-        {/* Cynthia portrait */}
+        {/* Your portrait */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
@@ -111,7 +113,7 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Specialties strip */}
+      {/* Specialties */}
       <div className="relative z-20 border-t border-[#850F25]/15 bg-[#FFF7F2]/95">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-5 px-6 py-7 text-sm font-medium md:text-base">
           <span>✦ Branding</span>
