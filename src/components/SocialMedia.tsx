@@ -6,9 +6,11 @@ import {
   ArrowRight,
   ArrowUpRight,
   X,
+  ZoomIn,
+  ZoomOut,
 } from "lucide-react";
 
-// Machewe Firas original campaign
+// Machewe Firas - Original Campaign
 import firasCover from "../assets/firas-cover.jpg";
 import firasGrill from "../assets/firas-grill-post.png";
 import firasSandwich from "../assets/firas-sandwich-post.png";
@@ -16,13 +18,13 @@ import firasChicken from "../assets/firas-chicken-post.png";
 import firasChristmas42 from "../assets/firas-christmas-42.png";
 import firasChristmas36 from "../assets/firas-christmas-36.png";
 
-// Machewe Firas new menu campaign
+// Machewe Firas - New Menu Campaign
 import chickenRollSub from "../assets/firas-chicken-roll-sub.jpeg";
 import kababDjej from "../assets/firas-kabab-djej.jpeg";
 import hawaiiBurger from "../assets/firas-hawaii-burger.jpeg";
 import steakSub from "../assets/firas-steak-sub.jpeg";
 
-// St. Abda – Jaj event campaign
+// St. Abda - Jaj Event Campaign
 import stAbdaSchedule from "../assets/st-abda-event-schedule.jpeg";
 import stAbdaMyrna from "../assets/st-abda-myrna-concert.jpeg";
 import stAbdaSpiritual from "../assets/st-abda-spiritual-day.jpeg";
@@ -56,11 +58,26 @@ const projects: SocialProject[] = [
     description:
       "A collection of promotional social media designs showcasing grilled specialties, restaurant offerings, and seasonal campaigns.",
     images: [
-      { src: firasGrill, title: "Grill Promotion" },
-      { src: firasSandwich, title: "Sandwich Promotion" },
-      { src: firasChicken, title: "Chicken Promotion" },
-      { src: firasChristmas42, title: "Christmas Campaign — 42" },
-      { src: firasChristmas36, title: "Christmas Campaign — 36" },
+      {
+        src: firasGrill,
+        title: "Grill Promotion",
+      },
+      {
+        src: firasSandwich,
+        title: "Sandwich Promotion",
+      },
+      {
+        src: firasChicken,
+        title: "Chicken Promotion",
+      },
+      {
+        src: firasChristmas42,
+        title: "Christmas Campaign - 42",
+      },
+      {
+        src: firasChristmas36,
+        title: "Christmas Campaign - 36",
+      },
     ],
   },
   {
@@ -72,28 +89,61 @@ const projects: SocialProject[] = [
     description:
       "A coordinated series of social media promotions introducing four new menu items, with bold typography, appetizing food imagery, and consistent brand styling.",
     images: [
-      { src: chickenRollSub, title: "Chicken Roll SUB" },
-      { src: kababDjej, title: "Kabab Djej with Pepsi" },
-      { src: hawaiiBurger, title: "Hawaii Burger" },
-      { src: steakSub, title: "Steak SUB" },
+      {
+        src: chickenRollSub,
+        title: "Chicken Roll SUB",
+      },
+      {
+        src: kababDjej,
+        title: "Kabab Djej with Pepsi",
+      },
+      {
+        src: hawaiiBurger,
+        title: "Hawaii Burger",
+      },
+      {
+        src: steakSub,
+        title: "Steak SUB",
+      },
     ],
   },
   {
     id: 3,
     title: "Event Marketing & Visual Campaigns",
-    subtitle: "St. Abda – Jaj | 2026",
+    subtitle: "St. Abda - Jaj | 2026",
     category: "Events & Entertainment",
     cover: stAbdaMyrna,
     description:
       "A coordinated promotional campaign for the St. Abda celebrations in Jaj, featuring concert announcements, event schedules, community activities, and festival communications.",
     images: [
-      { src: stAbdaSchedule, title: "Festival Schedule" },
-      { src: stAbdaMyrna, title: "Myrna Concert Announcement" },
-      { src: stAbdaSpiritual, title: "Spiritual Day Announcement" },
-      { src: stAbdaUpdate, title: "Event Update Announcement" },
-      { src: stAbdaWalid, title: "Walid Kanaan Concert" },
-      { src: stAbdaFares, title: "Fares Iskandar Dinner Event" },
-      { src: stAbdaKermesse, title: "Kermesse & Inflatable Games" },
+      {
+        src: stAbdaSchedule,
+        title: "Festival Schedule",
+      },
+      {
+        src: stAbdaMyrna,
+        title: "Myrna Concert Announcement",
+      },
+      {
+        src: stAbdaSpiritual,
+        title: "Spiritual Day Announcement",
+      },
+      {
+        src: stAbdaUpdate,
+        title: "Event Update Announcement",
+      },
+      {
+        src: stAbdaWalid,
+        title: "Walid Kanaan Concert",
+      },
+      {
+        src: stAbdaFares,
+        title: "Fares Iskandar Dinner Event",
+      },
+      {
+        src: stAbdaKermesse,
+        title: "Kermesse & Inflatable Games",
+      },
     ],
   },
 ];
@@ -101,32 +151,46 @@ const projects: SocialProject[] = [
 export function SocialMedia() {
   const [selectedProject, setSelectedProject] =
     useState<SocialProject | null>(null);
+
   const [activeImage, setActiveImage] = useState(0);
+  const [zoomed, setZoomed] = useState(false);
 
   const openProject = (project: SocialProject) => {
     setSelectedProject(project);
     setActiveImage(0);
+    setZoomed(false);
   };
 
   const closeProject = () => {
     setSelectedProject(null);
     setActiveImage(0);
+    setZoomed(false);
   };
 
   const nextImage = () => {
     if (!selectedProject) return;
+
     setActiveImage(
-      (current) => (current + 1) % selectedProject.images.length
+      (current) =>
+        (current + 1) % selectedProject.images.length
     );
+    setZoomed(false);
   };
 
   const previousImage = () => {
     if (!selectedProject) return;
+
     setActiveImage(
       (current) =>
         (current - 1 + selectedProject.images.length) %
         selectedProject.images.length
     );
+    setZoomed(false);
+  };
+
+  const selectImage = (index: number) => {
+    setActiveImage(index);
+    setZoomed(false);
   };
 
   useEffect(() => {
@@ -142,6 +206,7 @@ export function SocialMedia() {
           (current) =>
             (current + 1) % selectedProject.images.length
         );
+        setZoomed(false);
       }
 
       if (event.key === "ArrowLeft") {
@@ -150,17 +215,25 @@ export function SocialMedia() {
             (current - 1 + selectedProject.images.length) %
             selectedProject.images.length
         );
+        setZoomed(false);
       }
     };
 
-    const previousOverflow = document.body.style.overflow;
+    const previousOverflow =
+      document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
 
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow =
+        previousOverflow;
+
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
     };
   }, [selectedProject]);
 
@@ -171,7 +244,7 @@ export function SocialMedia() {
     >
       <div className="mx-auto max-w-7xl">
 
-        {/* Section heading */}
+        {/* SECTION HEADING */}
         <motion.div
           initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -186,7 +259,8 @@ export function SocialMedia() {
           <h2
             className="text-5xl text-[#850F25] md:text-7xl"
             style={{
-              fontFamily: "'Bodoni Moda', Georgia, serif",
+              fontFamily:
+                "'Bodoni Moda', Georgia, serif",
               fontWeight: 400,
             }}
           >
@@ -195,15 +269,16 @@ export function SocialMedia() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            Creative social media campaigns, promotional
-            artwork, and visual storytelling designed
-            for brands, product launches, and events.
+            Creative social media campaigns,
+            promotional artwork, and visual storytelling
+            designed for brands, product launches,
+            and events.
           </p>
 
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
-        {/* Three separate cards */}
+        {/* THREE PROJECT CARDS */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.article
@@ -224,13 +299,13 @@ export function SocialMedia() {
                 aria-label={`View ${project.title} - ${project.subtitle}`}
                 className="block h-full w-full cursor-pointer text-left"
               >
-                {/* Cover image */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-[#F7EDE8]">
+                {/* Cover image - no cropping */}
+                <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#F7EDE8]">
                   <img
                     src={project.cover}
                     alt={`${project.title} cover`}
                     loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
                   />
 
                   <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-sm">
@@ -273,7 +348,7 @@ export function SocialMedia() {
         </div>
       </div>
 
-      {/* Gallery popup */}
+      {/* GALLERY POPUP */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
@@ -281,28 +356,43 @@ export function SocialMedia() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             onClick={closeProject}
-            className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/90 p-3 backdrop-blur-sm md:p-6"
+            className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/90 p-2 backdrop-blur-sm sm:p-5"
           >
             <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              onClick={(event) => event.stopPropagation()}
+              initial={{
+                opacity: 0,
+                y: 15,
+                scale: 0.97,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.97,
+              }}
+              transition={{ duration: 0.25 }}
+              onClick={(event) =>
+                event.stopPropagation()
+              }
               role="dialog"
               aria-modal="true"
               aria-label={`${selectedProject.title} gallery`}
-              className="flex max-h-[94vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-[#FFF7F2] shadow-2xl"
+              className="flex h-[94dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-[#FFF7F2] shadow-2xl sm:h-[92dvh]"
             >
-              {/* Popup header */}
-              <div className="flex items-center justify-between gap-4 border-b border-[#E8D2CF] px-4 py-4 sm:px-6">
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-[#A45D69]">
+              {/* POPUP HEADER */}
+              <div className="flex shrink-0 items-center justify-between gap-3 border-b border-[#E8D2CF] px-3 py-3 sm:px-6 sm:py-4">
+                <div className="min-w-0">
+                  <p className="text-[10px] uppercase tracking-widest text-[#A45D69] sm:text-xs">
                     {selectedProject.subtitle}
                   </p>
 
                   <h3
-                    className="mt-1 text-xl text-[#681523] sm:text-2xl"
+                    className="mt-1 text-lg text-[#681523] sm:text-2xl"
                     style={{
                       fontFamily:
                         "'Bodoni Moda', Georgia, serif",
@@ -312,48 +402,111 @@ export function SocialMedia() {
                   </h3>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={closeProject}
-                  aria-label="Close gallery"
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#681523] text-white hover:bg-[#850F25]"
-                >
-                  <X size={20} />
-                </button>
+                <div className="flex shrink-0 gap-2">
+                  {/* Zoom button */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setZoomed((current) => !current)
+                    }
+                    aria-label={
+                      zoomed
+                        ? "Fit image to screen"
+                        : "Zoom into image"
+                    }
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F0DFD9] text-[#681523] transition hover:bg-[#E7CCC5]"
+                  >
+                    {zoomed ? (
+                      <ZoomOut size={20} />
+                    ) : (
+                      <ZoomIn size={20} />
+                    )}
+                  </button>
+
+                  {/* Close button */}
+                  <button
+                    type="button"
+                    onClick={closeProject}
+                    aria-label="Close gallery"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#681523] text-white transition hover:bg-[#850F25]"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
               </div>
 
-              {/* Main design */}
-              <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-[#F7EDE8] p-4 sm:p-6">
-                <img
-                  key={`${selectedProject.id}-${activeImage}`}
-                  src={selectedProject.images[activeImage].src}
-                  alt={selectedProject.images[activeImage].title}
-                  className="max-h-full max-w-full object-contain"
-                />
+              {/* MAIN IMAGE - FULL DESIGN VISIBLE */}
+              <div
+                className={`relative min-h-0 flex-1 bg-[#F7EDE8] ${
+                  zoomed
+                    ? "overflow-auto"
+                    : "overflow-hidden"
+                }`}
+              >
+                {zoomed ? (
+                  <div className="flex min-h-full min-w-full items-start justify-center p-3 sm:p-6">
+                    <img
+                      key={`${selectedProject.id}-${activeImage}-zoom`}
+                      src={
+                        selectedProject.images[activeImage]
+                          .src
+                      }
+                      alt={
+                        selectedProject.images[activeImage]
+                          .title
+                      }
+                      className="block h-auto w-auto max-w-none"
+                      style={{
+                        minWidth: "min(100%, 600px)",
+                        maxWidth: "1200px",
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center p-2 sm:p-4">
+                    <img
+                      key={`${selectedProject.id}-${activeImage}`}
+                      src={
+                        selectedProject.images[activeImage]
+                          .src
+                      }
+                      alt={
+                        selectedProject.images[activeImage]
+                          .title
+                      }
+                      className="block h-full w-full object-contain"
+                    />
+                  </div>
+                )}
 
+                {/* Previous image */}
                 <button
                   type="button"
                   onClick={previousImage}
                   aria-label="Previous design"
-                  className="absolute left-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-md hover:bg-white sm:left-4"
+                  className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-md hover:bg-white sm:left-4"
                 >
                   <ArrowLeft size={20} />
                 </button>
 
+                {/* Next image */}
                 <button
                   type="button"
                   onClick={nextImage}
                   aria-label="Next design"
-                  className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-md hover:bg-white sm:right-4"
+                  className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-md hover:bg-white sm:right-4"
                 >
                   <ArrowRight size={20} />
                 </button>
               </div>
 
-              {/* Image title and counter */}
-              <div className="border-t border-[#E8D2CF] px-4 py-3 text-center">
+              {/* IMAGE TITLE AND COUNTER */}
+              <div className="shrink-0 border-t border-[#E8D2CF] px-4 py-2 text-center">
                 <p className="text-sm font-medium text-[#681523]">
-                  {selectedProject.images[activeImage].title}
+                  {
+                    selectedProject.images[activeImage]
+                      .title
+                  }
                 </p>
 
                 <p className="mt-1 text-xs text-[#A45D69]">
@@ -362,28 +515,32 @@ export function SocialMedia() {
                 </p>
               </div>
 
-              {/* Thumbnails */}
-              <div className="flex shrink-0 gap-3 overflow-x-auto border-t border-[#E8D2CF] bg-[#FFF7F2] p-3 sm:p-4">
-                {selectedProject.images.map((image, index) => (
-                  <button
-                    key={`${selectedProject.id}-${index}`}
-                    type="button"
-                    onClick={() => setActiveImage(index)}
-                    aria-label={`View ${image.title}`}
-                    className={`h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 transition sm:h-20 sm:w-20 ${
-                      activeImage === index
-                        ? "border-[#850F25]"
-                        : "border-transparent opacity-60 hover:opacity-100"
-                    }`}
-                  >
-                    <img
-                      src={image.src}
-                      alt={image.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover"
-                    />
-                  </button>
-                ))}
+              {/* THUMBNAILS */}
+              <div className="flex shrink-0 gap-2 overflow-x-auto border-t border-[#E8D2CF] bg-[#FFF7F2] p-2 sm:gap-3 sm:p-3">
+                {selectedProject.images.map(
+                  (image, index) => (
+                    <button
+                      key={`${selectedProject.id}-${index}`}
+                      type="button"
+                      onClick={() =>
+                        selectImage(index)
+                      }
+                      aria-label={`View ${image.title}`}
+                      className={`h-14 w-14 shrink-0 overflow-hidden rounded-lg border-2 transition sm:h-20 sm:w-20 ${
+                        activeImage === index
+                          ? "border-[#850F25]"
+                          : "border-transparent opacity-60 hover:opacity-100"
+                      }`}
+                    >
+                      <img
+                        src={image.src}
+                        alt={image.title}
+                        loading="lazy"
+                        className="h-full w-full object-contain"
+                      />
+                    </button>
+                  )
+                )}
               </div>
             </motion.div>
           </motion.div>
