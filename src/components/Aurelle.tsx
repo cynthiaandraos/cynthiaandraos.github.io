@@ -10,6 +10,10 @@ import faceCreamBox from "../assets/aurelle-face-cream-box.png";
 import faceCreamSet from "../assets/aurelle-face-cream-set.png";
 import cleanser from "../assets/aurelle-gentle-cleanser.png";
 
+import serumCover from "../assets/aurelle-serum-cover.png";
+import faceCreamCover from "../assets/aurelle-face-cream-cover.png";
+import cleanserCover from "../assets/aurelle-cleanser-cover.png";
+
 type GalleryImage = { src: string; label: string };
 type AurelleProject = {
   id: number;
@@ -26,7 +30,7 @@ const projects: AurelleProject[] = [
     title: "Radiance Serum",
     category: "Skincare Packaging · 30 ml",
     description: "Luxury serum bottle, matching carton, and complete packaging presentation.",
-    cover: serumSet,
+    cover: serumCover,
     images: [
       { src: serum, label: "Radiance Serum Bottle · 30 ml" },
       { src: serumBox, label: "Radiance Serum Packaging Box" },
@@ -38,7 +42,7 @@ const projects: AurelleProject[] = [
     title: "Hydrating Face Cream",
     category: "Skincare Packaging · 50 ml",
     description: "Elegant face cream jar with coordinating box and product packaging mockup.",
-    cover: faceCreamSet,
+    cover: faceCreamCover,
     images: [
       { src: faceCream, label: "Hydrating Face Cream Jar · 50 ml" },
       { src: faceCreamBox, label: "Hydrating Face Cream Packaging Box" },
@@ -50,7 +54,7 @@ const projects: AurelleProject[] = [
     title: "Gentle Cleanser",
     category: "Skincare Packaging · 150 ml",
     description: "Minimal, refined cleanser tube with ivory, burgundy, and gold packaging details.",
-    cover: cleanser,
+    cover: cleanserCover,
     images: [
       { src: cleanser, label: "Gentle Cleanser Tube · 150 ml" },
     ],
@@ -141,7 +145,7 @@ export function Aurelle() {
                     src={project.cover}
                     alt={project.title}
                     loading="lazy"
-                    className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#681523] shadow-sm">
                     <ArrowUpRight size={20} />
