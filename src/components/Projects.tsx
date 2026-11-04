@@ -234,23 +234,23 @@ export function Projects() {
               }}
               whileHover={{ y: -5 }}
               onClick={() => openProject(project)}
-              className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white p-0 text-left shadow-sm transition-shadow hover:shadow-xl"
+              className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-[#F7EDE8] p-0 text-left shadow-sm transition-shadow hover:shadow-xl"
             >
 
-              {/* SAME SIZE COVER FOR ALL PROJECTS */}
+              {/* UNIFORM CREAM COVER */}
               <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
 
-                {/* Centered image with consistent spacing */}
-                <div className="absolute inset-0 flex items-center justify-center p-0">
+                {/* IMAGE BLENDED INTO CREAM BACKGROUND */}
+                <div className="absolute inset-0 flex items-center justify-center bg-[#F7EDE8]">
                   <img
                     src={project.cover}
                     alt={project.title}
                     loading="lazy"
-                    className="block h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                    className="block h-full w-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
 
-                {/* Arrow button */}
+                {/* ARROW BUTTON */}
                 <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#681523] shadow-sm">
                   <ArrowUpRight size={20} />
                 </div>
