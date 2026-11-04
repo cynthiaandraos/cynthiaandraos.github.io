@@ -4,6 +4,7 @@ import { About } from "./components/About";
 import { Skills } from "./components/Skills";
 import { Projects } from "./components/Projects";
 import { Packaging } from "./components/Packaging";
+import { Aurelle } from "./components/Aurelle";
 import { Flyers } from "./components/Flyers";
 import { SocialMedia } from "./components/SocialMedia";
 import { PrintDesign } from "./components/PrintDesign";
@@ -18,6 +19,7 @@ export default function App() {
       <Skills />
       <Projects />
       <Packaging />
+      <Aurelle />
       <Flyers />
       <SocialMedia />
       <PrintDesign />
