@@ -17,6 +17,7 @@ import coffeePackaging from "../assets/5beans-coffee-packaging.png";
 import peanutLabel from "../assets/5beans-peanut-butter-label.png";
 import peanutJars from "../assets/5beans-peanut-butter-jars.png";
 import cupDesign from "../assets/5beans-cup-design.png";
+import blankCups from "../assets/5beans-blank-cups.png";
 import snackStickers from "../assets/5beans-snack-stickers.png";
 import snackJars from "../assets/5beans-snack-jars.png";
 import proteinPhoto from "../assets/5beans-protein-balls-photo.png";
@@ -61,19 +62,23 @@ const collections = [
     ],
   },
   {
-  id: 3,
-  title: "Branded Takeaway Cups",
-  category: "Cup Branding & Sticker Design",
-  cover: cupDesign,
-  description:
-    "Transparent takeaway cups featuring the 5 Beans logo and the SIP • SMILE • REPEAT design.",
-  images: [
-    {
-      src: cupDesign,
-      label: "Transparent Cup — Logo & SIP • SMILE • REPEAT",
-    },
-  ],
-},
+    id: 3,
+    title: "Branded Takeaway Cups",
+    category: "Cup Branding & Design",
+    cover: cupDesign,
+    description:
+      "Transparent takeaway cup designs featuring the 5 Beans logo and SIP • SMILE • REPEAT artwork.",
+    images: [
+      {
+        src: cupDesign,
+        label: "5 Beans Branded Cup Design",
+      },
+      {
+        src: blankCups,
+        label: "Transparent Cup Mockup",
+      },
+    ],
+  },
   {
     id: 4,
     title: "Snack Stickers",
@@ -135,16 +140,20 @@ export function Packaging() {
 
   const nextImage = () => {
     if (!selected) return;
-    setActiveImage((current) =>
-      (current + 1) % selected.images.length
+
+    setActiveImage(
+      (current) =>
+        (current + 1) % selected.images.length
     );
   };
 
   const previousImage = () => {
     if (!selected) return;
-    setActiveImage((current) =>
-      (current - 1 + selected.images.length) %
-      selected.images.length
+
+    setActiveImage(
+      (current) =>
+        (current - 1 + selected.images.length) %
+        selected.images.length
     );
   };
 
@@ -153,17 +162,21 @@ export function Packaging() {
 
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        closeCollection();
+        setSelected(null);
       }
+
       if (event.key === "ArrowRight") {
-        setActiveImage((current) =>
-          (current + 1) % selected.images.length
+        setActiveImage(
+          (current) =>
+            (current + 1) % selected.images.length
         );
       }
+
       if (event.key === "ArrowLeft") {
-        setActiveImage((current) =>
-          (current - 1 + selected.images.length) %
-          selected.images.length
+        setActiveImage(
+          (current) =>
+            (current - 1 + selected.images.length) %
+            selected.images.length
         );
       }
     };
@@ -186,15 +199,22 @@ export function Packaging() {
       className="bg-[#FFF7F2] px-6 py-24 text-[#681523]"
     >
       <div className="mx-auto max-w-7xl">
-        {/* Heading */}
+
+        {/* Section heading */}
         <motion.div
           initial={{
             opacity: 0,
             y: reduceMotion ? 0 : 35,
           }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{
+            duration: 0.8,
+            ease: "easeOut",
+          }}
           className="mb-14 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
@@ -244,7 +264,10 @@ export function Packaging() {
               }}
               transition={{
                 duration: 0.65,
-                delay: (index % 3) * 0.12,
+                delay: reduceMotion
+                  ? 0
+                  : (index % 3) * 0.12,
+                ease: "easeOut",
               }}
               whileHover={
                 reduceMotion
@@ -284,6 +307,7 @@ export function Packaging() {
                     style={{
                       fontFamily:
                         "'Bodoni Moda', Georgia, serif",
+                      fontWeight: 400,
                     }}
                   >
                     {collection.title}
@@ -312,6 +336,7 @@ export function Packaging() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-[#210C12]/85 p-3 backdrop-blur-sm md:p-8"
             onClick={closeCollection}
           >
@@ -328,8 +353,9 @@ export function Packaging() {
               }}
               exit={{
                 opacity: 0,
-                scale: 0.97,
+                scale: reduceMotion ? 1 : 0.97,
               }}
+              transition={{ duration: 0.3 }}
               role="dialog"
               aria-modal="true"
               aria-label={`${selected.title} gallery`}
@@ -338,15 +364,17 @@ export function Packaging() {
               }
               className="relative max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-3xl bg-[#FFF7F2] p-4 shadow-2xl md:p-8"
             >
+              {/* Close button */}
               <button
                 type="button"
                 onClick={closeCollection}
                 aria-label="Close gallery"
-                className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white hover:bg-[#A13A4B]"
+                className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white transition hover:bg-[#A13A4B]"
               >
                 <X size={22} />
               </button>
 
+              {/* Gallery title */}
               <div className="mb-6 pr-12">
                 <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[#A45D69]">
                   5 Beans Coffee Shop
@@ -357,13 +385,14 @@ export function Packaging() {
                   style={{
                     fontFamily:
                       "'Bodoni Moda', Georgia, serif",
+                    fontWeight: 400,
                   }}
                 >
                   {selected.title}
                 </h3>
               </div>
 
-              {/* Main gallery image */}
+              {/* Main image */}
               <div className="relative flex min-h-[260px] items-center justify-center overflow-hidden rounded-2xl bg-[#F8F0EC]">
                 <AnimatePresence mode="wait">
                   <motion.img
@@ -391,6 +420,7 @@ export function Packaging() {
                   />
                 </AnimatePresence>
 
+                {/* Image navigation */}
                 {selected.images.length > 1 && (
                   <>
                     <button
@@ -414,13 +444,10 @@ export function Packaging() {
                 )}
               </div>
 
-              {/* Image title and counter */}
+              {/* Image label and counter */}
               <div className="mt-5 text-center">
                 <p className="text-sm font-medium text-[#681523]">
-                  {
-                    selected.images[activeImage]
-                      .label
-                  }
+                  {selected.images[activeImage].label}
                 </p>
 
                 <p className="mt-1 text-xs text-[#A45D69]">
@@ -429,7 +456,7 @@ export function Packaging() {
                 </p>
               </div>
 
-              {/* Clickable thumbnails */}
+              {/* Thumbnail navigation */}
               <div className="mt-5 flex flex-wrap justify-center gap-3">
                 {selected.images.map(
                   (image, index) => (
