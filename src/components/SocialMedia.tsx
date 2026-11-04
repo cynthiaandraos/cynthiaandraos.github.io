@@ -1,142 +1,142 @@
 
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import {
-  motion,
-  AnimatePresence,
-  useReducedMotion,
-} from "motion/react";
-import {
-  X,
+  ArrowLeft,
+  ArrowRight,
   ArrowUpRight,
-  ChevronLeft,
-  ChevronRight,
+  X,
 } from "lucide-react";
 
-// Card cover only
 import firasCover from "../assets/firas-cover.jpg";
 
-// Original social media designs
-import grillPost from "../assets/firas-grill-post.png";
-import christmas42 from "../assets/firas-christmas-42.png";
-import christmas36 from "../assets/firas-christmas-36.png";
-import sandwichPost from "../assets/firas-sandwich-post.png";
-import chickenPost from "../assets/firas-chicken-post.png";
+import firasGrill from "../assets/firas-grill-post.png";
+import firasSandwich from "../assets/firas-sandwich-post.png";
+import firasChicken from "../assets/firas-chicken-post.png";
+import firasChristmas42 from "../assets/firas-christmas-42.png";
+import firasChristmas36 from "../assets/firas-christmas-36.png";
 
-// Social media clients
+// New menu-item designs
+import chickenRollSub from "../assets/firas-chicken-roll-sub.jpeg";
+import kababDjej from "../assets/firas-kabab-djej.jpeg";
+import hawaiiBurger from "../assets/firas-hawaii-burger.jpeg";
+import steakSub from "../assets/firas-steak-sub.jpeg";
+
 const projects = [
   {
     id: 1,
     title: "Machewe Firas",
-    arabicName: "مشاوي فراس",
-    category: "Restaurant Social Media Design",
-
-    // This image appears ONLY outside the card
+    subtitle: "Restaurant Social Media Campaign",
+    category: "Food & Beverage",
     cover: firasCover,
-
     description:
-      "A collection of restaurant social media designs featuring food promotions, branded content, and seasonal Christmas offers.",
-
-    // These five images appear ONLY when clicking the card
+      "Social media designs showcasing grilled specialties, seasonal promotions, and new menu-item launches for Machewe Firas.",
     images: [
       {
-        src: grillPost,
-        label: "Grilled Meat Promotional Post",
+        src: firasGrill,
+        title: "Grill Promotion",
       },
       {
-        src: sandwichPost,
-        label: "Sandwich Promotional Post",
+        src: firasSandwich,
+        title: "Sandwich Promotion",
       },
       {
-        src: chickenPost,
-        label: "Chicken Grill Promotional Post",
+        src: firasChicken,
+        title: "Chicken Promotion",
       },
       {
-        src: christmas42,
-        label: "Christmas Offer — $42",
+        src: firasChristmas42,
+        title: "Christmas Campaign — 42",
       },
       {
-        src: christmas36,
-        label: "Christmas Offer — $36",
+        src: firasChristmas36,
+        title: "Christmas Campaign — 36",
+      },
+      {
+        src: chickenRollSub,
+        title: "New Chicken Roll SUB",
+      },
+      {
+        src: kababDjej,
+        title: "New Kabab Djej",
+      },
+      {
+        src: hawaiiBurger,
+        title: "New Hawaii Burger",
+      },
+      {
+        src: steakSub,
+        title: "New Steak SUB",
       },
     ],
   },
 ];
 
-type Project = (typeof projects)[number];
-
 export function SocialMedia() {
-  const [selected, setSelected] =
-    useState<Project | null>(null);
+  const [selectedProject, setSelectedProject] =
+    useState<(typeof projects)[number] | null>(null);
 
   const [activeImage, setActiveImage] = useState(0);
-  const reduceMotion = useReducedMotion();
 
-  const openProject = (project: Project) => {
-    setSelected(project);
+  const openProject = (project: (typeof projects)[number]) => {
+    setSelectedProject(project);
     setActiveImage(0);
   };
 
   const closeProject = () => {
-    setSelected(null);
+    setSelectedProject(null);
     setActiveImage(0);
   };
 
   const nextImage = () => {
-    if (!selected) return;
+    if (!selectedProject) return;
 
-    setActiveImage(
-      (current) =>
-        (current + 1) % selected.images.length
+    setActiveImage((current) =>
+      (current + 1) % selectedProject.images.length
     );
   };
 
   const previousImage = () => {
-    if (!selected) return;
+    if (!selectedProject) return;
 
-    setActiveImage(
-      (current) =>
-        (current - 1 + selected.images.length) %
-        selected.images.length
+    setActiveImage((current) =>
+      (current - 1 + selectedProject.images.length) %
+      selectedProject.images.length
     );
   };
 
   useEffect(() => {
-    if (!selected) return;
+    if (!selectedProject) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setSelected(null);
+        closeProject();
       }
 
       if (event.key === "ArrowRight") {
-        setActiveImage(
-          (current) =>
-            (current + 1) % selected.images.length
+        setActiveImage((current) =>
+          (current + 1) % selectedProject.images.length
         );
       }
 
       if (event.key === "ArrowLeft") {
-        setActiveImage(
-          (current) =>
-            (current - 1 + selected.images.length) %
-            selected.images.length
+        setActiveImage((current) =>
+          (current - 1 + selectedProject.images.length) %
+          selectedProject.images.length
         );
       }
     };
 
-    const oldOverflow = document.body.style.overflow;
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = oldOverflow;
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [selected]);
+  }, [selectedProject]);
 
   return (
     <section
@@ -145,29 +145,22 @@ export function SocialMedia() {
     >
       <div className="mx-auto max-w-7xl">
 
-        {/* Section heading */}
+        {/* Heading */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: reduceMotion ? 0 : 35,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
           className="mb-14 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
-            05 / DIGITAL DESIGN
+            SOCIAL MEDIA PORTFOLIO
           </p>
 
           <h2
             className="text-5xl text-[#850F25] md:text-7xl"
             style={{
-              fontFamily:
-                "'Bodoni Moda', Georgia, serif",
+              fontFamily: "'Bodoni Moda', Georgia, serif",
               fontWeight: 400,
             }}
           >
@@ -176,56 +169,39 @@ export function SocialMedia() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            Creative social media content,
-            promotional campaigns, and branded
-            visuals designed to communicate
-            with audiences.
+            Creative social media campaigns, promotional
+            artwork, and engaging visual content designed
+            to bring brands and their products to life.
           </p>
 
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
-        {/* Client project cards */}
+        {/* Project cards */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.article
               key={project.id}
-              initial={{
-                opacity: 0,
-                y: reduceMotion ? 0 : 40,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.1,
-              }}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{
-                duration: 0.65,
-                delay: reduceMotion
-                  ? 0
-                  : index * 0.12,
+                duration: 0.6,
+                delay: index * 0.1,
               }}
-              whileHover={
-                reduceMotion
-                  ? undefined
-                  : { y: -7 }
-              }
-              className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
+              className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-[#F7EDE8] shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
               <button
                 type="button"
                 onClick={() => openProject(project)}
-                aria-label={`Open ${project.title} social media gallery`}
-                className="block w-full cursor-pointer text-left"
+                className="block h-full w-full cursor-pointer text-left"
+                aria-label={`View ${project.title} designs`}
               >
-                {/* OUTSIDE CARD COVER */}
-                <div className="relative aspect-square overflow-hidden bg-[#F8F0EC]">
+                {/* Cover photo */}
+                <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={project.cover}
-                    alt={`${project.title} project cover`}
+                    alt={`${project.title} cover`}
                     loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
@@ -233,20 +209,16 @@ export function SocialMedia() {
                   <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-sm">
                     <ArrowUpRight size={20} />
                   </div>
-
-                  <div className="absolute bottom-4 left-4 rounded-full bg-[#681523]/90 px-4 py-2 text-xs font-medium text-white">
-                    {project.images.length} Designs
-                  </div>
                 </div>
 
-                {/* Card information */}
+                {/* Card text */}
                 <div className="p-6">
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {project.category}
                   </p>
 
                   <h3
-                    className="text-3xl text-[#681523]"
+                    className="text-2xl text-[#681523]"
                     style={{
                       fontFamily:
                         "'Bodoni Moda', Georgia, serif",
@@ -255,22 +227,18 @@ export function SocialMedia() {
                     {project.title}
                   </h3>
 
-                  <p
-                    lang="ar"
-                    dir="rtl"
-                    className="mt-2 text-right text-lg text-[#850F25]"
-                  >
-                    {project.arabicName}
+                  <p className="mt-2 text-sm font-medium text-[#A45D69]">
+                    {project.subtitle}
                   </p>
 
                   <p className="mt-4 text-sm leading-relaxed text-[#704B50]">
                     {project.description}
                   </p>
 
-                  <div className="mt-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#850F25]">
-                    View Designs
+                  <p className="mt-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#850F25]">
+                    View Campaign
                     <ArrowUpRight size={16} />
-                  </div>
+                  </p>
                 </div>
               </button>
             </motion.article>
@@ -278,165 +246,119 @@ export function SocialMedia() {
         </div>
       </div>
 
-      {/* CLICKABLE GALLERY POPUP */}
+      {/* Gallery popup */}
       <AnimatePresence>
-        {selected && (
+        {selectedProject && (
           <motion.div
-            key="social-gallery"
+            key="social-media-modal"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
             onClick={closeProject}
-            className="fixed inset-0 z-[110] flex items-center justify-center bg-[#210C12]/90 p-3 backdrop-blur-sm md:p-8"
+            className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/90 p-3 backdrop-blur-sm md:p-6"
           >
             <motion.div
-              initial={{
-                opacity: 0,
-                y: reduceMotion ? 0 : 25,
-                scale: reduceMotion ? 1 : 0.97,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                scale: 1,
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0.97,
-              }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, y: 20, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              onClick={(event) => event.stopPropagation()}
               role="dialog"
               aria-modal="true"
-              aria-label={`${selected.title} gallery`}
-              onClick={(event) =>
-                event.stopPropagation()
-              }
-              className="relative max-h-[94vh] w-full max-w-4xl overflow-y-auto rounded-3xl bg-[#FFF7F2] p-4 shadow-2xl md:p-8"
+              aria-label={`${selectedProject.title} gallery`}
+              className="flex max-h-[94vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-[#FFF7F2] shadow-2xl"
             >
-              {/* Close button */}
-              <button
-                type="button"
-                onClick={closeProject}
-                aria-label="Close gallery"
-                className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white transition hover:bg-[#850F25]"
-              >
-                <X size={22} />
-              </button>
+              {/* Modal header */}
+              <div className="flex items-center justify-between gap-4 border-b border-[#E8D2CF] px-4 py-4 sm:px-6">
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-[#A45D69]">
+                    {selectedProject.subtitle}
+                  </p>
 
-              {/* Gallery heading */}
-              <div className="mb-6 pr-12">
-                <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[#A45D69]">
-                  Social Media Design
-                </p>
+                  <h3
+                    className="mt-1 text-xl text-[#681523] sm:text-2xl"
+                    style={{
+                      fontFamily:
+                        "'Bodoni Moda', Georgia, serif",
+                    }}
+                  >
+                    {selectedProject.title}
+                  </h3>
+                </div>
 
-                <h3
-                  className="text-3xl text-[#850F25] md:text-4xl"
-                  style={{
-                    fontFamily:
-                      "'Bodoni Moda', Georgia, serif",
-                  }}
+                <button
+                  type="button"
+                  onClick={closeProject}
+                  aria-label="Close gallery"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#681523] text-white hover:bg-[#850F25]"
                 >
-                  {selected.title}
-                </h3>
-
-                <p className="mt-2 text-sm text-[#704B50]">
-                  {selected.images.length} Original Designs
-                </p>
+                  <X size={20} />
+                </button>
               </div>
 
-              {/* ORIGINAL DESIGN IMAGE */}
-              <div className="relative flex min-h-[260px] items-center justify-center overflow-hidden rounded-2xl bg-[#F8F0EC]">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={`${selected.id}-${activeImage}`}
-                    src={
-                      selected.images[activeImage].src
-                    }
-                    alt={
-                      selected.images[activeImage].label
-                    }
-                    initial={{
-                      opacity: 0,
-                      x: reduceMotion ? 0 : 20,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      x: reduceMotion ? 0 : -20,
-                    }}
-                    transition={{ duration: 0.25 }}
-                    className="max-h-[60vh] w-full object-contain"
-                  />
-                </AnimatePresence>
+              {/* Main image */}
+              <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-[#F7EDE8] p-4 sm:p-6">
+                <img
+                  key={activeImage}
+                  src={selectedProject.images[activeImage].src}
+                  alt={selectedProject.images[activeImage].title}
+                  className="max-h-full max-w-full object-contain"
+                />
 
-                {/* Gallery arrows */}
-                {selected.images.length > 1 && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={previousImage}
-                      aria-label="Previous design"
-                      className="absolute left-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#681523]/90 text-white transition hover:bg-[#850F25]"
-                    >
-                      <ChevronLeft size={24} />
-                    </button>
+                {/* Previous */}
+                <button
+                  type="button"
+                  onClick={previousImage}
+                  aria-label="Previous design"
+                  className="absolute left-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-md hover:bg-white sm:left-4"
+                >
+                  <ArrowLeft size={20} />
+                </button>
 
-                    <button
-                      type="button"
-                      onClick={nextImage}
-                      aria-label="Next design"
-                      className="absolute right-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#681523]/90 text-white transition hover:bg-[#850F25]"
-                    >
-                      <ChevronRight size={24} />
-                    </button>
-                  </>
-                )}
+                {/* Next */}
+                <button
+                  type="button"
+                  onClick={nextImage}
+                  aria-label="Next design"
+                  className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-md hover:bg-white sm:right-4"
+                >
+                  <ArrowRight size={20} />
+                </button>
               </div>
 
-              {/* Design title and counter */}
-              <div className="mt-5 text-center">
+              {/* Image name and counter */}
+              <div className="border-t border-[#E8D2CF] px-4 py-3 text-center">
                 <p className="text-sm font-medium text-[#681523]">
-                  {selected.images[activeImage].label}
+                  {selectedProject.images[activeImage].title}
                 </p>
 
                 <p className="mt-1 text-xs text-[#A45D69]">
-                  {activeImage + 1} of{" "}
-                  {selected.images.length}
+                  {activeImage + 1} /{" "}
+                  {selectedProject.images.length}
                 </p>
               </div>
 
-              {/* Design thumbnails */}
-              <div className="mt-5 flex flex-wrap justify-center gap-3">
-                {selected.images.map(
-                  (image, index) => (
-                    <button
-                      key={image.label}
-                      type="button"
-                      onClick={() =>
-                        setActiveImage(index)
-                      }
-                      aria-label={`View ${image.label}`}
-                      aria-pressed={
-                        activeImage === index
-                      }
-                      className={`h-20 w-20 overflow-hidden rounded-xl border-2 bg-white p-1 transition ${
-                        activeImage === index
-                          ? "border-[#850F25]"
-                          : "border-[#E8D2CF]"
-                      }`}
-                    >
-                      <img
-                        src={image.src}
-                        alt=""
-                        className="h-full w-full object-contain"
-                      />
-                    </button>
-                  )
-                )}
+              {/* Gallery thumbnails */}
+              <div className="flex shrink-0 gap-3 overflow-x-auto border-t border-[#E8D2CF] bg-[#FFF7F2] p-3 sm:p-4">
+                {selectedProject.images.map((image, index) => (
+                  <button
+                    key={`${image.title}-${index}`}
+                    type="button"
+                    onClick={() => setActiveImage(index)}
+                    aria-label={`View ${image.title}`}
+                    className={`h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 transition sm:h-20 sm:w-20 ${
+                      activeImage === index
+                        ? "border-[#850F25]"
+                        : "border-transparent opacity-60 hover:opacity-100"
+                    }`}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                  </button>
+                ))}
               </div>
             </motion.div>
           </motion.div>
