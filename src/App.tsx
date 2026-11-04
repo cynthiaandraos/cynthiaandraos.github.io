@@ -6,6 +6,7 @@ import { Projects } from "./components/Projects";
 import { Packaging } from "./components/Packaging";
 import { Flyers } from "./components/Flyers";
 import { SocialMedia } from "./components/SocialMedia";
+import { PrintDesign } from "./components/PrintDesign";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 
@@ -19,6 +20,7 @@ export default function App() {
       <Packaging />
       <Flyers />
       <SocialMedia />
+      <PrintDesign />
       <Contact />
       <Footer />
     </div>
