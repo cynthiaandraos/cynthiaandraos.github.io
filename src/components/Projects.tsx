@@ -16,6 +16,7 @@ import jouyPackagingJars from "../assets/jouy-packaging-jars.jpeg";
 import jouyProductLabel from "../assets/jouy-product-label.jpeg";
 import houseOfBeautyStorefront from "../assets/house-of-beauty-storefront.png";
 import goldenMarkCarBranding from "../assets/golden-mark-car-branding.jpeg";
+import aurelleLogo from "../assets/aurelle-logo-preview.png";
 
 type ProjectImage = {
   src: string;
@@ -30,6 +31,17 @@ type Project = {
 };
 
 const projects: Project[] = [
+  {
+    title: "AURELLE Skincare",
+    category: "Concept Brand Identity & Logo Design",
+    cover: aurelleLogo,
+    images: [
+      {
+        src: aurelleLogo,
+        title: "AURELLE Skincare Logo",
+      },
+    ],
+  },
   {
     title: "Domina Real Estate",
     category: "Logo Design & Brand Identity",
