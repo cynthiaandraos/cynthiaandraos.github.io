@@ -108,10 +108,7 @@ const projects: SocialProject[] = [
     title: "Event Marketing & Visual Campaigns",
     subtitle: "St. Abda - Jaj | 2026",
     category: "Events & Entertainment",
-
-    // NEW ST. ABDA COVER
     cover: stAbdaCover,
-
     description:
       "A coordinated promotional campaign for the St. Abda celebrations in Jaj, featuring concert announcements, event schedules, community activities, and festival communications.",
     images: [
@@ -295,12 +292,13 @@ export function SocialMedia() {
                 aria-label={`View ${project.title} - ${project.subtitle}`}
                 className="block h-full w-full cursor-pointer text-left"
               >
-                <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#F7EDE8]">
+                {/* ALL THREE COVERS FILL THEIR CARDS */}
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7EDE8]">
                   <img
                     src={project.cover}
                     alt={`${project.title} cover`}
                     loading="lazy"
-                    className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
 
                   <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-sm">
