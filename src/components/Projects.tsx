@@ -14,6 +14,8 @@ import oMarket from "../assets/o-market-transparent.png";
 import manymodaBag from "../assets/manymoda-shopping-bag.jpeg";
 import jouyPackagingJars from "../assets/jouy-packaging-jars.jpeg";
 import jouyProductLabel from "../assets/jouy-product-label.jpeg";
+import houseOfBeautyStorefront from "../assets/house-of-beauty-storefront.png";
+import goldenMarkCarBranding from "../assets/golden-mark-car-branding.jpeg";
 
 type ProjectImage = {
   src: string;
@@ -48,6 +50,10 @@ const projects: Project[] = [
         src: goldenMark,
         title: "Golden Mark Logo",
       },
+      {
+        src: goldenMarkCarBranding,
+        title: "Golden Mark Vehicle Branding",
+      },
     ],
   },
   {
@@ -58,6 +64,10 @@ const projects: Project[] = [
       {
         src: houseOfBeauty,
         title: "House of Beauty Logo",
+      },
+      {
+        src: houseOfBeautyStorefront,
+        title: "House of Beauty Storefront Branding",
       },
     ],
   },
