@@ -25,7 +25,7 @@ import proteinPhoto from "../assets/5beans-protein-balls-photo.png";
 import christmasLabel from "../assets/5beans-christmas-label.png";
 import christmasPackaging from "../assets/5beans-christmas-packaging.png";
 
-// New creative portfolio cover images
+// Creative portfolio cover images
 import coffeeCover from "../assets/5beans-coffee-cover.png";
 import peanutCover from "../assets/5beans-peanut-cover.png";
 import takeawayCover from "../assets/5beans-takeaway-cover.png";
@@ -253,7 +253,7 @@ export function Packaging() {
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
-        {/* Five clickable project cards */}
+        {/* Five project cards */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {collections.map((collection, index) => (
             <motion.article
@@ -282,32 +282,37 @@ export function Packaging() {
                   ? undefined
                   : { y: -7 }
               }
-              className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
+              className="group h-full overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
               <button
                 type="button"
                 onClick={() =>
                   openCollection(collection)
                 }
-                className="block w-full cursor-pointer text-left"
+                className="flex h-full w-full cursor-pointer flex-col text-left"
                 aria-label={`Open ${collection.title} gallery`}
               >
-                {/* New creative cover */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-[#F8F0EC]">
+                {/* Creative cover with consistent sizing */}
+                <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F8F0EC]">
                   <img
                     src={collection.cover}
                     alt={collection.title}
                     loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className={`h-full w-full object-cover object-center transition-transform duration-700 ${
+                      collection.id === 3
+                        ? "scale-[1.08] group-hover:scale-[1.13]"
+                        : "group-hover:scale-105"
+                    }`}
                   />
 
+                  {/* White arrow */}
                   <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#681523] shadow-sm">
                     <ArrowUpRight size={20} />
                   </div>
                 </div>
 
-                {/* Project information */}
-                <div className="p-6">
+                {/* Project details */}
+                <div className="flex w-full flex-1 flex-col p-6">
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {collection.category}
                   </p>
@@ -327,7 +332,7 @@ export function Packaging() {
                     {collection.description}
                   </p>
 
-                  <p className="mt-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#850F25]">
+                  <p className="mt-auto flex items-center gap-2 pt-5 text-xs font-semibold uppercase tracking-[0.15em] text-[#850F25]">
                     View Project
                     <ArrowUpRight size={16} />
                   </p>
@@ -402,7 +407,7 @@ export function Packaging() {
                 </h3>
               </div>
 
-              {/* Original packaging images */}
+              {/* Original packaging and label photos */}
               <div className="relative flex min-h-[260px] items-center justify-center overflow-hidden rounded-2xl bg-[#F8F0EC]">
                 <AnimatePresence mode="wait">
                   <motion.img
@@ -430,7 +435,7 @@ export function Packaging() {
                   />
                 </AnimatePresence>
 
-                {/* Image navigation */}
+                {/* Gallery arrows */}
                 {selected.images.length > 1 && (
                   <>
                     <button
@@ -454,7 +459,7 @@ export function Packaging() {
                 )}
               </div>
 
-              {/* Image label and counter */}
+              {/* Image caption */}
               <div className="mt-5 text-center">
                 <p className="text-sm font-medium text-[#681523]">
                   {selected.images[activeImage].label}
@@ -466,7 +471,7 @@ export function Packaging() {
                 </p>
               </div>
 
-              {/* Gallery thumbnails */}
+              {/* Original image thumbnails */}
               <div className="mt-5 flex flex-wrap justify-center gap-3">
                 {selected.images.map(
                   (image, index) => (
