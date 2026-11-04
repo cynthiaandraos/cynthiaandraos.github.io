@@ -18,6 +18,10 @@ import loyaltyCard from "../assets/5beans-loyalty-card.png";
 import tuksiCard from "../assets/tuksi-business-card.png";
 import cynthiaCard from "../assets/cynthia-business-card.png";
 
+import myFitnessGiftCard from "../assets/my-fitness-gift-card.jpeg";
+import oMarketGiveaway from "../assets/o-market-giveaway.jpeg";
+import oMarketGiftVoucher from "../assets/o-market-gift-voucher.jpeg";
+
 const designs = [
   {
     id: 1,
@@ -63,6 +67,33 @@ const designs = [
     image: loyaltyCard,
     description:
       "A coffee loyalty card encouraging repeat visits with a buy-nine, get-the-tenth-free reward.",
+  },
+  {
+    id: 6,
+    title: "MY Fitness Gift Card",
+    category: "Gift Card Design",
+    client: "MY Fitness by Myriam",
+    image: myFitnessGiftCard,
+    description:
+      "A printed fitness gift card featuring the MY Fitness brand identity, session details, and contact information.",
+  },
+  {
+    id: 7,
+    title: "Easter Giveaway",
+    category: "Giveaway Design",
+    client: "O-Market",
+    image: oMarketGiveaway,
+    description:
+      "A vibrant blue-and-orange Easter giveaway design featuring prize details and promotional branding.",
+  },
+  {
+    id: 8,
+    title: "Christmas Gift Voucher",
+    category: "Gift Voucher Design",
+    client: "O-Market",
+    image: oMarketGiftVoucher,
+    description:
+      "A festive double-sided Christmas gift voucher featuring seasonal illustrations and prize details.",
   },
 ];
 
@@ -115,7 +146,6 @@ export function PrintDesign() {
       className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24 text-[#681523]"
     >
       <div className="mx-auto max-w-7xl">
-
         {/* Section heading */}
         <motion.div
           initial={{
@@ -156,7 +186,7 @@ export function PrintDesign() {
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
-        {/* Five project cards */}
+        {/* Eight project cards */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {designs.map((design, index) => (
             <motion.article
@@ -192,7 +222,7 @@ export function PrintDesign() {
                 aria-label={`Open ${design.title}`}
                 className="block h-full w-full cursor-pointer text-left"
               >
-                {/* Card image - matching background */}
+                {/* Card image */}
                 <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#F7EDE8] p-4">
                   <img
                     src={design.image}
