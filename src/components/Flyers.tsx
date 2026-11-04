@@ -14,6 +14,7 @@ import {
 
 import deliveryFlyer from "../assets/5beans-delivery-flyer.png";
 import branchFlyer from "../assets/5beans-branch-flyer.png";
+import myFitnessFlyer from "../assets/my-fitness-training-flyer.jpeg";
 
 const flyers = [
   {
@@ -33,6 +34,15 @@ const flyers = [
     image: branchFlyer,
     description:
       "A promotional flyer featuring the FortyFour Tower location, product photography, and a scannable menu.",
+  },
+  {
+    id: 3,
+    title: "Personal Training Flyer",
+    client: "MY Fitness by Myriam",
+    category: "Fitness Promotional Flyer",
+    image: myFitnessFlyer,
+    description:
+      "A promotional fitness flyer highlighting personal training services and the MY Fitness brand identity.",
   },
 ];
 
@@ -116,7 +126,7 @@ export function Flyers() {
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
             Promotional and marketing flyers created for
-            5 Beans Coffee Shop. Explore each design
+            different brands. Explore each design
             in full detail.
           </p>
 
@@ -136,7 +146,10 @@ export function Flyers() {
                 opacity: 1,
                 y: 0,
               }}
-              viewport={{ once: true, amount: 0.1 }}
+              viewport={{
+                once: true,
+                amount: 0.1,
+              }}
               transition={{
                 duration: 0.65,
                 delay: reduceMotion ? 0 : index * 0.15,
@@ -237,7 +250,7 @@ export function Flyers() {
               <div className="flex items-center justify-between gap-3 border-b border-[#E8D2CF] px-4 py-4 sm:px-6">
                 <div className="min-w-0">
                   <p className="text-xs uppercase tracking-widest text-[#A45D69]">
-                    5 Beans Coffee Shop
+                    {selected.client}
                   </p>
 
                   <h3
@@ -258,7 +271,9 @@ export function Flyers() {
                       setZoomed((current) => !current)
                     }
                     aria-label={
-                      zoomed ? "Fit flyer to screen" : "Zoom in"
+                      zoomed
+                        ? "Fit flyer to screen"
+                        : "Zoom in"
                     }
                     className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F0DFD9] text-[#681523] transition hover:bg-[#E7CCC5]"
                   >
@@ -312,4 +327,3 @@ export function Flyers() {
     </section>
   );
 }
-
