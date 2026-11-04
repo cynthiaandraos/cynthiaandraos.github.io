@@ -16,14 +16,16 @@ import myFitness from "../assets/my-fitness.jpg";
 import manymoda from "../assets/manymoda.jpg";
 import manymodaBag from "../assets/manymoda-shopping-bag.jpeg";
 
+type ProjectImage = {
+  src: string;
+  title: string;
+};
+
 type Project = {
   title: string;
   category: string;
   cover: string;
-  images: {
-    src: string;
-    title: string;
-  }[];
+  images: ProjectImage[];
 };
 
 const projects: Project[] = [
@@ -150,20 +152,26 @@ export function Projects() {
       if (event.key === "ArrowRight") {
         setActiveImage(
           (current) =>
-            (current + 1) % selectedProject.images.length
+            (current + 1) %
+            selectedProject.images.length
         );
       }
 
       if (event.key === "ArrowLeft") {
         setActiveImage(
           (current) =>
-            (current - 1 + selectedProject.images.length) %
+            (current -
+              1 +
+              selectedProject.images.length) %
             selectedProject.images.length
         );
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
 
     return () => {
       document.body.style.overflow =
@@ -182,6 +190,8 @@ export function Projects() {
       className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24"
     >
       <div className="mx-auto max-w-7xl">
+
+        {/* SECTION HEADING */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -209,6 +219,7 @@ export function Projects() {
           </p>
         </motion.div>
 
+        {/* PROJECT CARDS */}
         <div className="grid grid-cols-1 items-stretch gap-7 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.button
@@ -223,24 +234,30 @@ export function Projects() {
               }}
               whileHover={{ y: -5 }}
               onClick={() => openProject(project)}
-              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white p-0 text-left shadow-sm transition-shadow hover:shadow-xl"
+              className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white p-0 text-left shadow-sm transition-shadow hover:shadow-xl"
             >
-              {/* Equal image area for every card */}
-              <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
-                <img
-                  src={project.cover}
-                  alt={project.title}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
-                />
 
+              {/* SAME SIZE COVER FOR ALL PROJECTS */}
+              <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
+
+                {/* Centered image with consistent spacing */}
+                <div className="absolute inset-0 flex items-center justify-center p-0">
+                  <img
+                    src={project.cover}
+                    alt={project.title}
+                    loading="lazy"
+                    className="block h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Arrow button */}
                 <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#681523] shadow-sm">
                   <ArrowUpRight size={20} />
                 </div>
               </div>
 
-              {/* Equal text area for every card */}
-              <div className="flex w-full flex-1 flex-col p-6">
+              {/* CARD DETAILS */}
+              <div className="flex w-full flex-1 flex-col bg-white p-6">
                 <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                   {project.category}
                 </p>
@@ -264,6 +281,7 @@ export function Projects() {
           ))}
         </div>
 
+        {/* BOTTOM QUOTE */}
         <p
           className="mt-16 text-center text-2xl italic text-[#850F25]"
           style={{
@@ -275,6 +293,7 @@ export function Projects() {
         </p>
       </div>
 
+      {/* PROJECT POPUP GALLERY */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
@@ -307,6 +326,8 @@ export function Projects() {
               aria-label={`${selectedProject.title} gallery`}
               className="flex h-[90dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-[#FFF7F2] shadow-2xl"
             >
+
+              {/* POPUP HEADER */}
               <div className="flex shrink-0 items-center justify-between gap-4 border-b border-[#E8D2CF] px-4 py-4 sm:px-6">
                 <div>
                   <p className="text-xs uppercase tracking-widest text-[#A45D69]">
@@ -334,21 +355,20 @@ export function Projects() {
                 </button>
               </div>
 
-              {/* Full image visible without cropping */}
+              {/* FULL IMAGE WITHOUT CROPPING */}
               <div className="relative flex min-h-0 flex-1 items-center justify-center bg-[#F7EDE8] p-3 sm:p-6">
                 <img
                   key={`${selectedProject.title}-${activeImage}`}
                   src={
-                    selectedProject.images[activeImage]
-                      .src
+                    selectedProject.images[activeImage].src
                   }
                   alt={
-                    selectedProject.images[activeImage]
-                      .title
+                    selectedProject.images[activeImage].title
                   }
                   className="h-full w-full object-contain"
                 />
 
+                {/* GALLERY ARROWS */}
                 {selectedProject.images.length > 1 && (
                   <>
                     <button
@@ -372,11 +392,11 @@ export function Projects() {
                 )}
               </div>
 
+              {/* IMAGE TITLE AND COUNTER */}
               <div className="shrink-0 border-t border-[#E8D2CF] px-4 py-3 text-center">
                 <p className="text-sm font-medium text-[#681523]">
                   {
-                    selectedProject.images[activeImage]
-                      .title
+                    selectedProject.images[activeImage].title
                   }
                 </p>
 
@@ -386,6 +406,7 @@ export function Projects() {
                 </p>
               </div>
 
+              {/* GALLERY THUMBNAILS */}
               {selectedProject.images.length > 1 && (
                 <div className="flex shrink-0 justify-center gap-3 overflow-x-auto border-t border-[#E8D2CF] p-3">
                   {selectedProject.images.map(
