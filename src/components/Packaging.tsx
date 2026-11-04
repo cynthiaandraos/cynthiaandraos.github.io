@@ -12,6 +12,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+// Original packaging and label images
 import coffeeLabel from "../assets/5beans-coffee-label.png";
 import coffeePackaging from "../assets/5beans-coffee-packaging.png";
 import peanutLabel from "../assets/5beans-peanut-butter-label.png";
@@ -24,12 +25,19 @@ import proteinPhoto from "../assets/5beans-protein-balls-photo.png";
 import christmasLabel from "../assets/5beans-christmas-label.png";
 import christmasPackaging from "../assets/5beans-christmas-packaging.png";
 
+// New creative portfolio cover images
+import coffeeCover from "../assets/5beans-coffee-cover.png";
+import peanutCover from "../assets/5beans-peanut-cover.png";
+import takeawayCover from "../assets/5beans-takeaway-cover.png";
+import snackCover from "../assets/5beans-snack-cover.png";
+import christmasCover from "../assets/5beans-christmas-cover.png";
+
 const collections = [
   {
     id: 1,
     title: "Coffee Packaging",
     category: "Coffee Bag & Label Design",
-    cover: coffeePackaging,
+    cover: coffeeCover,
     description:
       "Coffee bag packaging and original front-and-back label artwork.",
     images: [
@@ -47,7 +55,7 @@ const collections = [
     id: 2,
     title: "Nut Butter Collection",
     category: "Food Packaging & Labels",
-    cover: peanutJars,
+    cover: peanutCover,
     description:
       "Product packaging and label design for the nut butter collection.",
     images: [
@@ -65,7 +73,7 @@ const collections = [
     id: 3,
     title: "Branded Takeaway Cups",
     category: "Cup Branding & Design",
-    cover: cupDesign,
+    cover: takeawayCover,
     description:
       "Transparent takeaway cup designs featuring the 5 Beans logo and SIP • SMILE • REPEAT artwork.",
     images: [
@@ -83,7 +91,7 @@ const collections = [
     id: 4,
     title: "Snack Stickers",
     category: "Sticker & Product Label Design",
-    cover: snackJars,
+    cover: snackCover,
     description:
       "Sticker artwork and product photography for the snack collection.",
     images: [
@@ -105,7 +113,7 @@ const collections = [
     id: 5,
     title: "Christmas Cookie Packaging",
     category: "Seasonal Packaging Design",
-    cover: christmasPackaging,
+    cover: christmasCover,
     description:
       "Festive Christmas cookie packaging and original seasonal label artwork.",
     images: [
@@ -136,6 +144,7 @@ export function Packaging() {
 
   const closeCollection = () => {
     setSelected(null);
+    setActiveImage(0);
   };
 
   const nextImage = () => {
@@ -199,7 +208,6 @@ export function Packaging() {
       className="bg-[#FFF7F2] px-6 py-24 text-[#681523]"
     >
       <div className="mx-auto max-w-7xl">
-
         {/* Section heading */}
         <motion.div
           initial={{
@@ -245,7 +253,7 @@ export function Packaging() {
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
-        {/* Five project cards */}
+        {/* Five clickable project cards */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {collections.map((collection, index) => (
             <motion.article
@@ -284,12 +292,13 @@ export function Packaging() {
                 className="block w-full cursor-pointer text-left"
                 aria-label={`Open ${collection.title} gallery`}
               >
+                {/* New creative cover */}
                 <div className="relative aspect-[4/3] overflow-hidden bg-[#F8F0EC]">
                   <img
                     src={collection.cover}
                     alt={collection.title}
                     loading="lazy"
-                    className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
 
                   <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#681523] shadow-sm">
@@ -297,6 +306,7 @@ export function Packaging() {
                   </div>
                 </div>
 
+                {/* Project information */}
                 <div className="p-6">
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {collection.category}
@@ -392,7 +402,7 @@ export function Packaging() {
                 </h3>
               </div>
 
-              {/* Main image */}
+              {/* Original packaging images */}
               <div className="relative flex min-h-[260px] items-center justify-center overflow-hidden rounded-2xl bg-[#F8F0EC]">
                 <AnimatePresence mode="wait">
                   <motion.img
@@ -456,7 +466,7 @@ export function Packaging() {
                 </p>
               </div>
 
-              {/* Thumbnail navigation */}
+              {/* Gallery thumbnails */}
               <div className="mt-5 flex flex-wrap justify-center gap-3">
                 {selected.images.map(
                   (image, index) => (
