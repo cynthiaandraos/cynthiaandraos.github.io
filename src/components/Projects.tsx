@@ -209,7 +209,7 @@ export function Projects() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 items-stretch gap-7 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.button
               key={project.title}
@@ -223,22 +223,24 @@ export function Projects() {
               }}
               whileHover={{ y: -5 }}
               onClick={() => openProject(project)}
-              className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white p-0 text-left shadow-sm transition-shadow hover:shadow-xl"
+              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white p-0 text-left shadow-sm transition-shadow hover:shadow-xl"
             >
-              <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#F7EDE8] p-4">
+              {/* Equal image area for every card */}
+              <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
                 <img
                   src={project.cover}
                   alt={project.title}
                   loading="lazy"
-                  className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                  className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                 />
 
-                <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#681523] shadow-sm">
+                <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#681523] shadow-sm">
                   <ArrowUpRight size={20} />
                 </div>
               </div>
 
-              <div className="p-6">
+              {/* Equal text area for every card */}
+              <div className="flex w-full flex-1 flex-col p-6">
                 <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                   {project.category}
                 </p>
@@ -253,7 +255,7 @@ export function Projects() {
                   {project.title}
                 </h3>
 
-                <p className="mt-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#850F25]">
+                <p className="mt-auto flex items-center gap-2 pt-5 text-xs font-semibold uppercase tracking-widest text-[#850F25]">
                   View Project
                   <ArrowUpRight size={16} />
                 </p>
@@ -332,6 +334,7 @@ export function Projects() {
                 </button>
               </div>
 
+              {/* Full image visible without cropping */}
               <div className="relative flex min-h-0 flex-1 items-center justify-center bg-[#F7EDE8] p-3 sm:p-6">
                 <img
                   key={`${selectedProject.title}-${activeImage}`}
