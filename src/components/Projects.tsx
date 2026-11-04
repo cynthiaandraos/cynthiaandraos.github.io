@@ -8,6 +8,7 @@ import goldenMark from "../assets/golden-mark-transparent.png";
 import houseOfBeauty from "../assets/house-of-beauty-transparent.png";
 import jouy from "../assets/jouy-transparent.png";
 import myFitness from "../assets/my-fitness-transparent.png";
+import myFitnessDoor from "../assets/my-fitness-door-branding.jpeg";
 import manymoda from "../assets/manymoda-transparent.png";
 import oMarket from "../assets/o-market-transparent.png";
 import manymodaBag from "../assets/manymoda-shopping-bag.jpeg";
@@ -29,51 +30,92 @@ const projects: Project[] = [
     title: "Domina Real Estate",
     category: "Logo Design & Brand Identity",
     cover: domina,
-    images: [{ src: domina, title: "Domina Real Estate Logo" }],
+    images: [
+      {
+        src: domina,
+        title: "Domina Real Estate Logo",
+      },
+    ],
   },
   {
     title: "Golden Mark",
     category: "Logo Design & Brand Identity",
     cover: goldenMark,
-    images: [{ src: goldenMark, title: "Golden Mark Logo" }],
+    images: [
+      {
+        src: goldenMark,
+        title: "Golden Mark Logo",
+      },
+    ],
   },
   {
     title: "House of Beauty",
     category: "Logo Design & Brand Identity",
     cover: houseOfBeauty,
-    images: [{ src: houseOfBeauty, title: "House of Beauty Logo" }],
+    images: [
+      {
+        src: houseOfBeauty,
+        title: "House of Beauty Logo",
+      },
+    ],
   },
   {
     title: "مونة إم جوي",
     category: "Logo Design & Brand Identity",
     cover: jouy,
-    images: [{ src: jouy, title: "مونة إم جوي Logo" }],
+    images: [
+      {
+        src: jouy,
+        title: "مونة إم جوي Logo",
+      },
+    ],
   },
   {
     title: "MY Fitness by Myriam",
     category: "Logo Design & Brand Identity",
     cover: myFitness,
-    images: [{ src: myFitness, title: "MY Fitness by Myriam Logo" }],
+    images: [
+      {
+        src: myFitness,
+        title: "MY Fitness by Myriam Logo",
+      },
+      {
+        src: myFitnessDoor,
+        title: "MY Fitness Glass Door Branding",
+      },
+    ],
   },
   {
     title: "Manymoda",
     category: "Logo Design & Brand Application",
     cover: manymoda,
     images: [
-      { src: manymoda, title: "Manymoda Original Logo" },
-      { src: manymodaBag, title: "Manymoda Shopping Bag Branding" },
+      {
+        src: manymoda,
+        title: "Manymoda Original Logo",
+      },
+      {
+        src: manymodaBag,
+        title: "Manymoda Shopping Bag Branding",
+      },
     ],
   },
   {
     title: "O-Market",
     category: "Logo Design & Brand Identity",
     cover: oMarket,
-    images: [{ src: oMarket, title: "O-Market Logo" }],
+    images: [
+      {
+        src: oMarket,
+        title: "O-Market Logo",
+      },
+    ],
   },
 ];
 
 export function Projects() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedProject, setSelectedProject] =
+    useState<Project | null>(null);
   const [activeImage, setActiveImage] = useState(0);
 
   const openProject = (project: Project) => {
@@ -88,11 +130,16 @@ export function Projects() {
 
   const nextImage = () => {
     if (!selectedProject) return;
-    setActiveImage((current) => (current + 1) % selectedProject.images.length);
+
+    setActiveImage(
+      (current) =>
+        (current + 1) % selectedProject.images.length
+    );
   };
 
   const previousImage = () => {
     if (!selectedProject) return;
+
     setActiveImage(
       (current) =>
         (current - 1 + selectedProject.images.length) %
@@ -107,12 +154,17 @@ export function Projects() {
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeProject();
+      if (event.key === "Escape") {
+        closeProject();
+      }
+
       if (event.key === "ArrowRight") {
         setActiveImage(
-          (current) => (current + 1) % selectedProject.images.length
+          (current) =>
+            (current + 1) % selectedProject.images.length
         );
       }
+
       if (event.key === "ArrowLeft") {
         setActiveImage(
           (current) =>
@@ -126,7 +178,10 @@ export function Projects() {
 
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
     };
   }, [selectedProject]);
 
@@ -146,15 +201,19 @@ export function Projects() {
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
             02 / SELECTED WORK
           </p>
+
           <h2
             className="text-5xl text-[#681523] md:text-7xl"
-            style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
+            style={{
+              fontFamily: "'Bodoni Moda', Georgia, serif",
+            }}
           >
             My <span className="italic">Portfolio</span>
           </h2>
+
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            Explore my creative work in logo design, brand identity,
-            and visual storytelling.
+            Explore my creative work in logo design,
+            brand identity, and visual storytelling.
           </p>
         </motion.div>
 
@@ -166,7 +225,10 @@ export function Projects() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.08,
+              }}
               whileHover={{ y: -5 }}
               onClick={() => openProject(project)}
               className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white p-0 text-left shadow-sm transition-shadow hover:shadow-xl"
@@ -180,6 +242,7 @@ export function Projects() {
                     className="block h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
+
                 <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#681523] shadow-sm">
                   <ArrowUpRight size={20} />
                 </div>
@@ -189,14 +252,20 @@ export function Projects() {
                 <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                   {project.category}
                 </p>
+
                 <h3
                   className="text-2xl text-[#681523]"
-                  style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
+                  style={{
+                    fontFamily:
+                      "'Bodoni Moda', Georgia, serif",
+                  }}
                 >
                   {project.title}
                 </h3>
+
                 <p className="mt-auto flex items-center gap-2 pt-5 text-xs font-semibold uppercase tracking-widest text-[#850F25]">
-                  View Project <ArrowUpRight size={16} />
+                  View Project
+                  <ArrowUpRight size={16} />
                 </p>
               </div>
             </motion.button>
@@ -205,7 +274,9 @@ export function Projects() {
 
         <p
           className="mt-16 text-center text-2xl italic text-[#850F25]"
-          style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
+          style={{
+            fontFamily: "'Bodoni Moda', Georgia, serif",
+          }}
         >
           Every design tells a story.
         </p>
@@ -221,10 +292,23 @@ export function Projects() {
             className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/90 p-3 backdrop-blur-sm sm:p-6"
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              onClick={(event) => event.stopPropagation()}
+              initial={{
+                opacity: 0,
+                scale: 0.96,
+                y: 15,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.96,
+              }}
+              onClick={(event) =>
+                event.stopPropagation()
+              }
               role="dialog"
               aria-modal="true"
               aria-label={`${selectedProject.title} gallery`}
@@ -235,13 +319,18 @@ export function Projects() {
                   <p className="text-xs uppercase tracking-widest text-[#A45D69]">
                     {selectedProject.category}
                   </p>
+
                   <h3
                     className="mt-1 text-xl text-[#681523] sm:text-2xl"
-                    style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
+                    style={{
+                      fontFamily:
+                        "'Bodoni Moda', Georgia, serif",
+                    }}
                   >
                     {selectedProject.title}
                   </h3>
                 </div>
+
                 <button
                   type="button"
                   onClick={closeProject}
@@ -255,10 +344,15 @@ export function Projects() {
               <div className="relative flex min-h-0 flex-1 items-center justify-center bg-[#F7EDE8] p-3 sm:p-6">
                 <img
                   key={`${selectedProject.title}-${activeImage}`}
-                  src={selectedProject.images[activeImage].src}
-                  alt={selectedProject.images[activeImage].title}
+                  src={
+                    selectedProject.images[activeImage].src
+                  }
+                  alt={
+                    selectedProject.images[activeImage].title
+                  }
                   className="h-full w-full object-contain"
                 />
+
                 {selectedProject.images.length > 1 && (
                   <>
                     <button
@@ -269,6 +363,7 @@ export function Projects() {
                     >
                       <ArrowLeft size={20} />
                     </button>
+
                     <button
                       type="button"
                       onClick={nextImage}
@@ -283,34 +378,43 @@ export function Projects() {
 
               <div className="shrink-0 border-t border-[#E8D2CF] px-4 py-3 text-center">
                 <p className="text-sm font-medium text-[#681523]">
-                  {selectedProject.images[activeImage].title}
+                  {
+                    selectedProject.images[activeImage]
+                      .title
+                  }
                 </p>
+
                 <p className="mt-1 text-xs text-[#A45D69]">
-                  {activeImage + 1} / {selectedProject.images.length}
+                  {activeImage + 1} /{" "}
+                  {selectedProject.images.length}
                 </p>
               </div>
 
               {selectedProject.images.length > 1 && (
                 <div className="flex shrink-0 justify-center gap-3 overflow-x-auto border-t border-[#E8D2CF] p-3">
-                  {selectedProject.images.map((image, index) => (
-                    <button
-                      key={image.title}
-                      type="button"
-                      onClick={() => setActiveImage(index)}
-                      aria-label={`View ${image.title}`}
-                      className={`h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 sm:h-20 sm:w-20 ${
-                        activeImage === index
-                          ? "border-[#850F25]"
-                          : "border-transparent opacity-60"
-                      }`}
-                    >
-                      <img
-                        src={image.src}
-                        alt={image.title}
-                        className="h-full w-full object-contain"
-                      />
-                    </button>
-                  ))}
+                  {selectedProject.images.map(
+                    (image, index) => (
+                      <button
+                        key={image.title}
+                        type="button"
+                        onClick={() =>
+                          setActiveImage(index)
+                        }
+                        aria-label={`View ${image.title}`}
+                        className={`h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 sm:h-20 sm:w-20 ${
+                          activeImage === index
+                            ? "border-[#850F25]"
+                            : "border-transparent opacity-60"
+                        }`}
+                      >
+                        <img
+                          src={image.src}
+                          alt={image.title}
+                          className="h-full w-full object-contain"
+                        />
+                      </button>
+                    )
+                  )}
                 </div>
               )}
             </motion.div>
