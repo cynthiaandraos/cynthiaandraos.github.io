@@ -8,12 +8,15 @@ import {
   X,
 } from "lucide-react";
 
-import domina from "../assets/domina.jpeg";
-import goldenMark from "../assets/golden-mark.png";
-import houseOfBeauty from "../assets/house-of-beauty.jpg";
-import jouy from "../assets/jouy.jpg";
-import myFitness from "../assets/my-fitness.jpg";
-import manymoda from "../assets/manymoda.jpg";
+// Transparent PNG logos
+import domina from "../assets/domina-transparent.png";
+import goldenMark from "../assets/golden-mark-transparent.png";
+import houseOfBeauty from "../assets/house-of-beauty-transparent.png";
+import jouy from "../assets/jouy-transparent.png";
+import myFitness from "../assets/my-fitness-transparent.png";
+import manymoda from "../assets/manymoda-transparent.png";
+
+// Original Manymoda shopping bag photo
 import manymodaBag from "../assets/manymoda-shopping-bag.jpeg";
 
 type ProjectImage = {
@@ -234,23 +237,23 @@ export function Projects() {
               }}
               whileHover={{ y: -5 }}
               onClick={() => openProject(project)}
-              className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-[#F7EDE8] p-0 text-left shadow-sm transition-shadow hover:shadow-xl"
+              className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white p-0 text-left shadow-sm transition-shadow hover:shadow-xl"
             >
 
-              {/* UNIFORM CREAM COVER */}
+              {/* SAME CREAM BACKGROUND FOR ALL LOGOS */}
               <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
 
-                {/* IMAGE BLENDED INTO CREAM BACKGROUND */}
-                <div className="absolute inset-0 flex items-center justify-center bg-[#F7EDE8]">
+                {/* TRANSPARENT PNG - ORIGINAL COLORS */}
+                <div className="absolute inset-0 flex items-center justify-center bg-[#F7EDE8] p-6 sm:p-8">
                   <img
                     src={project.cover}
                     alt={project.title}
                     loading="lazy"
-                    className="block h-full w-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+                    className="block h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
 
-                {/* ARROW BUTTON */}
+                {/* ARROW ICON */}
                 <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#681523] shadow-sm">
                   <ArrowUpRight size={20} />
                 </div>
