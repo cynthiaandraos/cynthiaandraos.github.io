@@ -10,9 +10,7 @@ import {
   ZoomOut,
 } from "lucide-react";
 
-// --------------------------------------
 // MACHEWE FIRAS - ORIGINAL CAMPAIGN
-// --------------------------------------
 
 import firasCover from "../assets/firas-cover.jpg";
 import firasGrill from "../assets/firas-grill-post.png";
@@ -21,21 +19,17 @@ import firasChicken from "../assets/firas-chicken-post.png";
 import firasChristmas42 from "../assets/firas-christmas-42.png";
 import firasChristmas36 from "../assets/firas-christmas-36.png";
 
-// --------------------------------------
-// MACHEWE FIRAS - NEW MENU CAMPAIGN
-// --------------------------------------
+// MACHEWE FIRAS - NEW MENU LAUNCH
 
 import firasNewMenuCover from "../assets/firas-new-menu-cover.png";
-
 import chickenRollSub from "../assets/firas-chicken-roll-sub.jpeg";
 import kababDjej from "../assets/firas-kabab-djej.jpeg";
 import hawaiiBurger from "../assets/firas-hawaii-burger.jpeg";
 import steakSub from "../assets/firas-steak-sub.jpeg";
 
-// --------------------------------------
 // ST. ABDA - JAJ EVENT CAMPAIGN
-// --------------------------------------
 
+import stAbdaCover from "../assets/st-abda-event-cover.png";
 import stAbdaSchedule from "../assets/st-abda-event-schedule.jpeg";
 import stAbdaMyrna from "../assets/st-abda-myrna-concert.jpeg";
 import stAbdaSpiritual from "../assets/st-abda-spiritual-day.jpeg";
@@ -43,10 +37,6 @@ import stAbdaUpdate from "../assets/st-abda-event-update.jpeg";
 import stAbdaWalid from "../assets/st-abda-walid-kanaan.jpeg";
 import stAbdaFares from "../assets/st-abda-fares-iskandar.jpeg";
 import stAbdaKermesse from "../assets/st-abda-kermesse.jpeg";
-
-// --------------------------------------
-// TYPES
-// --------------------------------------
 
 type GalleryImage = {
   src: string;
@@ -63,10 +53,6 @@ type SocialProject = {
   images: GalleryImage[];
 };
 
-// --------------------------------------
-// PROJECTS
-// --------------------------------------
-
 const projects: SocialProject[] = [
   {
     id: 1,
@@ -77,18 +63,9 @@ const projects: SocialProject[] = [
     description:
       "A collection of promotional social media designs showcasing grilled specialties, restaurant offerings, and seasonal campaigns.",
     images: [
-      {
-        src: firasGrill,
-        title: "Grill Promotion",
-      },
-      {
-        src: firasSandwich,
-        title: "Sandwich Promotion",
-      },
-      {
-        src: firasChicken,
-        title: "Chicken Promotion",
-      },
+      { src: firasGrill, title: "Grill Promotion" },
+      { src: firasSandwich, title: "Sandwich Promotion" },
+      { src: firasChicken, title: "Chicken Promotion" },
       {
         src: firasChristmas42,
         title: "Christmas Campaign - 42",
@@ -99,16 +76,12 @@ const projects: SocialProject[] = [
       },
     ],
   },
-
   {
     id: 2,
     title: "Machewe Firas",
     subtitle: "New Menu Launch Campaign",
     category: "Product Launch & Promotion",
-
-    // NEW CUSTOM COVER
     cover: firasNewMenuCover,
-
     description:
       "A coordinated series of social media promotions introducing four new menu items, with bold typography, appetizing food imagery, and consistent brand styling.",
     images: [
@@ -130,13 +103,15 @@ const projects: SocialProject[] = [
       },
     ],
   },
-
   {
     id: 3,
     title: "Event Marketing & Visual Campaigns",
     subtitle: "St. Abda - Jaj | 2026",
     category: "Events & Entertainment",
-    cover: stAbdaMyrna,
+
+    // NEW ST. ABDA COVER
+    cover: stAbdaCover,
+
     description:
       "A coordinated promotional campaign for the St. Abda celebrations in Jaj, featuring concert announcements, event schedules, community activities, and festival communications.",
     images: [
@@ -172,10 +147,6 @@ const projects: SocialProject[] = [
   },
 ];
 
-// --------------------------------------
-// SOCIAL MEDIA COMPONENT
-// --------------------------------------
-
 export function SocialMedia() {
   const [selectedProject, setSelectedProject] =
     useState<SocialProject | null>(null);
@@ -202,7 +173,6 @@ export function SocialMedia() {
       (current) =>
         (current + 1) % selectedProject.images.length
     );
-
     setZoomed(false);
   };
 
@@ -214,7 +184,6 @@ export function SocialMedia() {
         (current - 1 + selectedProject.images.length) %
         selectedProject.images.length
     );
-
     setZoomed(false);
   };
 
@@ -223,7 +192,6 @@ export function SocialMedia() {
     setZoomed(false);
   };
 
-  // Keyboard controls and background scroll lock
   useEffect(() => {
     if (!selectedProject) return;
 
@@ -237,7 +205,6 @@ export function SocialMedia() {
           (current) =>
             (current + 1) % selectedProject.images.length
         );
-
         setZoomed(false);
       }
 
@@ -247,7 +214,6 @@ export function SocialMedia() {
             (current - 1 + selectedProject.images.length) %
             selectedProject.images.length
         );
-
         setZoomed(false);
       }
     };
@@ -276,8 +242,6 @@ export function SocialMedia() {
       className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24 text-[#681523]"
     >
       <div className="mx-auto max-w-7xl">
-
-        {/* SECTION HEADING */}
         <motion.div
           initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -311,7 +275,6 @@ export function SocialMedia() {
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
-        {/* THREE PROJECT CARDS */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.article
@@ -332,7 +295,6 @@ export function SocialMedia() {
                 aria-label={`View ${project.title} - ${project.subtitle}`}
                 className="block h-full w-full cursor-pointer text-left"
               >
-                {/* COVER IMAGE */}
                 <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#F7EDE8]">
                   <img
                     src={project.cover}
@@ -346,7 +308,6 @@ export function SocialMedia() {
                   </div>
                 </div>
 
-                {/* CARD DETAILS */}
                 <div className="p-6">
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {project.category}
@@ -381,7 +342,6 @@ export function SocialMedia() {
         </div>
       </div>
 
-      {/* GALLERY POPUP */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
@@ -417,7 +377,6 @@ export function SocialMedia() {
               aria-label={`${selectedProject.title} gallery`}
               className="flex h-[94dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-[#FFF7F2] shadow-2xl sm:h-[92dvh]"
             >
-              {/* POPUP HEADER */}
               <div className="flex shrink-0 items-center justify-between gap-3 border-b border-[#E8D2CF] px-3 py-3 sm:px-6 sm:py-4">
                 <div className="min-w-0">
                   <p className="text-[10px] uppercase tracking-widest text-[#A45D69] sm:text-xs">
@@ -436,8 +395,6 @@ export function SocialMedia() {
                 </div>
 
                 <div className="flex shrink-0 gap-2">
-
-                  {/* ZOOM BUTTON */}
                   <button
                     type="button"
                     onClick={() =>
@@ -457,7 +414,6 @@ export function SocialMedia() {
                     )}
                   </button>
 
-                  {/* CLOSE BUTTON */}
                   <button
                     type="button"
                     onClick={closeProject}
@@ -469,7 +425,6 @@ export function SocialMedia() {
                 </div>
               </div>
 
-              {/* MAIN IMAGE */}
               <div
                 className={`relative min-h-0 flex-1 bg-[#F7EDE8] ${
                   zoomed
@@ -513,7 +468,6 @@ export function SocialMedia() {
                   </div>
                 )}
 
-                {/* PREVIOUS IMAGE */}
                 <button
                   type="button"
                   onClick={previousImage}
@@ -523,7 +477,6 @@ export function SocialMedia() {
                   <ArrowLeft size={20} />
                 </button>
 
-                {/* NEXT IMAGE */}
                 <button
                   type="button"
                   onClick={nextImage}
@@ -534,7 +487,6 @@ export function SocialMedia() {
                 </button>
               </div>
 
-              {/* IMAGE TITLE AND COUNTER */}
               <div className="shrink-0 border-t border-[#E8D2CF] px-4 py-2 text-center">
                 <p className="text-sm font-medium text-[#681523]">
                   {
@@ -549,16 +501,13 @@ export function SocialMedia() {
                 </p>
               </div>
 
-              {/* THUMBNAILS */}
               <div className="flex shrink-0 gap-2 overflow-x-auto border-t border-[#E8D2CF] bg-[#FFF7F2] p-2 sm:gap-3 sm:p-3">
                 {selectedProject.images.map(
                   (image, index) => (
                     <button
                       key={`${selectedProject.id}-${index}`}
                       type="button"
-                      onClick={() =>
-                        selectImage(index)
-                      }
+                      onClick={() => selectImage(index)}
                       aria-label={`View ${image.title}`}
                       className={`h-14 w-14 shrink-0 overflow-hidden rounded-lg border-2 transition sm:h-20 sm:w-20 ${
                         activeImage === index
