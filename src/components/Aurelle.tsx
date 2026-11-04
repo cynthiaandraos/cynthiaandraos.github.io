@@ -2,8 +2,13 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
 
-import aurelleLogo from "../assets/aurelle-logo-preview.png";
-import aurelleSerum from "../assets/aurelle-radiance-serum.png";
+import serum from "../assets/aurelle-radiance-serum.png";
+import serumBox from "../assets/aurelle-radiance-serum-box.png";
+import serumSet from "../assets/aurelle-radiance-serum-set.png";
+import faceCream from "../assets/aurelle-face-cream.png";
+import faceCreamBox from "../assets/aurelle-face-cream-box.png";
+import faceCreamSet from "../assets/aurelle-face-cream-set.png";
+import cleanser from "../assets/aurelle-gentle-cleanser.png";
 
 type GalleryImage = { src: string; label: string };
 type AurelleProject = {
@@ -18,22 +23,36 @@ type AurelleProject = {
 const projects: AurelleProject[] = [
   {
     id: 1,
-    title: "AURELLE Brand Identity",
-    category: "Luxury Skincare · Concept Design",
-    description:
-      "A refined skincare identity featuring an elegant monogram, champagne-gold detailing, and timeless typography.",
-    cover: aurelleLogo,
-    images: [{ src: aurelleLogo, label: "AURELLE Skincare Logo" }],
+    title: "Radiance Serum",
+    category: "Skincare Packaging · 30 ml",
+    description: "Luxury serum bottle, matching carton, and complete packaging presentation.",
+    cover: serumSet,
+    images: [
+      { src: serum, label: "Radiance Serum Bottle · 30 ml" },
+      { src: serumBox, label: "Radiance Serum Packaging Box" },
+      { src: serumSet, label: "Radiance Serum Packaging Set" },
+    ],
   },
   {
     id: 2,
-    title: "Radiance Serum",
-    category: "Skincare Packaging · 30 ml",
-    description:
-      "Frosted-glass serum packaging with a champagne-gold dropper, ivory label, and AURELLE brand identity.",
-    cover: aurelleSerum,
+    title: "Hydrating Face Cream",
+    category: "Skincare Packaging · 50 ml",
+    description: "Elegant face cream jar with coordinating box and product packaging mockup.",
+    cover: faceCreamSet,
     images: [
-      { src: aurelleSerum, label: "AURELLE Radiance Serum — 30 ml" },
+      { src: faceCream, label: "Hydrating Face Cream Jar · 50 ml" },
+      { src: faceCreamBox, label: "Hydrating Face Cream Packaging Box" },
+      { src: faceCreamSet, label: "Hydrating Face Cream Packaging Set" },
+    ],
+  },
+  {
+    id: 3,
+    title: "Gentle Cleanser",
+    category: "Skincare Packaging · 150 ml",
+    description: "Minimal, refined cleanser tube with ivory, burgundy, and gold packaging details.",
+    cover: cleanser,
+    images: [
+      { src: cleanser, label: "Gentle Cleanser Tube · 150 ml" },
     ],
   },
 ];
@@ -85,7 +104,7 @@ export function Aurelle() {
           className="mb-14 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
-            04 / BRAND IDENTITY CONCEPT
+            04 / SKINCARE PACKAGING
           </p>
           <h2
             className="text-5xl text-[#850F25] md:text-7xl"
@@ -94,8 +113,8 @@ export function Aurelle() {
             AURELLE <span className="italic">Skincare</span>
           </h2>
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            A luxury skincare concept inspired by natural radiance, quiet elegance,
-            and thoughtful everyday rituals. Explore the visual identity and its applications.
+            Explore AURELLE skincare packaging, from the Radiance Serum and Hydrating Face Cream
+            to the Gentle Cleanser. Select a product to see its packaging designs.
           </p>
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
@@ -122,7 +141,7 @@ export function Aurelle() {
                     src={project.cover}
                     alt={project.title}
                     loading="lazy"
-                    className="h-full w-full object-contain object-center p-6 transition-transform duration-700 group-hover:scale-105"
+                    className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#681523] shadow-sm">
                     <ArrowUpRight size={20} />
