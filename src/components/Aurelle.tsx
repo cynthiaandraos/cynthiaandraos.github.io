@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
 
 import aurelleLogo from "../assets/aurelle-logo-preview.png";
+import aurelleSerum from "../assets/aurelle-radiance-serum.png";
 
 type GalleryImage = { src: string; label: string };
 type AurelleProject = {
@@ -23,6 +24,17 @@ const projects: AurelleProject[] = [
       "A refined skincare identity featuring an elegant monogram, champagne-gold detailing, and timeless typography.",
     cover: aurelleLogo,
     images: [{ src: aurelleLogo, label: "AURELLE Skincare Logo" }],
+  },
+  {
+    id: 2,
+    title: "Radiance Serum",
+    category: "Skincare Packaging · 30 ml",
+    description:
+      "Frosted-glass serum packaging with a champagne-gold dropper, ivory label, and AURELLE brand identity.",
+    cover: aurelleSerum,
+    images: [
+      { src: aurelleSerum, label: "AURELLE Radiance Serum — 30 ml" },
+    ],
   },
 ];
 
