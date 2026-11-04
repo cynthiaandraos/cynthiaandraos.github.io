@@ -61,19 +61,19 @@ const collections = [
     ],
   },
   {
-    id: 3,
-    title: "Branded Takeaway Cups",
-    category: "Brand Application",
-    cover: cupDesign,
-    description:
-      "Custom branded takeaway cup design for 5 Beans Coffee Shop.",
-    images: [
-      {
-        src: cupDesign,
-        label: "Branded Cup Design",
-      },
-    ],
-  },
+  id: 3,
+  title: "Branded Takeaway Cups",
+  category: "Cup Branding & Sticker Design",
+  cover: cupDesign,
+  description:
+    "Transparent takeaway cups featuring the 5 Beans logo and the SIP • SMILE • REPEAT design.",
+  images: [
+    {
+      src: cupDesign,
+      label: "Transparent Cup — Logo & SIP • SMILE • REPEAT",
+    },
+  ],
+},
   {
     id: 4,
     title: "Snack Stickers",
