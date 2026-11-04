@@ -12,21 +12,31 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+// Card cover only
+import firasCover from "../assets/firas-cover.jpg";
+
+// Original social media designs
 import grillPost from "../assets/firas-grill-post.png";
 import christmas42 from "../assets/firas-christmas-42.png";
 import christmas36 from "../assets/firas-christmas-36.png";
 import sandwichPost from "../assets/firas-sandwich-post.png";
 import chickenPost from "../assets/firas-chicken-post.png";
 
+// Social media clients
 const projects = [
   {
     id: 1,
     title: "Machewe Firas",
     arabicName: "مشاوي فراس",
     category: "Restaurant Social Media Design",
-    cover: grillPost,
+
+    // This image appears ONLY outside the card
+    cover: firasCover,
+
     description:
       "A collection of restaurant social media designs featuring food promotions, branded content, and seasonal Christmas offers.",
+
+    // These five images appear ONLY when clicking the card
     images: [
       {
         src: grillPost,
@@ -211,13 +221,13 @@ export function SocialMedia() {
                 aria-label={`Open ${project.title} social media gallery`}
                 className="block w-full cursor-pointer text-left"
               >
-                {/* Cover image */}
+                {/* OUTSIDE CARD COVER */}
                 <div className="relative aspect-square overflow-hidden bg-[#F8F0EC]">
                   <img
                     src={project.cover}
-                    alt={`${project.title} social media design`}
+                    alt={`${project.title} project cover`}
                     loading="lazy"
-                    className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
 
                   <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-sm">
@@ -229,7 +239,7 @@ export function SocialMedia() {
                   </div>
                 </div>
 
-                {/* Project information */}
+                {/* Card information */}
                 <div className="p-6">
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {project.category}
@@ -268,7 +278,7 @@ export function SocialMedia() {
         </div>
       </div>
 
-      {/* Full gallery popup */}
+      {/* CLICKABLE GALLERY POPUP */}
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -335,7 +345,7 @@ export function SocialMedia() {
                 </p>
               </div>
 
-              {/* Main image */}
+              {/* ORIGINAL DESIGN IMAGE */}
               <div className="relative flex min-h-[260px] items-center justify-center overflow-hidden rounded-2xl bg-[#F8F0EC]">
                 <AnimatePresence mode="wait">
                   <motion.img
@@ -363,7 +373,7 @@ export function SocialMedia() {
                   />
                 </AnimatePresence>
 
-                {/* Previous and next buttons */}
+                {/* Gallery arrows */}
                 {selected.images.length > 1 && (
                   <>
                     <button
@@ -387,7 +397,7 @@ export function SocialMedia() {
                 )}
               </div>
 
-              {/* Image title */}
+              {/* Design title and counter */}
               <div className="mt-5 text-center">
                 <p className="text-sm font-medium text-[#681523]">
                   {selected.images[activeImage].label}
@@ -399,7 +409,7 @@ export function SocialMedia() {
                 </p>
               </div>
 
-              {/* Gallery thumbnails */}
+              {/* Design thumbnails */}
               <div className="mt-5 flex flex-wrap justify-center gap-3">
                 {selected.images.map(
                   (image, index) => (
@@ -435,4 +445,3 @@ export function SocialMedia() {
     </section>
   );
 }
-
