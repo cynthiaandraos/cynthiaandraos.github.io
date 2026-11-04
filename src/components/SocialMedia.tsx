@@ -10,7 +10,10 @@ import {
   ZoomOut,
 } from "lucide-react";
 
-// Machewe Firas - Original Campaign
+// --------------------------------------
+// MACHEWE FIRAS - ORIGINAL CAMPAIGN
+// --------------------------------------
+
 import firasCover from "../assets/firas-cover.jpg";
 import firasGrill from "../assets/firas-grill-post.png";
 import firasSandwich from "../assets/firas-sandwich-post.png";
@@ -18,13 +21,21 @@ import firasChicken from "../assets/firas-chicken-post.png";
 import firasChristmas42 from "../assets/firas-christmas-42.png";
 import firasChristmas36 from "../assets/firas-christmas-36.png";
 
-// Machewe Firas - New Menu Campaign
+// --------------------------------------
+// MACHEWE FIRAS - NEW MENU CAMPAIGN
+// --------------------------------------
+
+import firasNewMenuCover from "../assets/firas-new-menu-cover.png";
+
 import chickenRollSub from "../assets/firas-chicken-roll-sub.jpeg";
 import kababDjej from "../assets/firas-kabab-djej.jpeg";
 import hawaiiBurger from "../assets/firas-hawaii-burger.jpeg";
 import steakSub from "../assets/firas-steak-sub.jpeg";
 
-// St. Abda - Jaj Event Campaign
+// --------------------------------------
+// ST. ABDA - JAJ EVENT CAMPAIGN
+// --------------------------------------
+
 import stAbdaSchedule from "../assets/st-abda-event-schedule.jpeg";
 import stAbdaMyrna from "../assets/st-abda-myrna-concert.jpeg";
 import stAbdaSpiritual from "../assets/st-abda-spiritual-day.jpeg";
@@ -32,6 +43,10 @@ import stAbdaUpdate from "../assets/st-abda-event-update.jpeg";
 import stAbdaWalid from "../assets/st-abda-walid-kanaan.jpeg";
 import stAbdaFares from "../assets/st-abda-fares-iskandar.jpeg";
 import stAbdaKermesse from "../assets/st-abda-kermesse.jpeg";
+
+// --------------------------------------
+// TYPES
+// --------------------------------------
 
 type GalleryImage = {
   src: string;
@@ -47,6 +62,10 @@ type SocialProject = {
   description: string;
   images: GalleryImage[];
 };
+
+// --------------------------------------
+// PROJECTS
+// --------------------------------------
 
 const projects: SocialProject[] = [
   {
@@ -80,12 +99,16 @@ const projects: SocialProject[] = [
       },
     ],
   },
+
   {
     id: 2,
     title: "Machewe Firas",
     subtitle: "New Menu Launch Campaign",
     category: "Product Launch & Promotion",
-    cover: chickenRollSub,
+
+    // NEW CUSTOM COVER
+    cover: firasNewMenuCover,
+
     description:
       "A coordinated series of social media promotions introducing four new menu items, with bold typography, appetizing food imagery, and consistent brand styling.",
     images: [
@@ -107,6 +130,7 @@ const projects: SocialProject[] = [
       },
     ],
   },
+
   {
     id: 3,
     title: "Event Marketing & Visual Campaigns",
@@ -148,6 +172,10 @@ const projects: SocialProject[] = [
   },
 ];
 
+// --------------------------------------
+// SOCIAL MEDIA COMPONENT
+// --------------------------------------
+
 export function SocialMedia() {
   const [selectedProject, setSelectedProject] =
     useState<SocialProject | null>(null);
@@ -174,6 +202,7 @@ export function SocialMedia() {
       (current) =>
         (current + 1) % selectedProject.images.length
     );
+
     setZoomed(false);
   };
 
@@ -185,6 +214,7 @@ export function SocialMedia() {
         (current - 1 + selectedProject.images.length) %
         selectedProject.images.length
     );
+
     setZoomed(false);
   };
 
@@ -193,6 +223,7 @@ export function SocialMedia() {
     setZoomed(false);
   };
 
+  // Keyboard controls and background scroll lock
   useEffect(() => {
     if (!selectedProject) return;
 
@@ -206,6 +237,7 @@ export function SocialMedia() {
           (current) =>
             (current + 1) % selectedProject.images.length
         );
+
         setZoomed(false);
       }
 
@@ -215,6 +247,7 @@ export function SocialMedia() {
             (current - 1 + selectedProject.images.length) %
             selectedProject.images.length
         );
+
         setZoomed(false);
       }
     };
@@ -299,7 +332,7 @@ export function SocialMedia() {
                 aria-label={`View ${project.title} - ${project.subtitle}`}
                 className="block h-full w-full cursor-pointer text-left"
               >
-                {/* Cover image - no cropping */}
+                {/* COVER IMAGE */}
                 <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#F7EDE8]">
                   <img
                     src={project.cover}
@@ -313,7 +346,7 @@ export function SocialMedia() {
                   </div>
                 </div>
 
-                {/* Card details */}
+                {/* CARD DETAILS */}
                 <div className="p-6">
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {project.category}
@@ -403,7 +436,8 @@ export function SocialMedia() {
                 </div>
 
                 <div className="flex shrink-0 gap-2">
-                  {/* Zoom button */}
+
+                  {/* ZOOM BUTTON */}
                   <button
                     type="button"
                     onClick={() =>
@@ -423,7 +457,7 @@ export function SocialMedia() {
                     )}
                   </button>
 
-                  {/* Close button */}
+                  {/* CLOSE BUTTON */}
                   <button
                     type="button"
                     onClick={closeProject}
@@ -435,7 +469,7 @@ export function SocialMedia() {
                 </div>
               </div>
 
-              {/* MAIN IMAGE - FULL DESIGN VISIBLE */}
+              {/* MAIN IMAGE */}
               <div
                 className={`relative min-h-0 flex-1 bg-[#F7EDE8] ${
                   zoomed
@@ -479,7 +513,7 @@ export function SocialMedia() {
                   </div>
                 )}
 
-                {/* Previous image */}
+                {/* PREVIOUS IMAGE */}
                 <button
                   type="button"
                   onClick={previousImage}
@@ -489,7 +523,7 @@ export function SocialMedia() {
                   <ArrowLeft size={20} />
                 </button>
 
-                {/* Next image */}
+                {/* NEXT IMAGE */}
                 <button
                   type="button"
                   onClick={nextImage}
