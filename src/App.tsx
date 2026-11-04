@@ -5,6 +5,7 @@ import { Skills } from "./components/Skills";
 import { Projects } from "./components/Projects";
 import { Packaging } from "./components/Packaging";
 import { Flyers } from "./components/Flyers";
+import { SocialMedia } from "./components/SocialMedia";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 
@@ -17,6 +18,7 @@ export default function App() {
       <Projects />
       <Packaging />
       <Flyers />
+      <SocialMedia />
       <Contact />
       <Footer />
     </div>
