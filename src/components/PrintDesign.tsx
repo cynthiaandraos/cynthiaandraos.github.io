@@ -184,7 +184,7 @@ export function PrintDesign() {
                   ? undefined
                   : { y: -7 }
               }
-              className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
+              className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-[#F7EDE8] shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
               <button
                 type="button"
@@ -192,7 +192,7 @@ export function PrintDesign() {
                 aria-label={`Open ${design.title}`}
                 className="block h-full w-full cursor-pointer text-left"
               >
-                {/* Card image */}
+                {/* Card image - matching background */}
                 <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#F7EDE8] p-4">
                   <img
                     src={design.image}
@@ -207,7 +207,7 @@ export function PrintDesign() {
                 </div>
 
                 {/* Card details */}
-                <div className="p-6">
+                <div className="bg-[#F7EDE8] p-6">
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {design.category}
                   </p>
@@ -360,4 +360,3 @@ export function PrintDesign() {
     </section>
   );
 }
-
