@@ -1,6 +1,6 @@
 
 import { motion, AnimatePresence } from "motion/react";
-import { Download, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -66,7 +66,6 @@ export function Hero() {
       }}
     >
       <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-3 px-5 py-3 md:px-6">
-
         {/* CA Logo */}
         <a
           href="#home"
@@ -212,33 +211,6 @@ export function Hero() {
               memorable branding, and creative designs
               that bring ideas to life.
             </p>
-
-            {/* Buttons */}
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
-              <a
-                href="#portfolio"
-                className="inline-flex w-full items-center justify-center gap-4 bg-[#850F25] px-7 py-4 text-center text-sm font-semibold text-white transition hover:bg-[#65101E] sm:w-auto"
-              >
-                VIEW PORTFOLIO
-                <span>→</span>
-              </a>
-
-              <a
-                href="#contact"
-                className="inline-flex w-full items-center justify-center border border-[#850F25] px-7 py-4 text-center text-sm font-semibold transition hover:bg-[#F3D9D9] sm:w-auto"
-              >
-                CONTACT ME
-              </a>
-
-              <a
-                href={`${import.meta.env.BASE_URL}Cynthia-Andraos-CV.pdf`}
-                download="Cynthia-Andraos-CV.pdf"
-                className="inline-flex w-full items-center justify-center gap-3 border border-[#850F25] bg-[#FFF7F2] px-7 py-4 text-center text-sm font-semibold text-[#850F25] transition hover:bg-[#F3D9D9] sm:w-auto"
-              >
-                <Download size={18} />
-                DOWNLOAD MY CV
-              </a>
-            </div>
           </motion.div>
 
           {/* Portrait */}
