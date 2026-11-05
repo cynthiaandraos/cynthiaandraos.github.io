@@ -145,6 +145,23 @@ const projects: SocialProject[] = [
   },
 ];
 
+// Cache preloaded images to avoid unnecessary duplicate work.
+const preloadedImages = new Set<string>();
+
+function preloadImage(src: string) {
+  if (preloadedImages.has(src)) return;
+
+  preloadedImages.add(src);
+
+  const image = new Image();
+
+  image.onerror = () => {
+    preloadedImages.delete(src);
+  };
+
+  image.src = src;
+}
+
 export function SocialMedia() {
   const [selectedProject, setSelectedProject] =
     useState<SocialProject | null>(null);
@@ -165,6 +182,11 @@ export function SocialMedia() {
       document.activeElement instanceof HTMLElement
         ? document.activeElement
         : null;
+
+    // Begin downloading the first image immediately.
+    if (project.images.length > 0) {
+      preloadImage(project.images[0].src);
+    }
 
     touchStart.current = null;
     setActiveImage(0);
@@ -211,6 +233,20 @@ export function SocialMedia() {
     setZoomed(false);
   };
 
+  // Prepare the next gallery image for smoother swiping.
+  useEffect(() => {
+    if (!selectedProject) return;
+
+    const images = selectedProject.images;
+
+    if (images.length <= 1) return;
+
+    const nextIndex =
+      (activeImage + 1) % images.length;
+
+    preloadImage(images[nextIndex].src);
+  }, [selectedProject, activeImage]);
+
   const handleTouchStart = (
     event: TouchEvent<HTMLDivElement>
   ) => {
@@ -253,7 +289,8 @@ export function SocialMedia() {
 
     if (
       Math.abs(differenceX) > 45 &&
-      Math.abs(differenceX) > Math.abs(differenceY) * 1.2
+      Math.abs(differenceX) >
+        Math.abs(differenceY) * 1.2
     ) {
       if (differenceX < 0) {
         nextImage();
@@ -377,6 +414,7 @@ export function SocialMedia() {
                     src={project.cover}
                     alt={`${project.title} cover`}
                     loading="lazy"
+                    decoding="async"
                     className="absolute inset-0 block h-full w-full object-cover object-center transition-transform duration-700"
                     style={{
                       transform: `scale(${project.coverZoom ?? 1})`,
@@ -543,6 +581,9 @@ export function SocialMedia() {
                       key={`${selectedProject.id}-${activeImage}-zoom`}
                       src={selectedProject.images[activeImage].src}
                       alt={selectedProject.images[activeImage].title}
+                      loading="eager"
+                      decoding="async"
+                      fetchPriority="high"
                       draggable={false}
                       className="block h-auto w-auto max-w-none"
                       style={{
@@ -558,6 +599,9 @@ export function SocialMedia() {
                         key={`${selectedProject.id}-${activeImage}`}
                         src={selectedProject.images[activeImage].src}
                         alt={selectedProject.images[activeImage].title}
+                        loading="eager"
+                        decoding="async"
+                        fetchPriority="high"
                         draggable={false}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -648,6 +692,7 @@ export function SocialMedia() {
                       src={image.src}
                       alt={image.title}
                       loading="lazy"
+                      decoding="async"
                       className="h-full w-full object-contain"
                     />
                   </button>
