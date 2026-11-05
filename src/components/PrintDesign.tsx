@@ -12,15 +12,26 @@ import {
   ZoomOut,
 } from "lucide-react";
 
+// ORIGINAL DESIGNS
+// These images open when someone clicks a cover.
 import charityTicket from "../assets/5beans-charity-ticket.png";
 import giftVoucher from "../assets/5beans-gift-voucher.png";
 import loyaltyCard from "../assets/5beans-loyalty-card.png";
 import tuksiCard from "../assets/tuksi-business-card.png";
 import cynthiaCard from "../assets/cynthia-business-card.png";
-
 import myFitnessGiftCard from "../assets/my-fitness-gift-card.jpeg";
 import oMarketGiveaway from "../assets/o-market-giveaway.jpeg";
 import oMarketGiftVoucher from "../assets/o-market-gift-voucher.jpeg";
+
+// NEW PORTFOLIO COVERS
+import tuksiCover from "../assets/tuksi-services-business-card-cover.png";
+import designerCover from "../assets/graphic-designer-business-card-cover.png";
+import charityCover from "../assets/charity-event-ticket-cover.png";
+import voucherCover from "../assets/10-dollar-gift-voucher-cover.png";
+import loyaltyCover from "../assets/coffee-loyalty-card-cover.png";
+import fitnessCover from "../assets/myfitness-sessions-gift-card-cover.png";
+import easterCover from "../assets/omarket-easter-giveaway-cover.png";
+import christmasCover from "../assets/omarket-christmas-voucher-cover.png";
 
 const designs = [
   {
@@ -28,6 +39,7 @@ const designs = [
     title: "Tuksi Services",
     category: "Business Card Design",
     client: "Tuksi Services",
+    cover: tuksiCover,
     image: tuksiCard,
     description:
       "A bold black-and-yellow business card featuring the Tuksi Services identity and contact information.",
@@ -37,6 +49,7 @@ const designs = [
     title: "Cynthia Melki",
     category: "Personal Business Card",
     client: "Personal Branding",
+    cover: designerCover,
     image: cynthiaCard,
     description:
       "A modern graphic designer business card featuring a geometric monogram and turquoise-and-charcoal color palette.",
@@ -46,6 +59,7 @@ const designs = [
     title: "Charity Event Ticket",
     category: "Event Ticket Design",
     client: "5 Beans Coffee Shop",
+    cover: charityCover,
     image: charityTicket,
     description:
       "A double-sided ticket for a charity high tea event supporting the Children's Cancer Center of Lebanon.",
@@ -55,6 +69,7 @@ const designs = [
     title: "$10 Gift Voucher",
     category: "Gift Voucher Design",
     client: "5 Beans Coffee Shop",
+    cover: voucherCover,
     image: giftVoucher,
     description:
       "A double-sided coffee voucher designed in collaboration with Once Upon a Time Nursery.",
@@ -64,6 +79,7 @@ const designs = [
     title: "Coffee Loyalty Card",
     category: "Loyalty Card Design",
     client: "5 Beans Coffee Shop",
+    cover: loyaltyCover,
     image: loyaltyCard,
     description:
       "A coffee loyalty card encouraging repeat visits with a buy-nine, get-the-tenth-free reward.",
@@ -73,6 +89,7 @@ const designs = [
     title: "MY Fitness Gift Card",
     category: "Gift Card Design",
     client: "MY Fitness by Myriam",
+    cover: fitnessCover,
     image: myFitnessGiftCard,
     description:
       "A printed fitness gift card featuring the MY Fitness brand identity, session details, and contact information.",
@@ -82,6 +99,7 @@ const designs = [
     title: "Easter Giveaway",
     category: "Giveaway Design",
     client: "O-Market",
+    cover: easterCover,
     image: oMarketGiveaway,
     description:
       "A vibrant blue-and-orange Easter giveaway design featuring prize details and promotional branding.",
@@ -91,6 +109,7 @@ const designs = [
     title: "Christmas Gift Voucher",
     category: "Gift Voucher Design",
     client: "O-Market",
+    cover: christmasCover,
     image: oMarketGiftVoucher,
     description:
       "A festive double-sided Christmas gift voucher featuring seasonal illustrations and prize details.",
@@ -102,6 +121,7 @@ type PrintProject = (typeof designs)[number];
 export function PrintDesign() {
   const [selected, setSelected] =
     useState<PrintProject | null>(null);
+
   const [zoomed, setZoomed] = useState(false);
   const reduceMotion = useReducedMotion();
 
@@ -146,7 +166,8 @@ export function PrintDesign() {
       className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24 text-[#681523]"
     >
       <div className="mx-auto max-w-7xl">
-        {/* Section heading */}
+
+        {/* SECTION HEADING */}
         <motion.div
           initial={{
             opacity: 0,
@@ -173,7 +194,9 @@ export function PrintDesign() {
             }}
           >
             Business Cards{" "}
-            <span className="italic">& Vouchers</span>
+            <span className="italic">
+              & Vouchers
+            </span>
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
@@ -186,8 +209,9 @@ export function PrintDesign() {
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
-        {/* Eight project cards */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {/* EIGHT MATCHING COVER CARDS */}
+        <div className="grid grid-cols-1 items-stretch gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
           {designs.map((design, index) => (
             <motion.article
               key={design.id}
@@ -214,30 +238,34 @@ export function PrintDesign() {
                   ? undefined
                   : { y: -7 }
               }
-              className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-[#F7EDE8] shadow-sm transition-shadow duration-300 hover:shadow-xl"
+              className="group h-full overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
               <button
                 type="button"
                 onClick={() => openDesign(design)}
                 aria-label={`Open ${design.title}`}
-                className="block h-full w-full cursor-pointer text-left"
+                className="flex h-full w-full cursor-pointer flex-col text-left"
               >
-                {/* Card image */}
-                <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#F7EDE8] p-4">
+
+                {/* SAME 4:3 SIZE FOR EVERY COVER */}
+                <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
+
                   <img
-                    src={design.image}
-                    alt={design.title}
+                    src={design.cover}
+                    alt={`${design.title} portfolio cover`}
                     loading="lazy"
-                    className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                    className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
                   />
 
-                  <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-sm">
-                    <ArrowUpRight size={20} />
+                  <div className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-sm">
+                    <ArrowUpRight size={21} />
                   </div>
+
                 </div>
 
-                {/* Card details */}
-                <div className="bg-[#F7EDE8] p-6">
+                {/* PROJECT INFORMATION */}
+                <div className="flex w-full flex-1 flex-col bg-white p-6">
+
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {design.category}
                   </p>
@@ -261,18 +289,21 @@ export function PrintDesign() {
                     {design.description}
                   </p>
 
-                  <p className="mt-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#850F25]">
+                  <p className="mt-auto flex items-center gap-2 pt-6 text-xs font-semibold uppercase tracking-[0.15em] text-[#850F25]">
                     View Full Design
                     <ArrowUpRight size={16} />
                   </p>
+
                 </div>
+
               </button>
             </motion.article>
           ))}
+
         </div>
       </div>
 
-      {/* Full-size design popup */}
+      {/* ORIGINAL DESIGN POPUP */}
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -308,8 +339,10 @@ export function PrintDesign() {
               }
               className="flex max-h-[94vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-[#FFF7F2] shadow-2xl"
             >
-              {/* Popup header */}
+
+              {/* POPUP HEADER */}
               <div className="flex items-center justify-between gap-3 border-b border-[#E8D2CF] px-4 py-4 sm:px-6">
+
                 <div className="min-w-0">
                   <p className="text-xs uppercase tracking-widest text-[#A45D69]">
                     {selected.category}
@@ -327,6 +360,8 @@ export function PrintDesign() {
                 </div>
 
                 <div className="flex shrink-0 gap-2">
+
+                  {/* ZOOM BUTTON */}
                   <button
                     type="button"
                     onClick={() =>
@@ -346,6 +381,7 @@ export function PrintDesign() {
                     )}
                   </button>
 
+                  {/* CLOSE BUTTON */}
                   <button
                     type="button"
                     onClick={closeDesign}
@@ -354,11 +390,13 @@ export function PrintDesign() {
                   >
                     <X size={20} />
                   </button>
+
                 </div>
               </div>
 
-              {/* Scrollable original image */}
+              {/* ORIGINAL IMAGE */}
               <div className="min-h-0 flex-1 overflow-auto bg-[#F7EDE8] p-3 sm:p-6">
+
                 <div
                   className={
                     zoomed
@@ -376,17 +414,20 @@ export function PrintDesign() {
                     }
                   />
                 </div>
+
               </div>
 
-              {/* Popup footer */}
+              {/* POPUP FOOTER */}
               <div className="border-t border-[#E8D2CF] px-4 py-3 text-center text-xs text-[#704B50]">
                 View the original design. Use the zoom
                 button for details, or press Esc to close.
               </div>
+
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+
     </section>
   );
 }
