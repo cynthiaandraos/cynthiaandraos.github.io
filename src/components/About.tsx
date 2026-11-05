@@ -1,5 +1,6 @@
 
 import { motion, useReducedMotion } from "motion/react";
+import { Download } from "lucide-react";
 
 export function About() {
   const reduceMotion = useReducedMotion();
@@ -23,7 +24,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="bg-[#FFF7F2] px-6 py-24 text-[#681523]"
+      className="scroll-mt-24 bg-[#FFF7F2] px-5 py-20 text-[#681523] sm:px-6 md:py-24"
     >
       <div className="mx-auto max-w-6xl">
 
@@ -50,7 +51,7 @@ export function About() {
             delay: 0.1,
             ease: "easeOut",
           }}
-          className="mb-10 text-5xl leading-tight md:text-7xl"
+          className="mb-10 text-4xl leading-tight sm:text-5xl md:text-7xl"
           style={{
             fontFamily: "'Bodoni Moda', Georgia, serif",
             fontWeight: 400,
@@ -59,7 +60,7 @@ export function About() {
           A little about me.
         </motion.h2>
 
-        <div className="grid gap-12 md:grid-cols-2">
+        <div className="grid gap-10 md:grid-cols-2 md:gap-12">
 
           {/* Left paragraph */}
           <motion.div
@@ -101,7 +102,7 @@ export function About() {
               clear communication in every project.
             </motion.p>
 
-            {/* Specialties appear one by one */}
+            {/* Specialties */}
             <div className="flex flex-wrap gap-3">
               {[
                 "Brand Identity",
@@ -140,9 +141,8 @@ export function About() {
               ))}
             </div>
 
-            {/* Explore button */}
-            <motion.a
-              href="#projects"
+            {/* About Me buttons */}
+            <motion.div
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
@@ -152,18 +152,47 @@ export function About() {
                 delay: 0.4,
                 ease: "easeOut",
               }}
-              whileHover={
-                reduceMotion
-                  ? undefined
-                  : { y: -3, scale: 1.03 }
-              }
-              whileTap={
-                reduceMotion ? undefined : { scale: 0.98 }
-              }
-              className="mt-10 inline-block bg-[#850F25] px-7 py-4 text-sm font-medium text-white hover:bg-[#65101E]"
+              className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4"
             >
-              EXPLORE MY WORK →
-            </motion.a>
+              {/* Explore My Work */}
+              <motion.a
+                href="#portfolio"
+                whileHover={
+                  reduceMotion
+                    ? undefined
+                    : { y: -3, scale: 1.03 }
+                }
+                whileTap={
+                  reduceMotion
+                    ? undefined
+                    : { scale: 0.98 }
+                }
+                className="inline-flex w-full items-center justify-center gap-3 bg-[#850F25] px-6 py-4 text-center text-sm font-medium text-white transition-colors hover:bg-[#65101E] sm:w-auto"
+              >
+                EXPLORE MY WORK
+                <span aria-hidden="true">→</span>
+              </motion.a>
+
+              {/* Download CV */}
+              <motion.a
+                href={`${import.meta.env.BASE_URL}Cynthia-Andraos-CV.pdf`}
+                download="Cynthia-Andraos-CV.pdf"
+                whileHover={
+                  reduceMotion
+                    ? undefined
+                    : { y: -3, scale: 1.03 }
+                }
+                whileTap={
+                  reduceMotion
+                    ? undefined
+                    : { scale: 0.98 }
+                }
+                className="inline-flex w-full items-center justify-center gap-3 border border-[#850F25] bg-[#FFF7F2] px-6 py-4 text-center text-sm font-medium text-[#850F25] transition-colors hover:bg-[#F3D9D9] sm:w-auto"
+              >
+                <Download size={18} />
+                DOWNLOAD MY CV
+              </motion.a>
+            </motion.div>
           </div>
         </div>
       </div>
