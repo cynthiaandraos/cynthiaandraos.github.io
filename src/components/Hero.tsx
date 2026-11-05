@@ -24,7 +24,11 @@ export function Hero() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const isScrolled = window.scrollY > 20;
+
+      setScrolled((previous) =>
+        previous === isScrolled ? previous : isScrolled
+      );
     };
 
     handleScroll();
@@ -77,6 +81,8 @@ export function Hero() {
           <img
             src={caLogo}
             alt="Cynthia Andraos CA Logo"
+            loading="eager"
+            decoding="async"
             className="w-28 object-contain sm:w-32 md:w-36"
           />
         </a>
@@ -226,6 +232,9 @@ export function Hero() {
             <img
               src={cynthiaPhoto}
               alt="Cynthia Andraos, Graphic Designer"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
               className="relative mx-auto h-[320px] w-full max-w-[340px] rounded-t-full object-cover object-top shadow-2xl sm:h-[380px] sm:max-w-md md:h-[550px]"
             />
           </motion.div>
