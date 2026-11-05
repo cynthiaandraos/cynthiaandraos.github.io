@@ -24,6 +24,7 @@ import shoppingBag from "../assets/aurelle-luxury-shopping-bag.png";
 import serumCover from "../assets/aurelle-serum-cover.png";
 import faceCreamCover from "../assets/aurelle-face-cream-cover.png";
 import cleanserCover from "../assets/aurelle-cleanser-cover.png";
+import shoppingBagCover from "../assets/aurelle-shopping-bag-cover.png";
 
 type GalleryImage = {
   src: string;
@@ -83,7 +84,7 @@ const projects: AurelleProject[] = [
     category: "Brand Identity · Packaging Design",
     description:
       "A luxury shopping bag concept featuring AURELLE's signature burgundy, champagne-gold detailing, and elegant brand presentation.",
-    cover: shoppingBag,
+    cover: shoppingBagCover,
     images: [
       {
         src: shoppingBag,
