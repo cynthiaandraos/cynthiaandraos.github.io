@@ -58,9 +58,8 @@ const flyers = [
 type Flyer = (typeof flyers)[number];
 
 export function Flyers() {
-  const [selected, setSelected] = useState<Flyer | null>(
-    null
-  );
+  const [selected, setSelected] =
+    useState<Flyer | null>(null);
 
   const [zoomed, setZoomed] = useState(false);
   const reduceMotion = useReducedMotion();
@@ -124,15 +123,16 @@ export function Flyers() {
             04 / PRINT & PROMOTIONAL DESIGN
           </p>
 
+          {/* BOLD ITALIC TITLE */}
           <h2
-            className="text-5xl text-[#850F25] md:text-7xl"
+            className="text-5xl italic text-[#850F25] md:text-7xl"
             style={{
               fontFamily:
                 "'Bodoni Moda', Georgia, serif",
-              fontWeight: 400,
+              fontWeight: 700,
             }}
           >
-            Flyer <span className="italic">Design</span>
+            Flyer Design
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
