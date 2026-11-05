@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowLeft,
@@ -174,14 +174,31 @@ export function Projects() {
 
   const [activeImage, setActiveImage] = useState(0);
 
+  const touchStart = useRef<{ x: number; y: number } | null>(
+    null
+  );
+
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
   const openProject = (project: Project) => {
-    setSelectedProject(project);
+    previousFocusRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+
     setActiveImage(0);
+    setSelectedProject(project);
   };
 
   const closeProject = () => {
+    touchStart.current = null;
     setSelectedProject(null);
     setActiveImage(0);
+
+    requestAnimationFrame(() => {
+      previousFocusRef.current?.focus();
+    });
   };
 
   const nextImage = () => {
@@ -209,9 +226,12 @@ export function Projects() {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
+    closeButtonRef.current?.focus();
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        closeProject();
+        setSelectedProject(null);
+        setActiveImage(0);
       }
 
       if (event.key === "ArrowRight") {
@@ -240,6 +260,46 @@ export function Projects() {
       );
     };
   }, [selectedProject]);
+
+  const handleTouchStart = (
+    event: React.TouchEvent<HTMLDivElement>
+  ) => {
+    const touch = event.touches[0];
+
+    touchStart.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+    };
+  };
+
+  const handleTouchEnd = (
+    event: React.TouchEvent<HTMLDivElement>
+  ) => {
+    if (!touchStart.current || !selectedProject) return;
+
+    const touch = event.changedTouches[0];
+
+    const differenceX =
+      touch.clientX - touchStart.current.x;
+
+    const differenceY =
+      touch.clientY - touchStart.current.y;
+
+    touchStart.current = null;
+
+    if (selectedProject.images.length <= 1) return;
+
+    if (
+      Math.abs(differenceX) > 45 &&
+      Math.abs(differenceX) > Math.abs(differenceY) * 1.2
+    ) {
+      if (differenceX < 0) {
+        nextImage();
+      } else {
+        previousImage();
+      }
+    }
+  };
 
   return (
     <section
@@ -351,7 +411,7 @@ export function Projects() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeProject}
-            className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/90 p-3 backdrop-blur-sm sm:p-6"
+            className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/90 p-0 backdrop-blur-sm sm:p-6"
           >
             <motion.div
               initial={{
@@ -374,17 +434,17 @@ export function Projects() {
               role="dialog"
               aria-modal="true"
               aria-label={`${selectedProject.title} gallery`}
-              className="flex h-[90dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-[#FFF7F2] shadow-2xl"
+              className="relative flex h-[100dvh] w-full flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-[90dvh] sm:max-w-5xl sm:rounded-2xl"
             >
-              {/* Gallery header */}
-              <div className="flex shrink-0 items-center justify-between gap-4 border-b border-[#E8D2CF] px-4 py-4 sm:px-6">
+              {/* Desktop gallery header */}
+              <div className="hidden shrink-0 items-center justify-between gap-4 border-b border-[#E8D2CF] px-6 py-4 sm:flex">
                 <div>
                   <p className="text-xs uppercase tracking-widest text-[#A45D69]">
                     {selectedProject.category}
                   </p>
 
                   <h3
-                    className="mt-1 text-xl text-[#681523] sm:text-2xl"
+                    className="mt-1 text-2xl text-[#681523]"
                     style={{
                       fontFamily:
                         "'Bodoni Moda', Georgia, serif",
@@ -404,27 +464,52 @@ export function Projects() {
                 </button>
               </div>
 
-              {/* Gallery image */}
-              <div className="relative flex min-h-0 flex-1 items-center justify-center bg-[#F7EDE8] p-3 sm:p-6">
-                <img
-                  key={`${selectedProject.title}-${activeImage}`}
-                  src={
-                    selectedProject.images[activeImage].src
-                  }
-                  alt={
-                    selectedProject.images[activeImage].title
-                  }
-                  className="h-full w-full object-contain"
-                />
+              {/* Mobile close button */}
+              <button
+                ref={closeButtonRef}
+                type="button"
+                onClick={closeProject}
+                aria-label="Close gallery"
+                className="absolute right-4 top-[calc(env(safe-area-inset-top)+16px)] z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white shadow-lg sm:hidden"
+              >
+                <X size={22} />
+              </button>
 
-                {/* Gallery navigation */}
+              {/* Gallery image */}
+              <div
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                className="relative flex min-h-0 flex-1 items-center justify-center bg-[#F7EDE8] p-4 pt-20 pb-20 sm:p-6"
+                style={{
+                  touchAction: "pan-y",
+                }}
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.img
+                    key={`${selectedProject.title}-${activeImage}`}
+                    src={
+                      selectedProject.images[activeImage].src
+                    }
+                    alt={
+                      selectedProject.images[activeImage].title
+                    }
+                    draggable={false}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="h-full w-full select-none object-contain"
+                  />
+                </AnimatePresence>
+
+                {/* Desktop navigation arrows */}
                 {selectedProject.images.length > 1 && (
                   <>
                     <button
                       type="button"
                       onClick={previousImage}
                       aria-label="Previous image"
-                      className="absolute left-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#681523] shadow-md sm:left-4"
+                      className="absolute left-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#681523] shadow-md sm:flex"
                     >
                       <ArrowLeft size={20} />
                     </button>
@@ -433,16 +518,40 @@ export function Projects() {
                       type="button"
                       onClick={nextImage}
                       aria-label="Next image"
-                      className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#681523] shadow-md sm:right-4"
+                      className="absolute right-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#681523] shadow-md sm:flex"
                     >
                       <ArrowRight size={20} />
                     </button>
                   </>
                 )}
+
+                {/* Mobile gallery information */}
+                <div className="absolute inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+16px)] z-20 text-center sm:hidden">
+                  <p
+                    className="mb-2 text-lg text-[#681523]"
+                    style={{
+                      fontFamily:
+                        "'Bodoni Moda', Georgia, serif",
+                    }}
+                  >
+                    {selectedProject.title}
+                  </p>
+
+                  <p className="text-xs text-[#A45D69]">
+                    {activeImage + 1} /{" "}
+                    {selectedProject.images.length}
+                  </p>
+
+                  {selectedProject.images.length > 1 && (
+                    <p className="mt-2 text-[11px] uppercase tracking-widest text-[#A45D69]">
+                      Swipe to explore
+                    </p>
+                  )}
+                </div>
               </div>
 
-              {/* Gallery image title */}
-              <div className="shrink-0 border-t border-[#E8D2CF] px-4 py-3 text-center">
+              {/* Desktop image title */}
+              <div className="hidden shrink-0 border-t border-[#E8D2CF] px-4 py-3 text-center sm:block">
                 <p className="text-sm font-medium text-[#681523]">
                   {
                     selectedProject.images[activeImage]
@@ -456,9 +565,9 @@ export function Projects() {
                 </p>
               </div>
 
-              {/* Gallery thumbnails */}
+              {/* Desktop gallery thumbnails */}
               {selectedProject.images.length > 1 && (
-                <div className="flex shrink-0 justify-center gap-3 overflow-x-auto border-t border-[#E8D2CF] p-3">
+                <div className="hidden shrink-0 justify-center gap-3 overflow-x-auto border-t border-[#E8D2CF] p-3 sm:flex">
                   {selectedProject.images.map(
                     (image, index) => (
                       <button
@@ -468,7 +577,7 @@ export function Projects() {
                           setActiveImage(index)
                         }
                         aria-label={`View ${image.title}`}
-                        className={`h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 sm:h-20 sm:w-20 ${
+                        className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 ${
                           activeImage === index
                             ? "border-[#850F25]"
                             : "border-transparent opacity-60"
