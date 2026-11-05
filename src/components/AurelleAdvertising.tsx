@@ -55,10 +55,6 @@ export function AurelleAdvertising() {
     >
       <div className="mx-auto max-w-7xl">
         <div className="mb-14 text-center">
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
-            Creative Portfolio
-          </p>
-
           <h2
             className="mb-5 text-4xl text-[#681523] md:text-5xl"
             style={{ fontFamily: "'Bodoni Moda', serif" }}
