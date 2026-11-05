@@ -1,6 +1,6 @@
 
 import { motion, useReducedMotion } from "motion/react";
-import { Download } from "lucide-react";
+import { Download, ArrowDown } from "lucide-react";
 
 export function About() {
   const reduceMotion = useReducedMotion();
@@ -21,13 +21,29 @@ export function About() {
     amount: 0.2,
   };
 
+  const scrollToPortfolio = (
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    const portfolio = document.getElementById("portfolio");
+
+    if (!portfolio) return;
+
+    event.preventDefault();
+
+    portfolio.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "start",
+    });
+
+    window.history.replaceState(null, "", "#portfolio");
+  };
+
   return (
     <section
       id="about"
       className="scroll-mt-24 bg-[#FFF7F2] px-5 py-20 text-[#681523] sm:px-6 md:py-24"
     >
       <div className="mx-auto max-w-6xl">
-
         {/* Section label */}
         <motion.p
           variants={fadeUp}
@@ -61,7 +77,6 @@ export function About() {
         </motion.h2>
 
         <div className="grid gap-10 md:grid-cols-2 md:gap-12">
-
           {/* Left paragraph */}
           <motion.div
             variants={fadeUp}
@@ -157,6 +172,7 @@ export function About() {
               {/* Explore My Work */}
               <motion.a
                 href="#portfolio"
+                onClick={scrollToPortfolio}
                 whileHover={
                   reduceMotion
                     ? undefined
@@ -170,7 +186,7 @@ export function About() {
                 className="inline-flex w-full items-center justify-center gap-3 bg-[#850F25] px-6 py-4 text-center text-sm font-medium text-white transition-colors hover:bg-[#65101E] sm:w-auto"
               >
                 EXPLORE MY WORK
-                <span aria-hidden="true">→</span>
+                <ArrowDown size={18} aria-hidden="true" />
               </motion.a>
 
               {/* Download CV */}
