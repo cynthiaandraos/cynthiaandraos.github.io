@@ -17,6 +17,7 @@ import jouyProductLabel from "../assets/jouy-product-label.jpeg";
 import houseOfBeautyStorefront from "../assets/house-of-beauty-storefront.png";
 import goldenMarkCarBranding from "../assets/golden-mark-car-branding.jpeg";
 import aurelleLogo from "../assets/aurelle-logo-transparent.png";
+import snackElKhal from "../assets/snack-el-khal-logo.jpg";
 
 type ProjectImage = {
   src: string;
@@ -32,40 +33,27 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: "AURELLE Skincare",
-    category: "Concept Brand Identity & Logo Design",
-    cover: aurelleLogo,
-    images: [
-      {
-        src: aurelleLogo,
-        title: "AURELLE Skincare Logo",
-      },
-    ],
-  },
-  {
-    title: "Domina Real Estate",
-    category: "Logo Design & Brand Identity",
-    cover: domina,
-    images: [
-      {
-        src: domina,
-        title: "Domina Real Estate Logo",
-      },
-    ],
-  },
-  {
     title: "Golden Mark",
     category: "Logo Design & Brand Identity",
     cover: goldenMark,
     images: [
-      {
-        src: goldenMark,
-        title: "Golden Mark Logo",
-      },
-      {
-        src: goldenMarkCarBranding,
-        title: "Golden Mark Vehicle Branding",
-      },
+      { src: goldenMark, title: "Golden Mark Logo" },
+      { src: goldenMarkCarBranding, title: "Golden Mark Vehicle Branding" },
+    ],
+  },
+  {
+    title: "AURELLE Skincare",
+    category: "Concept Brand Identity & Logo Design",
+    cover: aurelleLogo,
+    images: [{ src: aurelleLogo, title: "AURELLE Skincare Logo" }],
+  },
+  {
+    title: "MY Fitness by Myriam",
+    category: "Logo Design & Brand Identity",
+    cover: myFitness,
+    images: [
+      { src: myFitness, title: "MY Fitness by Myriam Logo" },
+      { src: myFitnessDoor, title: "MY Fitness Glass Door Branding" },
     ],
   },
   {
@@ -73,48 +61,30 @@ const projects: Project[] = [
     category: "Logo Design & Brand Identity",
     cover: houseOfBeauty,
     images: [
-      {
-        src: houseOfBeauty,
-        title: "House of Beauty Logo",
-      },
-      {
-        src: houseOfBeautyStorefront,
-        title: "House of Beauty Storefront Branding",
-      },
+      { src: houseOfBeauty, title: "House of Beauty Logo" },
+      { src: houseOfBeautyStorefront, title: "House of Beauty Storefront Branding" },
     ],
+  },
+  {
+    title: "Snack الخال",
+    category: "Logo Design & Brand Identity",
+    cover: snackElKhal,
+    images: [{ src: snackElKhal, title: "Snack الخال Logo" }],
+  },
+  {
+    title: "Domina Real Estate",
+    category: "Logo Design & Brand Identity",
+    cover: domina,
+    images: [{ src: domina, title: "Domina Real Estate Logo" }],
   },
   {
     title: "مونة إم جوي",
     category: "Logo Design & Brand Identity",
     cover: jouy,
     images: [
-      {
-        src: jouy,
-        title: "مونة إم جوي Logo",
-      },
-      {
-        src: jouyPackagingJars,
-        title: "Jouy Product Packaging - Jars in Box",
-      },
-      {
-        src: jouyProductLabel,
-        title: "Jouy Product Label - Jar Close-Up",
-      },
-    ],
-  },
-  {
-    title: "MY Fitness by Myriam",
-    category: "Logo Design & Brand Identity",
-    cover: myFitness,
-    images: [
-      {
-        src: myFitness,
-        title: "MY Fitness by Myriam Logo",
-      },
-      {
-        src: myFitnessDoor,
-        title: "MY Fitness Glass Door Branding",
-      },
+      { src: jouy, title: "مونة إم جوي Logo" },
+      { src: jouyPackagingJars, title: "Jouy Product Packaging - Jars in Box" },
+      { src: jouyProductLabel, title: "Jouy Product Label - Jar Close-Up" },
     ],
   },
   {
@@ -122,26 +92,15 @@ const projects: Project[] = [
     category: "Logo Design & Brand Application",
     cover: manymoda,
     images: [
-      {
-        src: manymoda,
-        title: "Manymoda Original Logo",
-      },
-      {
-        src: manymodaBag,
-        title: "Manymoda Shopping Bag Branding",
-      },
+      { src: manymoda, title: "Manymoda Original Logo" },
+      { src: manymodaBag, title: "Manymoda Shopping Bag Branding" },
     ],
   },
   {
     title: "O-Market",
     category: "Logo Design & Brand Identity",
     cover: oMarket,
-    images: [
-      {
-        src: oMarket,
-        title: "O-Market Logo",
-      },
-    ],
+    images: [{ src: oMarket, title: "O-Market Logo" }],
   },
 ];
 
