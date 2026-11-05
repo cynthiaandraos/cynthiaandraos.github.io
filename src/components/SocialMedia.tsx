@@ -1,5 +1,6 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { TouchEvent } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowLeft,
@@ -11,7 +12,6 @@ import {
 } from "lucide-react";
 
 // MACHEWE FIRAS - ORIGINAL CAMPAIGN
-
 import firasCover from "../assets/firas-cover.jpg";
 import firasGrill from "../assets/firas-grill-post.png";
 import firasSandwich from "../assets/firas-sandwich-post.png";
@@ -20,7 +20,6 @@ import firasChristmas42 from "../assets/firas-christmas-42.png";
 import firasChristmas36 from "../assets/firas-christmas-36.png";
 
 // MACHEWE FIRAS - NEW MENU LAUNCH
-
 import firasNewMenuCover from "../assets/firas-new-menu-cover.png";
 import chickenRollSub from "../assets/firas-chicken-roll-sub.jpeg";
 import kababDjej from "../assets/firas-kabab-djej.jpeg";
@@ -28,7 +27,6 @@ import hawaiiBurger from "../assets/firas-hawaii-burger.jpeg";
 import steakSub from "../assets/firas-steak-sub.jpeg";
 
 // ST. ABDA - JAJ EVENT CAMPAIGN
-
 import stAbdaCover from "../assets/st-abda-event-cover.png";
 import stAbdaSchedule from "../assets/st-abda-event-schedule.jpeg";
 import stAbdaMyrna from "../assets/st-abda-myrna-concert.jpeg";
@@ -154,16 +152,35 @@ export function SocialMedia() {
   const [activeImage, setActiveImage] = useState(0);
   const [zoomed, setZoomed] = useState(false);
 
+  const touchStart = useRef<{
+    x: number;
+    y: number;
+  } | null>(null);
+
+  const mobileCloseRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
   const openProject = (project: SocialProject) => {
-    setSelectedProject(project);
+    previousFocusRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+
+    touchStart.current = null;
     setActiveImage(0);
     setZoomed(false);
+    setSelectedProject(project);
   };
 
   const closeProject = () => {
+    touchStart.current = null;
     setSelectedProject(null);
     setActiveImage(0);
     setZoomed(false);
+
+    requestAnimationFrame(() => {
+      previousFocusRef.current?.focus();
+    });
   };
 
   const nextImage = () => {
@@ -173,6 +190,7 @@ export function SocialMedia() {
       (current) =>
         (current + 1) % selectedProject.images.length
     );
+
     setZoomed(false);
   };
 
@@ -184,6 +202,7 @@ export function SocialMedia() {
         (current - 1 + selectedProject.images.length) %
         selectedProject.images.length
     );
+
     setZoomed(false);
   };
 
@@ -192,8 +211,65 @@ export function SocialMedia() {
     setZoomed(false);
   };
 
+  const handleTouchStart = (
+    event: TouchEvent<HTMLDivElement>
+  ) => {
+    // Swipe navigation is enabled on phones only.
+    if (window.matchMedia("(min-width: 640px)").matches) {
+      return;
+    }
+
+    const touch = event.touches[0];
+
+    if (!touch) return;
+
+    touchStart.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+    };
+  };
+
+  const handleTouchEnd = (
+    event: TouchEvent<HTMLDivElement>
+  ) => {
+    if (!touchStart.current || !selectedProject) return;
+
+    const touch = event.changedTouches[0];
+
+    if (!touch) {
+      touchStart.current = null;
+      return;
+    }
+
+    const differenceX =
+      touch.clientX - touchStart.current.x;
+
+    const differenceY =
+      touch.clientY - touchStart.current.y;
+
+    touchStart.current = null;
+
+    if (selectedProject.images.length <= 1) return;
+
+    if (
+      Math.abs(differenceX) > 45 &&
+      Math.abs(differenceX) > Math.abs(differenceY) * 1.2
+    ) {
+      if (differenceX < 0) {
+        nextImage();
+      } else {
+        previousImage();
+      }
+    }
+  };
+
   useEffect(() => {
     if (!selectedProject) return;
+
+    const previousOverflow =
+      document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -218,12 +294,11 @@ export function SocialMedia() {
       }
     };
 
-    const previousOverflow =
-      document.body.style.overflow;
-
-    document.body.style.overflow = "hidden";
-
     window.addEventListener("keydown", handleKeyDown);
+
+    const focusTimer = window.setTimeout(() => {
+      mobileCloseRef.current?.focus();
+    }, 0);
 
     return () => {
       document.body.style.overflow =
@@ -233,6 +308,8 @@ export function SocialMedia() {
         "keydown",
         handleKeyDown
       );
+
+      window.clearTimeout(focusTimer);
     };
   }, [selectedProject]);
 
@@ -242,6 +319,7 @@ export function SocialMedia() {
       className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24 text-[#681523]"
     >
       <div className="mx-auto max-w-7xl">
+        {/* Section heading */}
         <motion.div
           initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -275,6 +353,7 @@ export function SocialMedia() {
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
+        {/* Campaign cards */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.article
@@ -295,14 +374,16 @@ export function SocialMedia() {
                 aria-label={`View ${project.title} - ${project.subtitle}`}
                 className="flex h-full w-full cursor-pointer flex-col overflow-hidden bg-transparent p-0 text-left"
               >
-                {/* ALL THREE COVERS FILL THEIR CARDS */}
+                {/* Covers */}
                 <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
                   <img
                     src={project.cover}
                     alt={`${project.title} cover`}
                     loading="lazy"
                     className="absolute inset-0 block h-full w-full object-cover object-center transition-transform duration-700"
-                    style={{ transform: `scale(${project.coverZoom ?? 1})` }}
+                    style={{
+                      transform: `scale(${project.coverZoom ?? 1})`,
+                    }}
                   />
 
                   <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-sm">
@@ -310,6 +391,7 @@ export function SocialMedia() {
                   </div>
                 </div>
 
+                {/* Card details */}
                 <div className="flex-1 p-6">
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {project.category}
@@ -344,6 +426,7 @@ export function SocialMedia() {
         </div>
       </div>
 
+      {/* Campaign gallery */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
@@ -353,7 +436,7 @@ export function SocialMedia() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={closeProject}
-            className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/90 p-2 backdrop-blur-sm sm:p-5"
+            className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/90 p-0 backdrop-blur-sm sm:p-5"
           >
             <motion.div
               initial={{
@@ -371,22 +454,21 @@ export function SocialMedia() {
                 scale: 0.97,
               }}
               transition={{ duration: 0.25 }}
-              onClick={(event) =>
-                event.stopPropagation()
-              }
+              onClick={(event) => event.stopPropagation()}
               role="dialog"
               aria-modal="true"
               aria-label={`${selectedProject.title} gallery`}
-              className="flex h-[94dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-[#FFF7F2] shadow-2xl sm:h-[92dvh]"
+              className="relative flex h-[100dvh] w-full flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-[92dvh] sm:max-w-5xl sm:rounded-2xl"
             >
-              <div className="flex shrink-0 items-center justify-between gap-3 border-b border-[#E8D2CF] px-3 py-3 sm:px-6 sm:py-4">
+              {/* Desktop gallery header */}
+              <div className="hidden shrink-0 items-center justify-between gap-3 border-b border-[#E8D2CF] px-6 py-4 sm:flex">
                 <div className="min-w-0">
-                  <p className="text-[10px] uppercase tracking-widest text-[#A45D69] sm:text-xs">
+                  <p className="text-xs uppercase tracking-widest text-[#A45D69]">
                     {selectedProject.subtitle}
                   </p>
 
                   <h3
-                    className="mt-1 text-lg text-[#681523] sm:text-2xl"
+                    className="mt-1 text-2xl text-[#681523]"
                     style={{
                       fontFamily:
                         "'Bodoni Moda', Georgia, serif",
@@ -397,6 +479,7 @@ export function SocialMedia() {
                 </div>
 
                 <div className="flex shrink-0 gap-2">
+                  {/* Desktop zoom */}
                   <button
                     type="button"
                     onClick={() =>
@@ -427,25 +510,40 @@ export function SocialMedia() {
                 </div>
               </div>
 
+              {/* Mobile close button */}
+              <button
+                ref={mobileCloseRef}
+                type="button"
+                onClick={closeProject}
+                aria-label="Close gallery"
+                className="absolute right-4 top-[calc(env(safe-area-inset-top)+16px)] z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white shadow-lg sm:hidden"
+              >
+                <X size={22} />
+              </button>
+
+              {/* Gallery image */}
               <div
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                onTouchCancel={() => {
+                  touchStart.current = null;
+                }}
                 className={`relative min-h-0 flex-1 bg-[#F7EDE8] ${
                   zoomed
                     ? "overflow-auto"
                     : "overflow-hidden"
                 }`}
+                style={{
+                  touchAction: "pan-y",
+                }}
               >
                 {zoomed ? (
                   <div className="flex min-h-full min-w-full items-start justify-center p-3 sm:p-6">
                     <img
                       key={`${selectedProject.id}-${activeImage}-zoom`}
-                      src={
-                        selectedProject.images[activeImage]
-                          .src
-                      }
-                      alt={
-                        selectedProject.images[activeImage]
-                          .title
-                      }
+                      src={selectedProject.images[activeImage].src}
+                      alt={selectedProject.images[activeImage].title}
+                      draggable={false}
                       className="block h-auto w-auto max-w-none"
                       style={{
                         minWidth: "min(100%, 600px)",
@@ -454,47 +552,75 @@ export function SocialMedia() {
                     />
                   </div>
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center p-2 sm:p-4">
-                    <img
-                      key={`${selectedProject.id}-${activeImage}`}
-                      src={
-                        selectedProject.images[activeImage]
-                          .src
-                      }
-                      alt={
-                        selectedProject.images[activeImage]
-                          .title
-                      }
-                      className="block h-full w-full object-contain"
-                    />
+                  <div className="flex h-full w-full items-center justify-center px-4 pb-24 pt-20 sm:p-4">
+                    <AnimatePresence mode="wait" initial={false}>
+                      <motion.img
+                        key={`${selectedProject.id}-${activeImage}`}
+                        src={selectedProject.images[activeImage].src}
+                        alt={selectedProject.images[activeImage].title}
+                        draggable={false}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="block h-full w-full select-none object-contain"
+                      />
+                    </AnimatePresence>
                   </div>
                 )}
 
-                <button
-                  type="button"
-                  onClick={previousImage}
-                  aria-label="Previous design"
-                  className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-md hover:bg-white sm:left-4"
-                >
-                  <ArrowLeft size={20} />
-                </button>
+                {/* Desktop navigation arrows */}
+                {selectedProject.images.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={previousImage}
+                      aria-label="Previous design"
+                      className="absolute left-4 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-md hover:bg-white sm:flex"
+                    >
+                      <ArrowLeft size={20} />
+                    </button>
 
-                <button
-                  type="button"
-                  onClick={nextImage}
-                  aria-label="Next design"
-                  className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-md hover:bg-white sm:right-4"
-                >
-                  <ArrowRight size={20} />
-                </button>
+                    <button
+                      type="button"
+                      onClick={nextImage}
+                      aria-label="Next design"
+                      className="absolute right-4 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-md hover:bg-white sm:flex"
+                    >
+                      <ArrowRight size={20} />
+                    </button>
+                  </>
+                )}
+
+                {/* Mobile gallery information */}
+                <div className="absolute inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+16px)] z-20 text-center sm:hidden">
+                  <p
+                    className="mb-2 text-lg text-[#681523]"
+                    style={{
+                      fontFamily:
+                        "'Bodoni Moda', Georgia, serif",
+                    }}
+                  >
+                    {selectedProject.title}
+                  </p>
+
+                  <p className="text-xs text-[#A45D69]">
+                    {activeImage + 1} /{" "}
+                    {selectedProject.images.length}
+                  </p>
+
+                  {selectedProject.images.length > 1 && (
+                    <p className="mt-2 text-[11px] uppercase tracking-widest text-[#A45D69]">
+                      Swipe to explore
+                    </p>
+                  )}
+                </div>
               </div>
 
-              <div className="shrink-0 border-t border-[#E8D2CF] px-4 py-2 text-center">
+              {/* Desktop image title and counter */}
+              <div className="hidden shrink-0 border-t border-[#E8D2CF] px-4 py-2 text-center sm:block">
                 <p className="text-sm font-medium text-[#681523]">
-                  {
-                    selectedProject.images[activeImage]
-                      .title
-                  }
+                  {selectedProject.images[activeImage].title}
                 </p>
 
                 <p className="mt-1 text-xs text-[#A45D69]">
@@ -503,29 +629,29 @@ export function SocialMedia() {
                 </p>
               </div>
 
-              <div className="flex shrink-0 gap-2 overflow-x-auto border-t border-[#E8D2CF] bg-[#FFF7F2] p-2 sm:gap-3 sm:p-3">
-                {selectedProject.images.map(
-                  (image, index) => (
-                    <button
-                      key={`${selectedProject.id}-${index}`}
-                      type="button"
-                      onClick={() => selectImage(index)}
-                      aria-label={`View ${image.title}`}
-                      className={`h-14 w-14 shrink-0 overflow-hidden rounded-lg border-2 transition sm:h-20 sm:w-20 ${
-                        activeImage === index
-                          ? "border-[#850F25]"
-                          : "border-transparent opacity-60 hover:opacity-100"
-                      }`}
-                    >
-                      <img
-                        src={image.src}
-                        alt={image.title}
-                        loading="lazy"
-                        className="h-full w-full object-contain"
-                      />
-                    </button>
-                  )
-                )}
+              {/* Desktop thumbnails */}
+              <div className="hidden shrink-0 gap-2 overflow-x-auto border-t border-[#E8D2CF] bg-[#FFF7F2] p-3 sm:flex">
+                {selectedProject.images.map((image, index) => (
+                  <button
+                    key={`${selectedProject.id}-${index}`}
+                    type="button"
+                    onClick={() => selectImage(index)}
+                    aria-label={`View ${image.title}`}
+                    aria-pressed={activeImage === index}
+                    className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition ${
+                      activeImage === index
+                        ? "border-[#850F25]"
+                        : "border-transparent opacity-60 hover:opacity-100"
+                    }`}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.title}
+                      loading="lazy"
+                      className="h-full w-full object-contain"
+                    />
+                  </button>
+                ))}
               </div>
             </motion.div>
           </motion.div>
@@ -534,4 +660,3 @@ export function SocialMedia() {
     </section>
   );
 }
-
