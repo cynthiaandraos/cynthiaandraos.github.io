@@ -1,7 +1,12 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, X } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  X,
+} from "lucide-react";
 
 import domina from "../assets/domina-transparent.png";
 import goldenMark from "../assets/golden-mark-transparent.png";
@@ -43,22 +48,33 @@ const projects: Project[] = [
     cover: goldenMark,
     images: [
       { src: goldenMark, title: "Golden Mark Logo" },
-      { src: goldenMarkCarBranding, title: "Golden Mark Vehicle Branding" },
+      {
+        src: goldenMarkCarBranding,
+        title: "Golden Mark Vehicle Branding",
+      },
     ],
   },
   {
     title: "AURELLE Skincare",
     category: "Concept Brand Identity & Logo Design",
     cover: aurelleLogo,
-    images: [{ src: aurelleLogo, title: "AURELLE Skincare Logo" }],
+    images: [
+      { src: aurelleLogo, title: "AURELLE Skincare Logo" },
+    ],
   },
   {
     title: "MY Fitness by Myriam",
     category: "Logo Design & Brand Identity",
     cover: myFitness,
     images: [
-      { src: myFitness, title: "MY Fitness by Myriam Logo" },
-      { src: myFitnessDoor, title: "MY Fitness Glass Door Branding" },
+      {
+        src: myFitness,
+        title: "MY Fitness by Myriam Logo",
+      },
+      {
+        src: myFitnessDoor,
+        title: "MY Fitness Glass Door Branding",
+      },
     ],
   },
   {
@@ -66,8 +82,14 @@ const projects: Project[] = [
     category: "Logo Design & Brand Identity",
     cover: houseOfBeauty,
     images: [
-      { src: houseOfBeauty, title: "House of Beauty Logo" },
-      { src: houseOfBeautyStorefront, title: "House of Beauty Storefront Branding" },
+      {
+        src: houseOfBeauty,
+        title: "House of Beauty Logo",
+      },
+      {
+        src: houseOfBeautyStorefront,
+        title: "House of Beauty Storefront Branding",
+      },
     ],
   },
   {
@@ -75,18 +97,35 @@ const projects: Project[] = [
     category: "Logo Design & Brand Identity",
     cover: snackElKhal,
     images: [
-      { src: snackMenuAppetizers, title: "Restaurant Menu – Appetizers" },
-      { src: snackMenuSandwiches, title: "Restaurant Menu – Sandwiches" },
-      { src: snackMenuBurgers, title: "Restaurant Menu – Burgers" },
-      { src: snackPackaging, title: "Branded Food Packaging" },
-      { src: snackSignage, title: "Outdoor Signage" },
+      {
+        src: snackMenuAppetizers,
+        title: "Restaurant Menu – Appetizers",
+      },
+      {
+        src: snackMenuSandwiches,
+        title: "Restaurant Menu – Sandwiches",
+      },
+      {
+        src: snackMenuBurgers,
+        title: "Restaurant Menu – Burgers",
+      },
+      {
+        src: snackPackaging,
+        title: "Branded Food Packaging",
+      },
+      {
+        src: snackSignage,
+        title: "Outdoor Signage",
+      },
     ],
   },
   {
     title: "Domina Real Estate",
     category: "Logo Design & Brand Identity",
     cover: domina,
-    images: [{ src: domina, title: "Domina Real Estate Logo" }],
+    images: [
+      { src: domina, title: "Domina Real Estate Logo" },
+    ],
   },
   {
     title: "مونة إم جوي",
@@ -94,8 +133,14 @@ const projects: Project[] = [
     cover: jouy,
     images: [
       { src: jouy, title: "مونة إم جوي Logo" },
-      { src: jouyPackagingJars, title: "Jouy Product Packaging - Jars in Box" },
-      { src: jouyProductLabel, title: "Jouy Product Label - Jar Close-Up" },
+      {
+        src: jouyPackagingJars,
+        title: "Jouy Product Packaging - Jars in Box",
+      },
+      {
+        src: jouyProductLabel,
+        title: "Jouy Product Label - Jar Close-Up",
+      },
     ],
   },
   {
@@ -103,21 +148,30 @@ const projects: Project[] = [
     category: "Logo Design & Brand Application",
     cover: manymoda,
     images: [
-      { src: manymoda, title: "Manymoda Original Logo" },
-      { src: manymodaBag, title: "Manymoda Shopping Bag Branding" },
+      {
+        src: manymoda,
+        title: "Manymoda Original Logo",
+      },
+      {
+        src: manymodaBag,
+        title: "Manymoda Shopping Bag Branding",
+      },
     ],
   },
   {
     title: "O-Market",
     category: "Logo Design & Brand Identity",
     cover: oMarket,
-    images: [{ src: oMarket, title: "O-Market Logo" }],
+    images: [
+      { src: oMarket, title: "O-Market Logo" },
+    ],
   },
 ];
 
 export function Projects() {
   const [selectedProject, setSelectedProject] =
     useState<Project | null>(null);
+
   const [activeImage, setActiveImage] = useState(0);
 
   const openProject = (project: Project) => {
@@ -193,6 +247,8 @@ export function Projects() {
       className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24"
     >
       <div className="mx-auto max-w-7xl">
+
+        {/* Logo Designs heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -201,7 +257,7 @@ export function Projects() {
           className="mb-14 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
-            02 / SELECTED WORK
+            02 / LOGO DESIGN & BRANDING
           </p>
 
           <h2
@@ -210,7 +266,7 @@ export function Projects() {
               fontFamily: "'Bodoni Moda', Georgia, serif",
             }}
           >
-            My <span className="italic">Portfolio</span>
+            Logo <span className="italic">Designs</span>
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
@@ -219,6 +275,7 @@ export function Projects() {
           </p>
         </motion.div>
 
+        {/* Project cards */}
         <div className="grid grid-cols-1 items-stretch gap-7 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.button
@@ -235,6 +292,7 @@ export function Projects() {
               onClick={() => openProject(project)}
               className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white p-0 text-left shadow-sm transition-shadow hover:shadow-xl"
             >
+              {/* Cover */}
               <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
                 <div className="absolute inset-0 flex items-center justify-center bg-[#F7EDE8] p-6 sm:p-8">
                   <img
@@ -250,6 +308,7 @@ export function Projects() {
                 </div>
               </div>
 
+              {/* Card details */}
               <div className="flex w-full flex-1 flex-col bg-white p-6">
                 <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                   {project.category}
@@ -284,6 +343,7 @@ export function Projects() {
         </p>
       </div>
 
+      {/* Project gallery modal */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
@@ -316,6 +376,7 @@ export function Projects() {
               aria-label={`${selectedProject.title} gallery`}
               className="flex h-[90dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-[#FFF7F2] shadow-2xl"
             >
+              {/* Gallery header */}
               <div className="flex shrink-0 items-center justify-between gap-4 border-b border-[#E8D2CF] px-4 py-4 sm:px-6">
                 <div>
                   <p className="text-xs uppercase tracking-widest text-[#A45D69]">
@@ -343,6 +404,7 @@ export function Projects() {
                 </button>
               </div>
 
+              {/* Gallery image */}
               <div className="relative flex min-h-0 flex-1 items-center justify-center bg-[#F7EDE8] p-3 sm:p-6">
                 <img
                   key={`${selectedProject.title}-${activeImage}`}
@@ -355,6 +417,7 @@ export function Projects() {
                   className="h-full w-full object-contain"
                 />
 
+                {/* Gallery navigation */}
                 {selectedProject.images.length > 1 && (
                   <>
                     <button
@@ -378,6 +441,7 @@ export function Projects() {
                 )}
               </div>
 
+              {/* Gallery image title */}
               <div className="shrink-0 border-t border-[#E8D2CF] px-4 py-3 text-center">
                 <p className="text-sm font-medium text-[#681523]">
                   {
@@ -392,6 +456,7 @@ export function Projects() {
                 </p>
               </div>
 
+              {/* Gallery thumbnails */}
               {selectedProject.images.length > 1 && (
                 <div className="flex shrink-0 justify-center gap-3 overflow-x-auto border-t border-[#E8D2CF] p-3">
                   {selectedProject.images.map(
