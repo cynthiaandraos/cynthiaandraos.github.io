@@ -84,6 +84,7 @@ export function Skills() {
         className="bg-[#FFF7F2] px-6 py-20"
       >
         <div className="mx-auto max-w-7xl">
+
           {/* Skills heading */}
           <motion.div
             variants={reveal}
@@ -103,15 +104,16 @@ export function Skills() {
               CREATIVE TOOLKIT
             </p>
 
+            {/* Bold italic heading */}
             <h2
-              className="text-5xl text-[#850F25] md:text-6xl"
+              className="text-5xl italic text-[#850F25] md:text-7xl"
               style={{
                 fontFamily:
                   "'Bodoni Moda', Georgia, serif",
-                fontWeight: 400,
+                fontWeight: 700,
               }}
             >
-              My <span className="italic">Skills</span>
+              My Skills
             </h2>
 
             <p className="mx-auto mt-5 max-w-xl text-[#704B50]">
@@ -156,7 +158,10 @@ export function Skills() {
                   className="group flex flex-col items-center rounded-2xl border border-[#E8D2CF] bg-white px-3 py-8 text-center shadow-sm transition-shadow duration-300 hover:shadow-lg"
                 >
                   <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F6E6E1] text-[#850F25] transition-colors group-hover:bg-[#850F25] group-hover:text-white">
-                    <Icon size={30} strokeWidth={1.5} />
+                    <Icon
+                      size={30}
+                      strokeWidth={1.5}
+                    />
                   </div>
 
                   <h3 className="text-sm font-medium text-[#681523]">
@@ -175,6 +180,7 @@ export function Skills() {
         className="bg-[#FFF7F2] px-6 pt-16 pb-8"
       >
         <div className="mx-auto max-w-7xl">
+
           {/* Services heading */}
           <motion.div
             variants={reveal}
@@ -194,15 +200,16 @@ export function Skills() {
               WHAT I DO
             </p>
 
+            {/* Bold italic heading */}
             <h2
-              className="text-5xl text-[#850F25] md:text-6xl"
+              className="text-5xl italic text-[#850F25] md:text-7xl"
               style={{
                 fontFamily:
                   "'Bodoni Moda', Georgia, serif",
-                fontWeight: 400,
+                fontWeight: 700,
               }}
             >
-              My <span className="italic">Services</span>
+              My Services
             </h2>
 
             <p className="mx-auto mt-5 max-w-xl text-[#704B50]">
@@ -248,7 +255,10 @@ export function Skills() {
                   className="group flex h-full flex-col items-center rounded-2xl border border-[#E8D2CF] bg-white px-3 py-8 text-center shadow-sm transition-shadow duration-300 hover:shadow-lg"
                 >
                   <div className="mb-5 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#F6E6E1] text-[#850F25] transition-colors group-hover:bg-[#850F25] group-hover:text-white">
-                    <Icon size={30} strokeWidth={1.5} />
+                    <Icon
+                      size={30}
+                      strokeWidth={1.5}
+                    />
                   </div>
 
                   <h3 className="text-sm font-medium text-[#681523]">
