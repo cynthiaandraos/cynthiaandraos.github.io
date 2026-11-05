@@ -89,7 +89,10 @@ export function Skills() {
             variants={reveal}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{
+              once: true,
+              amount: 0.2,
+            }}
             transition={{
               duration: 0.8,
               ease: "easeOut",
@@ -103,7 +106,8 @@ export function Skills() {
             <h2
               className="text-5xl text-[#850F25] md:text-6xl"
               style={{
-                fontFamily: "'Bodoni Moda', Georgia, serif",
+                fontFamily:
+                  "'Bodoni Moda', Georgia, serif",
                 fontWeight: 400,
               }}
             >
@@ -139,7 +143,9 @@ export function Skills() {
                   }}
                   transition={{
                     duration: 0.65,
-                    delay: reduceMotion ? 0 : index * 0.1,
+                    delay: reduceMotion
+                      ? 0
+                      : index * 0.1,
                     ease: "easeOut",
                   }}
                   whileHover={
@@ -163,74 +169,60 @@ export function Skills() {
         </div>
       </section>
 
-      {/* MY SERVICES */}
+      {/* MY SERVICES - MATCHING SKILLS DESIGN */}
       <section
         id="services"
-        className="relative overflow-hidden bg-[#F7EAE5] px-6 py-24"
+        className="bg-[#FFF7F2] px-6 py-20"
       >
-        {/* Background decoration */}
-        <div className="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-[#E8C9C6]/40 blur-3xl" />
-
-        <div className="relative mx-auto max-w-7xl">
+        <div className="mx-auto max-w-7xl">
           {/* Services heading */}
           <motion.div
             variants={reveal}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{
+              once: true,
+              amount: 0.2,
+            }}
             transition={{
               duration: 0.8,
               ease: "easeOut",
             }}
-            className="mb-14 text-center"
+            className="mb-12 text-center"
           >
             <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
               WHAT I DO
             </p>
 
             <h2
-              className="text-5xl text-[#850F25] md:text-7xl"
+              className="text-5xl text-[#850F25] md:text-6xl"
               style={{
-                fontFamily: "'Bodoni Moda', Georgia, serif",
+                fontFamily:
+                  "'Bodoni Moda', Georgia, serif",
                 fontWeight: 400,
               }}
             >
               My <span className="italic">Services</span>
             </h2>
 
-            <p className="mx-auto mt-6 max-w-xl leading-relaxed text-[#704B50]">
-              Thoughtful design solutions that bring creative
-              ideas and brands to life.
+            <p className="mx-auto mt-5 max-w-xl text-[#704B50]">
+              Thoughtful design solutions that bring
+              creative ideas and brands to life.
             </p>
-
-            {/* Animated decorative line */}
-            <motion.div
-              initial={{
-                scaleX: reduceMotion ? 1 : 0,
-              }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.9,
-                delay: 0.25,
-                ease: "easeOut",
-              }}
-              className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40"
-            />
           </motion.div>
 
-          {/* Services cards */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Services cards - same style as Skills */}
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
             {services.map((service, index) => {
               const Icon = service.icon;
 
               return (
-                <motion.article
+                <motion.div
                   key={service.title}
                   initial={{
                     opacity: 0,
-                    y: reduceMotion ? 0 : 40,
-                    scale: reduceMotion ? 1 : 0.97,
+                    y: reduceMotion ? 0 : 35,
+                    scale: reduceMotion ? 1 : 0.96,
                   }}
                   whileInView={{
                     opacity: 1,
@@ -242,35 +234,31 @@ export function Skills() {
                     amount: 0.15,
                   }}
                   transition={{
-                    duration: 0.7,
-                    delay: reduceMotion ? 0 : (index % 3) * 0.12,
+                    duration: 0.65,
+                    delay: reduceMotion
+                      ? 0
+                      : index * 0.1,
                     ease: "easeOut",
                   }}
                   whileHover={
                     reduceMotion
                       ? undefined
-                      : { y: -8, scale: 1.02 }
+                      : { y: -8, scale: 1.03 }
                   }
-                  className="group rounded-2xl border border-[#E8D2CF] bg-[#FFF9F6] p-8 shadow-sm transition-shadow duration-300 hover:shadow-xl"
+                  className="group flex h-full flex-col items-center rounded-2xl border border-[#E8D2CF] bg-white px-3 py-8 text-center shadow-sm transition-shadow duration-300 hover:shadow-lg"
                 >
-                  <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#F0DAD5] text-[#850F25] transition-colors group-hover:bg-[#850F25] group-hover:text-white">
+                  <div className="mb-5 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#F6E6E1] text-[#850F25] transition-colors group-hover:bg-[#850F25] group-hover:text-white">
                     <Icon size={30} strokeWidth={1.5} />
                   </div>
 
-                  <h3
-                    className="mb-3 text-3xl text-[#681523]"
-                    style={{
-                      fontFamily: "'Bodoni Moda', Georgia, serif",
-                      fontWeight: 400,
-                    }}
-                  >
+                  <h3 className="text-sm font-medium text-[#681523]">
                     {service.title}
                   </h3>
 
-                  <p className="leading-relaxed text-[#704B50]">
+                  <p className="mt-3 text-xs leading-relaxed text-[#704B50]">
                     {service.description}
                   </p>
-                </motion.article>
+                </motion.div>
               );
             })}
           </div>
@@ -280,7 +268,10 @@ export function Skills() {
             variants={reveal}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
+            viewport={{
+              once: true,
+              amount: 0.5,
+            }}
             transition={{
               duration: 0.8,
               ease: "easeOut",
