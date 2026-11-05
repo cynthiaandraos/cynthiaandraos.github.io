@@ -20,6 +20,7 @@ import myFitnessFlyer from "../assets/my-fitness-training-flyer.jpeg";
 // PORTFOLIO COVER IMAGES
 import deliveryCover from "../assets/5beans-delivery-cover.png";
 import branchCover from "../assets/5beans-branch-flyer-cover.png";
+import myFitnessCover from "../assets/my-fitness-flyer-cover.png";
 
 const flyers = [
   {
@@ -47,7 +48,7 @@ const flyers = [
     title: "Personal Training Flyer",
     client: "MY Fitness by Myriam",
     category: "Fitness Promotional Flyer",
-    cover: myFitnessFlyer,
+    cover: myFitnessCover,
     image: myFitnessFlyer,
     description:
       "A promotional fitness flyer highlighting personal training services and the MY Fitness brand identity.",
@@ -60,6 +61,7 @@ export function Flyers() {
   const [selected, setSelected] = useState<Flyer | null>(
     null
   );
+
   const [zoomed, setZoomed] = useState(false);
   const reduceMotion = useReducedMotion();
 
@@ -78,7 +80,8 @@ export function Flyers() {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        closeFlyer();
+        setSelected(null);
+        setZoomed(false);
       }
     };
 
@@ -174,10 +177,10 @@ export function Flyers() {
                 type="button"
                 onClick={() => openFlyer(flyer)}
                 aria-label={`Open ${flyer.title}`}
-                className="flex h-full w-full flex-col cursor-pointer text-left"
+                className="flex h-full w-full cursor-pointer flex-col text-left"
               >
 
-                {/* 4:3 LANDSCAPE COVER */}
+                {/* MATCHING 4:3 LANDSCAPE COVER */}
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7EDE8]">
                   <img
                     src={flyer.cover}
