@@ -309,17 +309,15 @@ export function Packaging() {
             01 / PACKAGING & LABELS
           </p>
 
+          {/* Bold italic section title */}
           <h2
-            className="text-5xl text-[#850F25] md:text-7xl"
+            className="text-5xl italic text-[#850F25] md:text-7xl"
             style={{
               fontFamily: "'Bodoni Moda', Georgia, serif",
-              fontWeight: 400,
+              fontWeight: 700,
             }}
           >
-            5 Beans{" "}
-            <span className="italic">
-              Coffee Shop
-            </span>
+            5 Beans Coffee Shop
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
