@@ -18,6 +18,11 @@ import houseOfBeautyStorefront from "../assets/house-of-beauty-storefront.png";
 import goldenMarkCarBranding from "../assets/golden-mark-car-branding.jpeg";
 import aurelleLogo from "../assets/aurelle-logo-transparent.png";
 import snackElKhal from "../assets/snack-el-khal-logo.png";
+import snackMenuAppetizers from "../assets/snack-el-khal-menu-appetizers.jpg";
+import snackMenuSandwiches from "../assets/snack-el-khal-menu-sandwiches.jpg";
+import snackMenuBurgers from "../assets/snack-el-khal-menu-burgers.jpg";
+import snackPackaging from "../assets/snack-el-khal-packaging.jpg";
+import snackSignage from "../assets/snack-el-khal-signage.jpg";
 
 type ProjectImage = {
   src: string;
@@ -69,7 +74,13 @@ const projects: Project[] = [
     title: "Snack الخال",
     category: "Logo Design & Brand Identity",
     cover: snackElKhal,
-    images: [{ src: snackElKhal, title: "Snack الخال Logo" }],
+    images: [
+      { src: snackMenuAppetizers, title: "Restaurant Menu – Appetizers" },
+      { src: snackMenuSandwiches, title: "Restaurant Menu – Sandwiches" },
+      { src: snackMenuBurgers, title: "Restaurant Menu – Burgers" },
+      { src: snackPackaging, title: "Branded Food Packaging" },
+      { src: snackSignage, title: "Outdoor Signage" },
+    ],
   },
   {
     title: "Domina Real Estate",
