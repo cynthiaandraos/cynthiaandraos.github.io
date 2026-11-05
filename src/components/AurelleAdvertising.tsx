@@ -6,15 +6,20 @@ import { X } from "lucide-react";
 import collectionAd from "../assets/aurelle-full-skincare-collection-ad.png";
 import radianceAd from "../assets/aurelle-natural-radiance-beauty-ad.png";
 
+import collectionCover from "../assets/aurelle-collection-cover.png";
+import radianceCover from "../assets/aurelle-natural-radiance-cover.png";
+
 const campaigns = [
   {
     title: "Full Skincare Collection",
     category: "Luxury Product Advertising",
+    cover: collectionCover,
     image: collectionAd,
   },
   {
     title: "Natural Radiance",
     category: "Beauty Advertising Campaign",
+    cover: radianceCover,
     image: radianceAd,
   },
 ];
@@ -82,9 +87,10 @@ export function AurelleAdvertising() {
             >
               <div className="aspect-[4/3] overflow-hidden bg-[#F2E8E4]">
                 <img
-                  src={campaign.image}
-                  alt={campaign.title}
-                  className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                  src={campaign.cover}
+                  alt={`${campaign.title} cover`}
+                  loading="lazy"
+                  className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
 
