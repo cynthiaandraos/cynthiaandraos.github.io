@@ -66,6 +66,7 @@ export function Hero() {
       }}
     >
       <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-3 px-5 py-3 md:px-6">
+
         {/* CA Logo */}
         <a
           href="#home"
@@ -119,7 +120,7 @@ export function Hero() {
         </button>
       </div>
 
-      {/* Mobile dropdown */}
+      {/* Mobile navigation */}
       <AnimatePresence>
         {menuOpen && (
           <motion.nav
@@ -165,7 +166,7 @@ export function Hero() {
         {`@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500&display=swap');`}
       </style>
 
-      {/* Keep fixed navigation outside animated sections */}
+      {/* Fixed navigation outside animated sections */}
       {createPortal(header, document.body)}
 
       {/* HOME SECTION */}
@@ -177,19 +178,17 @@ export function Hero() {
         <div className="pointer-events-none absolute -left-32 top-40 h-96 w-96 rounded-full bg-[#F4C9C9]/40 blur-3xl" />
         <div className="pointer-events-none absolute -right-24 top-20 h-96 w-96 rounded-full bg-[#F2B9BC]/40 blur-3xl" />
 
-        {/* Homepage */}
+        {/* Homepage layout */}
         <div className="relative mx-auto flex min-h-[600px] max-w-7xl flex-col justify-center px-5 pb-12 pt-8 sm:px-6 sm:pb-20 md:min-h-[730px] md:pb-24 md:pt-12">
+
+          {/* Main text */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className="relative z-20 w-full md:w-[65%]"
           >
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm sm:tracking-[0.35em]">
-              Creative Portfolio / Graphic Design
-            </p>
-
-            {/* Headline */}
+            {/* Main name */}
             <h1
               style={{
                 fontFamily: "'Bodoni Moda', Georgia, serif",
@@ -202,17 +201,19 @@ export function Hero() {
               <span className="block">Andraos</span>
             </h1>
 
+            {/* Job title */}
             <p className="mt-7 text-base font-medium uppercase tracking-[0.2em] sm:text-xl sm:tracking-[0.35em] md:text-2xl">
               Graphic Designer
             </p>
 
+            {/* Introduction */}
             <p className="mt-6 max-w-sm text-base leading-relaxed text-[#633A3E] sm:mt-8">
               I create thoughtful visual identities,
               memorable branding, and creative designs
               that bring ideas to life.
             </p>
 
-            {/* Homepage buttons */}
+            {/* Buttons */}
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
               <a
                 href="#portfolio"
