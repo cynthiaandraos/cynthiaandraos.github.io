@@ -57,6 +57,23 @@ const flyers = [
 
 type Flyer = (typeof flyers)[number];
 
+// Avoid requesting the same image repeatedly.
+const preloadedImages = new Set<string>();
+
+function preloadImage(src: string) {
+  if (preloadedImages.has(src)) return;
+
+  preloadedImages.add(src);
+
+  const image = new Image();
+
+  image.onerror = () => {
+    preloadedImages.delete(src);
+  };
+
+  image.src = src;
+}
+
 export function Flyers() {
   const [selected, setSelected] =
     useState<Flyer | null>(null);
@@ -65,6 +82,9 @@ export function Flyers() {
   const reduceMotion = useReducedMotion();
 
   const openFlyer = (flyer: Flyer) => {
+    // Start downloading the original flyer immediately.
+    preloadImage(flyer.image);
+
     setSelected(flyer);
     setZoomed(false);
   };
@@ -186,6 +206,7 @@ export function Flyers() {
                     src={flyer.cover}
                     alt={flyer.title}
                     loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
                   />
 
@@ -328,6 +349,9 @@ export function Flyers() {
                   <img
                     src={selected.image}
                     alt={selected.title}
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
                     className={
                       zoomed
                         ? "h-auto w-[900px] max-w-none"
