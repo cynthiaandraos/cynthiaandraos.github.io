@@ -17,7 +17,7 @@ import jouyProductLabel from "../assets/jouy-product-label.jpeg";
 import houseOfBeautyStorefront from "../assets/house-of-beauty-storefront.png";
 import goldenMarkCarBranding from "../assets/golden-mark-car-branding.jpeg";
 import aurelleLogo from "../assets/aurelle-logo-transparent.png";
-import snackElKhal from "../assets/snack-el-khal-logo.jpg";
+import snackElKhal from "../assets/snack-el-khal-logo.jpeg";
 
 type ProjectImage = {
   src: string;
