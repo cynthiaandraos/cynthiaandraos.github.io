@@ -6,20 +6,22 @@ import type { MouseEvent } from "react";
 export function About() {
   const reduceMotion = useReducedMotion();
 
+  const words = ["A", "little", "about", "me."];
+
+  const viewportSettings = {
+    once: true,
+    amount: 0.25,
+  };
+
   const fadeUp = {
     hidden: {
       opacity: 0,
-      y: reduceMotion ? 0 : 35,
+      y: reduceMotion ? 0 : 30,
     },
     visible: {
       opacity: 1,
       y: 0,
     },
-  };
-
-  const viewportSettings = {
-    once: true,
-    amount: 0.2,
   };
 
   const scrollToPortfolio = (
@@ -42,46 +44,77 @@ export function About() {
   return (
     <section
       id="about"
-      className="scroll-mt-24 bg-[#FFF7F2] px-5 py-20 text-[#681523] sm:px-6 md:py-24"
+      className="scroll-mt-24 overflow-hidden bg-[#FFF7F2] px-5 py-20 text-[#681523] sm:px-6 md:py-28"
     >
       <div className="mx-auto max-w-6xl">
+
         {/* Section label */}
         <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={viewportSettings}
-          transition={{
-            duration: 0.6,
-            ease: "easeOut",
-          }}
-          className="mb-5 text-sm uppercase tracking-[0.3em] text-[#A45D69]"
+          transition={{ duration: 0.6 }}
+          className="mb-6 text-sm uppercase tracking-[0.3em] text-[#A45D69]"
         >
           01 / ABOUT ME
         </motion.p>
 
-        {/* Main heading */}
+        {/* Animated headline */}
         <motion.h2
-          variants={fadeUp}
+          aria-label="A little about me."
           initial="hidden"
           whileInView="visible"
           viewport={viewportSettings}
-          transition={{
-            duration: 0.8,
-            delay: 0.1,
-            ease: "easeOut",
-          }}
-          className="mb-10 text-4xl leading-tight sm:text-5xl md:text-7xl"
+          className="mb-8 flex flex-wrap gap-x-[0.25em] overflow-hidden text-4xl leading-[1.2] sm:text-5xl md:text-7xl"
           style={{
             fontFamily: "'Bodoni Moda', Georgia, serif",
             fontWeight: 400,
           }}
         >
-          A little about me.
+          {words.map((word, index) => (
+            <motion.span
+              key={index}
+              aria-hidden="true"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: reduceMotion ? 0 : 55,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                },
+              }}
+              transition={{
+                duration: reduceMotion ? 0.01 : 0.8,
+                delay: reduceMotion ? 0 : index * 0.2,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="inline-block"
+            >
+              {word}
+            </motion.span>
+          ))}
         </motion.h2>
 
-        <div className="grid gap-10 md:grid-cols-2 md:gap-12">
-          {/* Left paragraph */}
+        {/* Animated burgundy line */}
+        <motion.div
+          initial={{ scaleX: reduceMotion ? 1 : 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={viewportSettings}
+          transition={{
+            duration: reduceMotion ? 0.01 : 1.2,
+            delay: reduceMotion ? 0 : 0.8,
+            ease: "easeInOut",
+          }}
+          style={{ transformOrigin: "left" }}
+          className="mb-12 h-[1px] w-full bg-[#850F25]"
+        />
+
+        {/* About text */}
+        <div className="grid gap-8 md:grid-cols-2 md:gap-14">
+
+          {/* Introduction */}
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -89,18 +122,19 @@ export function About() {
             viewport={viewportSettings}
             transition={{
               duration: 0.8,
-              delay: 0.2,
+              delay: 0.15,
               ease: "easeOut",
             }}
           >
             <p className="text-xl leading-relaxed md:text-2xl">
               I'm Cynthia Andraos, a graphic designer
-              passionate about turning creative ideas
-              into meaningful visual experiences.
+              with 5+ years of experience creating
+              distinctive and meaningful visual
+              experiences.
             </p>
           </motion.div>
 
-          {/* Right paragraph and specialties */}
+          {/* Description and specialties */}
           <div>
             <motion.p
               variants={fadeUp}
@@ -109,32 +143,31 @@ export function About() {
               viewport={viewportSettings}
               transition={{
                 duration: 0.8,
-                delay: 0.3,
+                delay: 0.25,
                 ease: "easeOut",
               }}
               className="mb-8 leading-8 text-[#704B50]"
             >
-              I enjoy creating distinctive visual identities,
-              memorable branding, thoughtful packaging,
-              and engaging social media designs.
-              My goal is to combine creativity and
-              clear communication in every project.
+              I specialize in brand identity, packaging,
+              social media design, and visual storytelling.
+              My approach combines creativity, attention
+              to detail, and clear communication to bring
+              every idea to life.
             </motion.p>
 
-            {/* Specialties */}
+            {/* Animated specialties */}
             <div className="flex flex-wrap gap-3">
               {[
                 "Brand Identity",
                 "Packaging",
                 "Social Media",
-                "Print Design",
                 "Visual Storytelling",
               ].map((item, index) => (
                 <motion.span
                   key={item}
                   initial={{
                     opacity: 0,
-                    y: reduceMotion ? 0 : 20,
+                    y: reduceMotion ? 0 : 25,
                     scale: reduceMotion ? 1 : 0.95,
                   }}
                   whileInView={{
@@ -142,35 +175,38 @@ export function About() {
                     y: 0,
                     scale: 1,
                   }}
-                  viewport={{
-                    once: true,
-                    amount: 0.2,
-                  }}
+                  viewport={viewportSettings}
                   transition={{
                     duration: 0.5,
-                    delay: reduceMotion ? 0 : index * 0.1,
+                    delay: reduceMotion ? 0 : 0.2 + index * 0.12,
                     ease: "easeOut",
                   }}
                   whileHover={
                     reduceMotion
                       ? undefined
-                      : { y: -4, scale: 1.04 }
+                      : {
+                          y: -4,
+                          scale: 1.04,
+                          backgroundColor: "#850F25",
+                          color: "#FFFFFF",
+                          borderColor: "#850F25",
+                        }
                   }
-                  className="rounded-full border border-[#D9B4B9] px-5 py-3 text-sm"
+                  className="cursor-default rounded-full border border-[#D9B4B9] px-5 py-3 text-sm"
                 >
                   {item}
                 </motion.span>
               ))}
             </div>
 
-            {/* About Me buttons */}
+            {/* Animated buttons */}
             <motion.div
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
               viewport={viewportSettings}
               transition={{
-                duration: 0.7,
+                duration: 0.8,
                 delay: 0.4,
                 ease: "easeOut",
               }}
@@ -193,13 +229,10 @@ export function About() {
                 className="inline-flex w-full items-center justify-center gap-3 bg-[#850F25] px-6 py-4 text-center text-sm font-medium text-white transition-colors hover:bg-[#65101E] sm:w-auto"
               >
                 EXPLORE MY WORK
-                <ArrowDown
-                  size={18}
-                  aria-hidden="true"
-                />
+                <ArrowDown size={18} aria-hidden="true" />
               </motion.a>
 
-              {/* Download New CV */}
+              {/* Download CV */}
               <motion.a
                 href={`${import.meta.env.BASE_URL}CV-cynthia.pdf`}
                 download="CV-cynthia.pdf"
@@ -215,7 +248,7 @@ export function About() {
                 }
                 className="inline-flex w-full items-center justify-center gap-3 border border-[#850F25] bg-[#FFF7F2] px-6 py-4 text-center text-sm font-medium text-[#850F25] transition-colors hover:bg-[#F3D9D9] sm:w-auto"
               >
-                <Download size={18} />
+                <Download size={18} aria-hidden="true" />
                 DOWNLOAD MY CV
               </motion.a>
             </motion.div>
