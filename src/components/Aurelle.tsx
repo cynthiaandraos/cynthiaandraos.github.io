@@ -182,7 +182,6 @@ export function Aurelle() {
   const handleTouchStart = (
     event: TouchEvent<HTMLDivElement>
   ) => {
-    // Enable swipe navigation on phones only.
     if (
       window.matchMedia("(min-width: 640px)").matches
     ) {
@@ -292,7 +291,6 @@ export function Aurelle() {
       className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24 text-[#681523]"
     >
       <div className="mx-auto max-w-7xl">
-
         {/* Section heading */}
         <motion.div
           initial={{
@@ -314,18 +312,16 @@ export function Aurelle() {
             02 / PACKAGING & LABELS
           </p>
 
+          {/* Bold italic heading matching 5 Beans */}
           <h2
-            className="text-5xl text-[#850F25] md:text-7xl"
+            className="text-5xl italic text-[#850F25] md:text-7xl"
             style={{
               fontFamily:
                 "'Bodoni Moda', Georgia, serif",
-              fontWeight: 400,
+              fontWeight: 700,
             }}
           >
-            AURELLE{" "}
-            <span className="italic">
-              Skincare
-            </span>
+            Aurelle SkinCare
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
