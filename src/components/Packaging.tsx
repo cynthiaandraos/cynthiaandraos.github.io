@@ -205,10 +205,9 @@ export function Packaging() {
   return (
     <section
       id="packaging"
-      className="bg-[#FFF7F2] px-6 py-24 text-[#681523]"
+      className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24 text-[#681523]"
     >
       <div className="mx-auto max-w-7xl">
-        {/* Section heading */}
         <motion.div
           initial={{
             opacity: 0,
@@ -226,7 +225,7 @@ export function Packaging() {
           className="mb-14 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
-            03 / PACKAGING & LABELS
+            01 / PACKAGING & LABELS
           </p>
 
           <h2
@@ -253,7 +252,6 @@ export function Packaging() {
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
-        {/* Five project cards */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {collections.map((collection, index) => (
             <motion.article
@@ -292,7 +290,6 @@ export function Packaging() {
                 className="flex h-full w-full cursor-pointer flex-col text-left"
                 aria-label={`Open ${collection.title} gallery`}
               >
-                {/* Creative cover with consistent sizing */}
                 <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F8F0EC]">
                   <img
                     src={collection.cover}
@@ -305,13 +302,11 @@ export function Packaging() {
                     }`}
                   />
 
-                  {/* White arrow */}
                   <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#681523] shadow-sm">
                     <ArrowUpRight size={20} />
                   </div>
                 </div>
 
-                {/* Project details */}
                 <div className="flex w-full flex-1 flex-col p-6">
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {collection.category}
@@ -343,7 +338,6 @@ export function Packaging() {
         </div>
       </div>
 
-      {/* Gallery popup */}
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -379,7 +373,6 @@ export function Packaging() {
               }
               className="relative max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-3xl bg-[#FFF7F2] p-4 shadow-2xl md:p-8"
             >
-              {/* Close button */}
               <button
                 type="button"
                 onClick={closeCollection}
@@ -389,7 +382,6 @@ export function Packaging() {
                 <X size={22} />
               </button>
 
-              {/* Gallery title */}
               <div className="mb-6 pr-12">
                 <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[#A45D69]">
                   5 Beans Coffee Shop
@@ -407,7 +399,6 @@ export function Packaging() {
                 </h3>
               </div>
 
-              {/* Original packaging and label photos */}
               <div className="relative flex min-h-[260px] items-center justify-center overflow-hidden rounded-2xl bg-[#F8F0EC]">
                 <AnimatePresence mode="wait">
                   <motion.img
@@ -435,7 +426,6 @@ export function Packaging() {
                   />
                 </AnimatePresence>
 
-                {/* Gallery arrows */}
                 {selected.images.length > 1 && (
                   <>
                     <button
@@ -459,7 +449,6 @@ export function Packaging() {
                 )}
               </div>
 
-              {/* Image caption */}
               <div className="mt-5 text-center">
                 <p className="text-sm font-medium text-[#681523]">
                   {selected.images[activeImage].label}
@@ -471,7 +460,6 @@ export function Packaging() {
                 </p>
               </div>
 
-              {/* Original image thumbnails */}
               <div className="mt-5 flex flex-wrap justify-center gap-3">
                 {selected.images.map(
                   (image, index) => (
