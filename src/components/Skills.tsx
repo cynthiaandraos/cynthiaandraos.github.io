@@ -169,10 +169,10 @@ export function Skills() {
         </div>
       </section>
 
-      {/* MY SERVICES - MATCHING SKILLS DESIGN */}
+      {/* MY SERVICES */}
       <section
         id="services"
-        className="bg-[#FFF7F2] px-6 py-20"
+        className="bg-[#FFF7F2] px-6 pt-16 pb-8"
       >
         <div className="mx-auto max-w-7xl">
           {/* Services heading */}
@@ -211,7 +211,7 @@ export function Skills() {
             </p>
           </motion.div>
 
-          {/* Services cards - same style as Skills */}
+          {/* Services cards */}
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
             {services.map((service, index) => {
               const Icon = service.icon;
@@ -262,40 +262,6 @@ export function Skills() {
               );
             })}
           </div>
-
-          {/* Contact button */}
-          <motion.div
-            variants={reveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{
-              once: true,
-              amount: 0.5,
-            }}
-            transition={{
-              duration: 0.8,
-              ease: "easeOut",
-            }}
-            className="mt-14 text-center"
-          >
-            <motion.a
-              href="#contact"
-              whileHover={
-                reduceMotion
-                  ? undefined
-                  : { y: -4, scale: 1.04 }
-              }
-              whileTap={
-                reduceMotion
-                  ? undefined
-                  : { scale: 0.98 }
-              }
-              className="inline-flex items-center gap-3 rounded-full bg-[#850F25] px-8 py-4 text-white transition-colors hover:bg-[#681523]"
-            >
-              Let's Work Together
-              <span aria-hidden="true">↗</span>
-            </motion.a>
-          </motion.div>
         </div>
       </section>
     </>
