@@ -25,26 +25,41 @@ const campaigns = [
 ];
 
 export function AurelleAdvertising() {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] =
+    useState<number | null>(null);
 
   const selected =
-    selectedIndex === null ? null : campaigns[selectedIndex];
+    selectedIndex === null
+      ? null
+      : campaigns[selectedIndex];
 
   useEffect(() => {
     if (selectedIndex === null) return;
 
-    const previousOverflow = document.body.style.overflow;
+    const previousOverflow =
+      document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelectedIndex(null);
+      if (event.key === "Escape") {
+        setSelectedIndex(null);
+      }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow =
+        previousOverflow;
+
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
     };
   }, [selectedIndex]);
 
@@ -54,31 +69,46 @@ export function AurelleAdvertising() {
       className="bg-[#FFF7F2] px-6 py-20 md:px-12"
     >
       <div className="mx-auto max-w-7xl">
+
+        {/* Section heading */}
         <div className="mb-14 text-center">
           <h2
-            className="mb-5 text-4xl text-[#681523] md:text-5xl"
-            style={{ fontFamily: "'Bodoni Moda', serif" }}
+            className="mb-5 text-5xl italic text-[#850F25] md:text-7xl"
+            style={{
+              fontFamily:
+                "'Bodoni Moda', Georgia, serif",
+              fontWeight: 700,
+            }}
           >
-            AURELLE Advertising Campaign
+            Aurelle Advertising Campaign
           </h2>
 
           <p className="mx-auto max-w-2xl text-[#76565B]">
-            A collection of luxury skincare advertisements and
-            elegant beauty campaigns.
+            A collection of luxury skincare advertisements
+            and elegant beauty campaigns.
           </p>
         </div>
 
+        {/* Advertising project cards */}
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-2">
           {campaigns.map((campaign, index) => (
             <motion.button
               key={campaign.title}
               type="button"
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: 25,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
               viewport={{ once: true }}
               whileHover={{ y: -6 }}
               transition={{ duration: 0.4 }}
-              onClick={() => setSelectedIndex(index)}
+              onClick={() =>
+                setSelectedIndex(index)
+              }
               className="group overflow-hidden rounded-xl bg-white text-left shadow-sm transition-shadow hover:shadow-xl"
             >
               <div className="aspect-[4/3] overflow-hidden bg-[#F2E8E4]">
@@ -97,7 +127,10 @@ export function AurelleAdvertising() {
 
                 <h3
                   className="text-2xl text-[#681523]"
-                  style={{ fontFamily: "'Bodoni Moda', serif" }}
+                  style={{
+                    fontFamily:
+                      "'Bodoni Moda', serif",
+                  }}
                 >
                   {campaign.title}
                 </h3>
@@ -111,6 +144,7 @@ export function AurelleAdvertising() {
         </div>
       </div>
 
+      {/* Full-screen advertisement viewer */}
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -120,13 +154,17 @@ export function AurelleAdvertising() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSelectedIndex(null)}
+            onClick={() =>
+              setSelectedIndex(null)
+            }
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 md:p-10"
           >
             <button
               type="button"
               aria-label="Close advertisement"
-              onClick={() => setSelectedIndex(null)}
+              onClick={() =>
+                setSelectedIndex(null)
+              }
               className="absolute right-5 top-5 z-20 rounded-full bg-white/10 p-3 text-white hover:bg-white/20"
             >
               <X size={28} />
@@ -134,7 +172,9 @@ export function AurelleAdvertising() {
 
             <div
               className="flex max-h-full w-full max-w-6xl flex-col items-center"
-              onClick={(event) => event.stopPropagation()}
+              onClick={(event) =>
+                event.stopPropagation()
+              }
             >
               <img
                 src={selected.image}
@@ -144,7 +184,10 @@ export function AurelleAdvertising() {
 
               <h3
                 className="mt-5 text-center text-xl text-white"
-                style={{ fontFamily: "'Bodoni Moda', serif" }}
+                style={{
+                  fontFamily:
+                    "'Bodoni Moda', serif",
+                }}
               >
                 {selected.title}
               </h3>
