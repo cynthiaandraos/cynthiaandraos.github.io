@@ -1,6 +1,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { Download, ArrowDown } from "lucide-react";
+import type { MouseEvent } from "react";
 
 export function About() {
   const reduceMotion = useReducedMotion();
@@ -22,7 +23,7 @@ export function About() {
   };
 
   const scrollToPortfolio = (
-    event: React.MouseEvent<HTMLAnchorElement>
+    event: MouseEvent<HTMLAnchorElement>
   ) => {
     const portfolio = document.getElementById("portfolio");
 
@@ -50,7 +51,10 @@ export function About() {
           initial="hidden"
           whileInView="visible"
           viewport={viewportSettings}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{
+            duration: 0.6,
+            ease: "easeOut",
+          }}
           className="mb-5 text-sm uppercase tracking-[0.3em] text-[#A45D69]"
         >
           01 / ABOUT ME
@@ -138,7 +142,10 @@ export function About() {
                     y: 0,
                     scale: 1,
                   }}
-                  viewport={{ once: true, amount: 0.2 }}
+                  viewport={{
+                    once: true,
+                    amount: 0.2,
+                  }}
                   transition={{
                     duration: 0.5,
                     delay: reduceMotion ? 0 : index * 0.1,
@@ -186,13 +193,16 @@ export function About() {
                 className="inline-flex w-full items-center justify-center gap-3 bg-[#850F25] px-6 py-4 text-center text-sm font-medium text-white transition-colors hover:bg-[#65101E] sm:w-auto"
               >
                 EXPLORE MY WORK
-                <ArrowDown size={18} aria-hidden="true" />
+                <ArrowDown
+                  size={18}
+                  aria-hidden="true"
+                />
               </motion.a>
 
-              {/* Download CV */}
+              {/* Download updated 2026 CV */}
               <motion.a
-                href={`${import.meta.env.BASE_URL}Cynthia-Andraos-CV.pdf`}
-                download="Cynthia-Andraos-CV.pdf"
+                href={`${import.meta.env.BASE_URL}Cynthia-Andraos-CV-2026.pdf`}
+                download="Cynthia-Andraos-CV-2026.pdf"
                 whileHover={
                   reduceMotion
                     ? undefined
