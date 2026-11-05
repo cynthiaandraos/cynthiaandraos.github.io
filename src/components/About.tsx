@@ -8,9 +8,16 @@ export function About() {
 
   const words = ["A", "little", "about", "me."];
 
+  const specialties = [
+    "Brand Identity",
+    "Packaging",
+    "Social Media",
+    "Visual Storytelling",
+  ];
+
   const viewportSettings = {
     once: true,
-    amount: 0.25,
+    amount: 0.2,
   };
 
   const fadeUp = {
@@ -46,26 +53,34 @@ export function About() {
       id="about"
       className="scroll-mt-24 overflow-hidden bg-[#FFF7F2] px-5 py-20 text-[#681523] sm:px-6 md:py-28"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto flex max-w-6xl flex-col items-center text-center">
 
-        {/* Section label */}
+        {/* Centered section label */}
         <motion.p
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            y: reduceMotion ? 0 : 15,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
           viewport={viewportSettings}
-          transition={{ duration: 0.6 }}
+          transition={{
+            duration: 0.6,
+          }}
           className="mb-6 text-sm uppercase tracking-[0.3em] text-[#A45D69]"
         >
           01 / ABOUT ME
         </motion.p>
 
-        {/* Animated headline */}
+        {/* Centered animated heading */}
         <motion.h2
           aria-label="A little about me."
           initial="hidden"
           whileInView="visible"
           viewport={viewportSettings}
-          className="mb-8 flex flex-wrap gap-x-[0.25em] overflow-hidden text-4xl leading-[1.2] sm:text-5xl md:text-7xl"
+          className="mb-8 flex flex-wrap justify-center gap-x-[0.25em] text-center text-4xl leading-[1.2] sm:text-5xl md:text-7xl"
           style={{
             fontFamily: "'Bodoni Moda', Georgia, serif",
             fontWeight: 400,
@@ -73,7 +88,7 @@ export function About() {
         >
           {words.map((word, index) => (
             <motion.span
-              key={index}
+              key={word}
               aria-hidden="true"
               variants={{
                 hidden: {
@@ -99,161 +114,153 @@ export function About() {
 
         {/* Animated burgundy line */}
         <motion.div
-          initial={{ scaleX: reduceMotion ? 1 : 0 }}
-          whileInView={{ scaleX: 1 }}
+          initial={{
+            scaleX: reduceMotion ? 1 : 0,
+          }}
+          whileInView={{
+            scaleX: 1,
+          }}
           viewport={viewportSettings}
           transition={{
             duration: reduceMotion ? 0.01 : 1.2,
             delay: reduceMotion ? 0 : 0.8,
             ease: "easeInOut",
           }}
-          style={{ transformOrigin: "left" }}
-          className="mb-12 h-[1px] w-full bg-[#850F25]"
+          style={{
+            transformOrigin: "center",
+          }}
+          className="mb-12 h-[1px] w-full max-w-4xl bg-[#850F25]"
         />
 
-        {/* About text */}
-        <div className="grid gap-8 md:grid-cols-2 md:gap-14">
+        {/* Centered introduction */}
+        <motion.p
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          transition={{
+            duration: 0.8,
+            delay: 0.15,
+            ease: "easeOut",
+          }}
+          className="mx-auto mb-6 max-w-4xl text-center text-xl leading-relaxed sm:text-2xl"
+        >
+          I'm Cynthia Andraos, a graphic designer with 5+ years
+          of experience creating distinctive and meaningful
+          visual experiences.
+        </motion.p>
 
-          {/* Introduction */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewportSettings}
-            transition={{
-              duration: 0.8,
-              delay: 0.15,
-              ease: "easeOut",
-            }}
-          >
-            <p className="text-xl leading-relaxed md:text-2xl">
-              I'm Cynthia Andraos, a graphic designer
-              with 5+ years of experience creating
-              distinctive and meaningful visual
-              experiences.
-            </p>
-          </motion.div>
+        {/* Centered description */}
+        <motion.p
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          transition={{
+            duration: 0.8,
+            delay: 0.25,
+            ease: "easeOut",
+          }}
+          className="mx-auto mb-10 max-w-3xl text-center text-base leading-8 text-[#704B50]"
+        >
+          I specialize in brand identity, packaging, social media
+          design, and visual storytelling. My approach combines
+          creativity, attention to detail, and clear communication
+          to bring every idea to life.
+        </motion.p>
 
-          {/* Description and specialties */}
-          <div>
-            <motion.p
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
+        {/* Centered animated specialties */}
+        <div className="mb-10 flex max-w-4xl flex-wrap justify-center gap-3">
+          {specialties.map((item, index) => (
+            <motion.span
+              key={item}
+              initial={{
+                opacity: 0,
+                y: reduceMotion ? 0 : 25,
+                scale: reduceMotion ? 1 : 0.95,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+              }}
               viewport={viewportSettings}
               transition={{
-                duration: 0.8,
-                delay: 0.25,
+                duration: 0.5,
+                delay: reduceMotion ? 0 : 0.2 + index * 0.12,
                 ease: "easeOut",
               }}
-              className="mb-8 leading-8 text-[#704B50]"
+              whileHover={
+                reduceMotion
+                  ? undefined
+                  : {
+                      y: -4,
+                      scale: 1.04,
+                      backgroundColor: "#850F25",
+                      color: "#FFFFFF",
+                      borderColor: "#850F25",
+                    }
+              }
+              className="cursor-default rounded-full border border-[#D9B4B9] px-5 py-3 text-sm"
             >
-              I specialize in brand identity, packaging,
-              social media design, and visual storytelling.
-              My approach combines creativity, attention
-              to detail, and clear communication to bring
-              every idea to life.
-            </motion.p>
-
-            {/* Animated specialties */}
-            <div className="flex flex-wrap gap-3">
-              {[
-                "Brand Identity",
-                "Packaging",
-                "Social Media",
-                "Visual Storytelling",
-              ].map((item, index) => (
-                <motion.span
-                  key={item}
-                  initial={{
-                    opacity: 0,
-                    y: reduceMotion ? 0 : 25,
-                    scale: reduceMotion ? 1 : 0.95,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                  }}
-                  viewport={viewportSettings}
-                  transition={{
-                    duration: 0.5,
-                    delay: reduceMotion ? 0 : 0.2 + index * 0.12,
-                    ease: "easeOut",
-                  }}
-                  whileHover={
-                    reduceMotion
-                      ? undefined
-                      : {
-                          y: -4,
-                          scale: 1.04,
-                          backgroundColor: "#850F25",
-                          color: "#FFFFFF",
-                          borderColor: "#850F25",
-                        }
-                  }
-                  className="cursor-default rounded-full border border-[#D9B4B9] px-5 py-3 text-sm"
-                >
-                  {item}
-                </motion.span>
-              ))}
-            </div>
-
-            {/* Animated buttons */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportSettings}
-              transition={{
-                duration: 0.8,
-                delay: 0.4,
-                ease: "easeOut",
-              }}
-              className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4"
-            >
-              {/* Explore My Work */}
-              <motion.a
-                href="#portfolio"
-                onClick={scrollToPortfolio}
-                whileHover={
-                  reduceMotion
-                    ? undefined
-                    : { y: -3, scale: 1.03 }
-                }
-                whileTap={
-                  reduceMotion
-                    ? undefined
-                    : { scale: 0.98 }
-                }
-                className="inline-flex w-full items-center justify-center gap-3 bg-[#850F25] px-6 py-4 text-center text-sm font-medium text-white transition-colors hover:bg-[#65101E] sm:w-auto"
-              >
-                EXPLORE MY WORK
-                <ArrowDown size={18} aria-hidden="true" />
-              </motion.a>
-
-              {/* Download CV */}
-              <motion.a
-                href={`${import.meta.env.BASE_URL}CV-cynthia.pdf`}
-                download="CV-cynthia.pdf"
-                whileHover={
-                  reduceMotion
-                    ? undefined
-                    : { y: -3, scale: 1.03 }
-                }
-                whileTap={
-                  reduceMotion
-                    ? undefined
-                    : { scale: 0.98 }
-                }
-                className="inline-flex w-full items-center justify-center gap-3 border border-[#850F25] bg-[#FFF7F2] px-6 py-4 text-center text-sm font-medium text-[#850F25] transition-colors hover:bg-[#F3D9D9] sm:w-auto"
-              >
-                <Download size={18} aria-hidden="true" />
-                DOWNLOAD MY CV
-              </motion.a>
-            </motion.div>
-          </div>
+              {item}
+            </motion.span>
+          ))}
         </div>
+
+        {/* Centered animated buttons */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          transition={{
+            duration: 0.8,
+            delay: 0.4,
+            ease: "easeOut",
+          }}
+          className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:gap-4"
+        >
+          {/* Explore My Work */}
+          <motion.a
+            href="#portfolio"
+            onClick={scrollToPortfolio}
+            whileHover={
+              reduceMotion
+                ? undefined
+                : { y: -3, scale: 1.03 }
+            }
+            whileTap={
+              reduceMotion
+                ? undefined
+                : { scale: 0.98 }
+            }
+            className="inline-flex w-full items-center justify-center gap-3 bg-[#850F25] px-6 py-4 text-center text-sm font-medium text-white transition-colors hover:bg-[#65101E] sm:w-auto"
+          >
+            EXPLORE MY WORK
+            <ArrowDown size={18} aria-hidden="true" />
+          </motion.a>
+
+          {/* Download CV */}
+          <motion.a
+            href={`${import.meta.env.BASE_URL}CV-cynthia.pdf`}
+            download="CV-cynthia.pdf"
+            whileHover={
+              reduceMotion
+                ? undefined
+                : { y: -3, scale: 1.03 }
+            }
+            whileTap={
+              reduceMotion
+                ? undefined
+                : { scale: 0.98 }
+            }
+            className="inline-flex w-full items-center justify-center gap-3 border border-[#850F25] bg-[#FFF7F2] px-6 py-4 text-center text-sm font-medium text-[#850F25] transition-colors hover:bg-[#F3D9D9] sm:w-auto"
+          >
+            <Download size={18} aria-hidden="true" />
+            DOWNLOAD MY CV
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   );
