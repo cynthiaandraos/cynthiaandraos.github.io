@@ -183,7 +183,7 @@ export function Aurelle() {
           className="mb-14 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
-            04 / SKINCARE PACKAGING
+            02 / PACKAGING & LABELS
           </p>
 
           <h2
@@ -214,7 +214,10 @@ export function Aurelle() {
                 opacity: 0,
                 y: reduceMotion ? 0 : 40,
               }}
-              whileInView={{ opacity: 1, y: 0 }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{
                 duration: 0.65,
