@@ -18,11 +18,11 @@ import houseOfBeautyStorefront from "../assets/house-of-beauty-storefront.png";
 import goldenMarkCarBranding from "../assets/golden-mark-car-branding.jpeg";
 import aurelleLogo from "../assets/aurelle-logo-transparent.png";
 import snackElKhal from "../assets/snack-el-khal-logo.png";
-import snackMenuAppetizers from "../assets/snack-el-khal-menu-appetizers.jpg";
-import snackMenuSandwiches from "../assets/snack-el-khal-menu-sandwiches.jpg";
-import snackMenuBurgers from "../assets/snack-el-khal-menu-burgers.jpg";
-import snackPackaging from "../assets/snack-el-khal-packaging.jpg";
-import snackSignage from "../assets/snack-el-khal-signage.jpg";
+import snackMenuAppetizers from "../assets/snack-el-khal-menu-appetizers.jpeg";
+import snackMenuSandwiches from "../assets/snack-el-khal-menu-sandwiches.jpeg";
+import snackMenuBurgers from "../assets/snack-el-khal-menu-burgers.jpeg";
+import snackPackaging from "../assets/snack-el-khal-packaging.jpeg";
+import snackSignage from "../assets/snack-el-khal-signage.jpeg";
 
 type ProjectImage = {
   src: string;
