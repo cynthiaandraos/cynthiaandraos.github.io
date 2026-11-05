@@ -199,10 +199,10 @@ export function About() {
                 />
               </motion.a>
 
-              {/* Download updated 2026 CV */}
+              {/* Download New CV */}
               <motion.a
-                href={`${import.meta.env.BASE_URL}Cynthia-Andraos-CV-2026.pdf`}
-                download="Cynthia-Andraos-CV-2026.pdf"
+                href={`${import.meta.env.BASE_URL}CV-cynthia.pdf`}
+                download="CV-cynthia.pdf"
                 whileHover={
                   reduceMotion
                     ? undefined
