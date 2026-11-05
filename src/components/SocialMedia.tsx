@@ -215,7 +215,9 @@ export function SocialMedia() {
     event: TouchEvent<HTMLDivElement>
   ) => {
     // Swipe navigation is enabled on phones only.
-    if (window.matchMedia("(min-width: 640px)").matches) {
+    if (
+      window.matchMedia("(min-width: 640px)").matches
+    ) {
       return;
     }
 
@@ -232,7 +234,9 @@ export function SocialMedia() {
   const handleTouchEnd = (
     event: TouchEvent<HTMLDivElement>
   ) => {
-    if (!touchStart.current || !selectedProject) return;
+    if (!touchStart.current || !selectedProject) {
+      return;
+    }
 
     const touch = event.changedTouches[0];
 
@@ -249,11 +253,14 @@ export function SocialMedia() {
 
     touchStart.current = null;
 
-    if (selectedProject.images.length <= 1) return;
+    if (selectedProject.images.length <= 1) {
+      return;
+    }
 
     if (
       Math.abs(differenceX) > 45 &&
-      Math.abs(differenceX) > Math.abs(differenceY) * 1.2
+      Math.abs(differenceX) >
+        Math.abs(differenceY) * 1.2
     ) {
       if (differenceX < 0) {
         nextImage();
@@ -287,14 +294,19 @@ export function SocialMedia() {
       if (event.key === "ArrowLeft") {
         setActiveImage(
           (current) =>
-            (current - 1 + selectedProject.images.length) %
+            (current -
+              1 +
+              selectedProject.images.length) %
             selectedProject.images.length
         );
         setZoomed(false);
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
 
     const focusTimer = window.setTimeout(() => {
       mobileCloseRef.current?.focus();
@@ -319,6 +331,7 @@ export function SocialMedia() {
       className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24 text-[#681523]"
     >
       <div className="mx-auto max-w-7xl">
+
         {/* Section heading */}
         <motion.div
           initial={{ opacity: 0, y: 35 }}
@@ -331,16 +344,16 @@ export function SocialMedia() {
             SOCIAL MEDIA PORTFOLIO
           </p>
 
+          {/* Bold italic title */}
           <h2
-            className="text-5xl text-[#850F25] md:text-7xl"
+            className="text-5xl italic text-[#850F25] md:text-7xl"
             style={{
               fontFamily:
                 "'Bodoni Moda', Georgia, serif",
-              fontWeight: 400,
+              fontWeight: 700,
             }}
           >
-            Social Media{" "}
-            <span className="italic">Design</span>
+            Social Media Design
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
@@ -454,7 +467,9 @@ export function SocialMedia() {
                 scale: 0.97,
               }}
               transition={{ duration: 0.25 }}
-              onClick={(event) => event.stopPropagation()}
+              onClick={(event) =>
+                event.stopPropagation()
+              }
               role="dialog"
               aria-modal="true"
               aria-label={`${selectedProject.title} gallery`}
@@ -479,6 +494,7 @@ export function SocialMedia() {
                 </div>
 
                 <div className="flex shrink-0 gap-2">
+
                   {/* Desktop zoom */}
                   <button
                     type="button"
@@ -553,7 +569,10 @@ export function SocialMedia() {
                   </div>
                 ) : (
                   <div className="flex h-full w-full items-center justify-center px-4 pb-24 pt-20 sm:p-4">
-                    <AnimatePresence mode="wait" initial={false}>
+                    <AnimatePresence
+                      mode="wait"
+                      initial={false}
+                    >
                       <motion.img
                         key={`${selectedProject.id}-${activeImage}`}
                         src={selectedProject.images[activeImage].src}
@@ -631,27 +650,29 @@ export function SocialMedia() {
 
               {/* Desktop thumbnails */}
               <div className="hidden shrink-0 gap-2 overflow-x-auto border-t border-[#E8D2CF] bg-[#FFF7F2] p-3 sm:flex">
-                {selectedProject.images.map((image, index) => (
-                  <button
-                    key={`${selectedProject.id}-${index}`}
-                    type="button"
-                    onClick={() => selectImage(index)}
-                    aria-label={`View ${image.title}`}
-                    aria-pressed={activeImage === index}
-                    className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition ${
-                      activeImage === index
-                        ? "border-[#850F25]"
-                        : "border-transparent opacity-60 hover:opacity-100"
-                    }`}
-                  >
-                    <img
-                      src={image.src}
-                      alt={image.title}
-                      loading="lazy"
-                      className="h-full w-full object-contain"
-                    />
-                  </button>
-                ))}
+                {selectedProject.images.map(
+                  (image, index) => (
+                    <button
+                      key={`${selectedProject.id}-${index}`}
+                      type="button"
+                      onClick={() => selectImage(index)}
+                      aria-label={`View ${image.title}`}
+                      aria-pressed={activeImage === index}
+                      className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition ${
+                        activeImage === index
+                          ? "border-[#850F25]"
+                          : "border-transparent opacity-60 hover:opacity-100"
+                      }`}
+                    >
+                      <img
+                        src={image.src}
+                        alt={image.title}
+                        loading="lazy"
+                        className="h-full w-full object-contain"
+                      />
+                    </button>
+                  )
+                )}
               </div>
             </motion.div>
           </motion.div>
