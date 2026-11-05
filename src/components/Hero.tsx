@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 import caLogo from "../assets/CA-logo.png";
-import cynthiaPhoto from "../assets/cynthia.jpg";
+import cynthiaPhoto from "../assets/cynthia.png";
 
 const navigation = [
   { label: "Home", href: "#home" },
@@ -66,6 +66,7 @@ export function Hero() {
       }}
     >
       <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-3 px-5 py-3 md:px-6">
+
         {/* CA Logo */}
         <a
           href="#home"
