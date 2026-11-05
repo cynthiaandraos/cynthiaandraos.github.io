@@ -12,9 +12,14 @@ import {
   ZoomOut,
 } from "lucide-react";
 
+// ORIGINAL FLYER DESIGNS
 import deliveryFlyer from "../assets/5beans-delivery-flyer.png";
 import branchFlyer from "../assets/5beans-branch-flyer.png";
 import myFitnessFlyer from "../assets/my-fitness-training-flyer.jpeg";
+
+// PORTFOLIO COVER IMAGES
+import deliveryCover from "../assets/5beans-delivery-cover.png";
+import branchCover from "../assets/5beans-branch-flyer-cover.png";
 
 const flyers = [
   {
@@ -22,6 +27,7 @@ const flyers = [
     title: "Delivery Promotional Flyer",
     client: "5 Beans Coffee Shop",
     category: "Promotional Flyer Design",
+    cover: deliveryCover,
     image: deliveryFlyer,
     description:
       "A promotional flyer highlighting the coffee shop's delivery service, menu platforms, and ordering information.",
@@ -31,6 +37,7 @@ const flyers = [
     title: "Branch Promotional Flyer",
     client: "5 Beans Coffee Shop",
     category: "Marketing Flyer Design",
+    cover: branchCover,
     image: branchFlyer,
     description:
       "A promotional flyer featuring the FortyFour Tower location, product photography, and a scannable menu.",
@@ -40,6 +47,7 @@ const flyers = [
     title: "Personal Training Flyer",
     client: "MY Fitness by Myriam",
     category: "Fitness Promotional Flyer",
+    cover: myFitnessFlyer,
     image: myFitnessFlyer,
     description:
       "A promotional fitness flyer highlighting personal training services and the MY Fitness brand identity.",
@@ -70,8 +78,7 @@ export function Flyers() {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setSelected(null);
-        setZoomed(false);
+        closeFlyer();
       }
     };
 
@@ -95,7 +102,8 @@ export function Flyers() {
       className="bg-[#FFF7F2] px-6 py-24 text-[#681523]"
     >
       <div className="mx-auto max-w-6xl">
-        {/* Section heading */}
+
+        {/* SECTION HEADING */}
         <motion.div
           initial={{
             opacity: 0,
@@ -126,14 +134,13 @@ export function Flyers() {
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
             Promotional and marketing flyers created for
-            different brands. Explore each design
-            in full detail.
+            different brands. Explore each design in full detail.
           </p>
 
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
-        {/* Flyer cards */}
+        {/* FLYER CARDS */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {flyers.map((flyer, index) => (
             <motion.article
@@ -152,10 +159,14 @@ export function Flyers() {
               }}
               transition={{
                 duration: 0.65,
-                delay: reduceMotion ? 0 : index * 0.15,
+                delay: reduceMotion
+                  ? 0
+                  : index * 0.15,
               }}
               whileHover={
-                reduceMotion ? undefined : { y: -7 }
+                reduceMotion
+                  ? undefined
+                  : { y: -7 }
               }
               className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
@@ -163,15 +174,16 @@ export function Flyers() {
                 type="button"
                 onClick={() => openFlyer(flyer)}
                 aria-label={`Open ${flyer.title}`}
-                className="block w-full cursor-pointer text-left"
+                className="flex h-full w-full flex-col cursor-pointer text-left"
               >
-                {/* Flyer preview */}
-                <div className="relative flex h-[430px] items-center justify-center overflow-hidden bg-[#F7EDE8] p-6 sm:h-[500px]">
+
+                {/* 4:3 LANDSCAPE COVER */}
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7EDE8]">
                   <img
-                    src={flyer.image}
+                    src={flyer.cover}
                     alt={flyer.title}
                     loading="lazy"
-                    className="h-full w-full object-contain drop-shadow-lg transition-transform duration-700 group-hover:scale-[1.04]"
+                    className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
                   />
 
                   <div className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-sm">
@@ -179,8 +191,8 @@ export function Flyers() {
                   </div>
                 </div>
 
-                {/* Flyer information */}
-                <div className="p-7">
+                {/* FLYER INFORMATION */}
+                <div className="flex w-full flex-1 flex-col p-7">
                   <p className="mb-2 text-xs uppercase tracking-[0.17em] text-[#A45D69]">
                     {flyer.category}
                   </p>
@@ -190,6 +202,7 @@ export function Flyers() {
                     style={{
                       fontFamily:
                         "'Bodoni Moda', Georgia, serif",
+                      fontWeight: 400,
                     }}
                   >
                     {flyer.title}
@@ -203,18 +216,19 @@ export function Flyers() {
                     {flyer.description}
                   </p>
 
-                  <div className="mt-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#850F25]">
+                  <div className="mt-auto flex items-center gap-2 pt-6 text-xs font-semibold uppercase tracking-[0.15em] text-[#850F25]">
                     View Full Design
                     <ArrowUpRight size={17} />
                   </div>
                 </div>
+
               </button>
             </motion.article>
           ))}
         </div>
       </div>
 
-      {/* Full-size flyer viewer */}
+      {/* FULL-SIZE ORIGINAL FLYER VIEWER */}
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -236,7 +250,10 @@ export function Flyers() {
                 y: 0,
                 scale: 1,
               }}
-              exit={{ opacity: 0, scale: 0.97 }}
+              exit={{
+                opacity: 0,
+                scale: 0.97,
+              }}
               transition={{ duration: 0.25 }}
               role="dialog"
               aria-modal="true"
@@ -246,7 +263,8 @@ export function Flyers() {
               }
               className="flex max-h-[94vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl bg-[#FFF7F2] shadow-2xl"
             >
-              {/* Modal header */}
+
+              {/* MODAL HEADER */}
               <div className="flex items-center justify-between gap-3 border-b border-[#E8D2CF] px-4 py-4 sm:px-6">
                 <div className="min-w-0">
                   <p className="text-xs uppercase tracking-widest text-[#A45D69]">
@@ -295,7 +313,7 @@ export function Flyers() {
                 </div>
               </div>
 
-              {/* Scrollable image viewer */}
+              {/* ORIGINAL FLYER IMAGE */}
               <div className="min-h-0 flex-1 overflow-auto bg-[#F7EDE8] p-3 sm:p-6">
                 <div
                   className={
@@ -316,10 +334,12 @@ export function Flyers() {
                 </div>
               </div>
 
+              {/* MODAL FOOTER */}
               <div className="border-t border-[#E8D2CF] px-4 py-3 text-center text-xs text-[#704B50]">
                 Use the zoom button to view the flyer details.
                 Press Esc to close.
               </div>
+
             </motion.div>
           </motion.div>
         )}
