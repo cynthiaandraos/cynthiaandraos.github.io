@@ -5,7 +5,6 @@ import { X } from "lucide-react";
 
 import collectionAd from "../assets/aurelle-full-skincare-collection-ad.png";
 import radianceAd from "../assets/aurelle-natural-radiance-beauty-ad.png";
-import magazineAd from "../assets/aurelle-magazine-campaign.png";
 
 const campaigns = [
   {
@@ -17,11 +16,6 @@ const campaigns = [
     title: "Natural Radiance",
     category: "Beauty Advertising Campaign",
     image: radianceAd,
-  },
-  {
-    title: "AURELLE Magazine Campaign",
-    category: "Editorial & Magazine Design",
-    image: magazineAd,
   },
 ];
 
@@ -38,9 +32,7 @@ export function AurelleAdvertising() {
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setSelectedIndex(null);
-      }
+      if (event.key === "Escape") setSelectedIndex(null);
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -70,12 +62,12 @@ export function AurelleAdvertising() {
           </h2>
 
           <p className="mx-auto max-w-2xl text-[#76565B]">
-            A collection of luxury skincare advertisements,
-            beauty campaigns, and editorial magazine designs.
+            A collection of luxury skincare advertisements and
+            elegant beauty campaigns.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-2">
           {campaigns.map((campaign, index) => (
             <motion.button
               key={campaign.title}
@@ -161,4 +153,3 @@ export function AurelleAdvertising() {
     </section>
   );
 }
-
