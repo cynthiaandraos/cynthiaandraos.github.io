@@ -181,6 +181,22 @@ const projects: Project[] = [
   },
 ];
 
+// Cache image preloads to avoid duplicate requests.
+const preloadedImages = new Set<string>();
+
+function preloadImage(src: string) {
+  if (preloadedImages.has(src)) return;
+
+  preloadedImages.add(src);
+
+  const image = new Image();
+  image.src = src;
+
+  image.onerror = () => {
+    preloadedImages.delete(src);
+  };
+}
+
 export function Projects() {
   const [selectedProject, setSelectedProject] =
     useState<Project | null>(null);
@@ -200,6 +216,9 @@ export function Projects() {
       document.activeElement instanceof HTMLElement
         ? document.activeElement
         : null;
+
+    // Start downloading the first gallery image.
+    preloadImage(project.images[0].src);
 
     touchStart.current = null;
     setActiveImage(0);
@@ -235,6 +254,20 @@ export function Projects() {
     );
   };
 
+  // Preload the next image for smoother swiping.
+  useEffect(() => {
+    if (!selectedProject) return;
+
+    const images = selectedProject.images;
+
+    if (images.length <= 1) return;
+
+    const nextIndex =
+      (activeImage + 1) % images.length;
+
+    preloadImage(images[nextIndex].src);
+  }, [selectedProject, activeImage]);
+
   useEffect(() => {
     if (!selectedProject) return;
 
@@ -269,10 +302,7 @@ export function Projects() {
       }
     };
 
-    window.addEventListener(
-      "keydown",
-      handleKeyDown
-    );
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.body.style.overflow =
@@ -398,6 +428,7 @@ export function Projects() {
                     src={project.cover}
                     alt={project.title}
                     loading="lazy"
+                    decoding="async"
                     className="block h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
@@ -539,6 +570,9 @@ export function Projects() {
                     alt={
                       selectedProject.images[activeImage].title
                     }
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
                     draggable={false}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -632,6 +666,8 @@ export function Projects() {
                         <img
                           src={image.src}
                           alt={image.title}
+                          loading="lazy"
+                          decoding="async"
                           className="h-full w-full object-contain"
                         />
                       </button>
