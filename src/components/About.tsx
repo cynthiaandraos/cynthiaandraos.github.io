@@ -15,15 +15,17 @@ export function About() {
     "Visual Storytelling",
   ];
 
+  // Mobile-friendly viewport settings
   const viewportSettings = {
     once: true,
-    amount: 0.2,
+    amount: 0.1,
+    margin: "0px 0px -30px 0px",
   };
 
   const fadeUp = {
     hidden: {
       opacity: 0,
-      y: reduceMotion ? 0 : 30,
+      y: reduceMotion ? 0 : 24,
     },
     visible: {
       opacity: 1,
@@ -55,7 +57,7 @@ export function About() {
     >
       <div className="mx-auto flex max-w-6xl flex-col items-center text-center">
 
-        {/* Centered section label */}
+        {/* Section label */}
         <motion.p
           initial={{
             opacity: 0,
@@ -67,52 +69,57 @@ export function About() {
           }}
           viewport={viewportSettings}
           transition={{
-            duration: 0.6,
+            duration: reduceMotion ? 0.01 : 0.6,
+            ease: "easeOut",
           }}
           className="mb-6 text-sm uppercase tracking-[0.3em] text-[#A45D69]"
         >
           01 / ABOUT ME
         </motion.p>
 
-        {/* Centered animated heading */}
+        {/* Animated heading */}
         <motion.h2
           aria-label="A little about me."
           initial="hidden"
           whileInView="visible"
           viewport={viewportSettings}
-          className="mb-8 flex flex-wrap justify-center gap-x-[0.25em] text-center text-4xl leading-[1.2] sm:text-5xl md:text-7xl"
+          className="mb-8 flex flex-wrap justify-center gap-x-[0.25em] gap-y-1 text-center text-4xl leading-[1.2] sm:text-5xl md:text-7xl"
           style={{
             fontFamily: "'Bodoni Moda', Georgia, serif",
             fontWeight: 400,
           }}
         >
           {words.map((word, index) => (
-            <motion.span
+            <span
               key={word}
-              aria-hidden="true"
-              variants={{
-                hidden: {
-                  opacity: 0,
-                  y: reduceMotion ? 0 : 55,
-                },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                },
-              }}
-              transition={{
-                duration: reduceMotion ? 0.01 : 0.8,
-                delay: reduceMotion ? 0 : index * 0.2,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="inline-block"
+              className="inline-block overflow-hidden pb-[0.12em]"
             >
-              {word}
-            </motion.span>
+              <motion.span
+                aria-hidden="true"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    y: reduceMotion ? 0 : "110%",
+                  },
+                  visible: {
+                    opacity: 1,
+                    y: "0%",
+                  },
+                }}
+                transition={{
+                  duration: reduceMotion ? 0.01 : 0.75,
+                  delay: reduceMotion ? 0 : index * 0.16,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="inline-block"
+              >
+                {word}
+              </motion.span>
+            </span>
           ))}
         </motion.h2>
 
-        {/* Animated burgundy line */}
+        {/* Animated burgundy underline */}
         <motion.div
           initial={{
             scaleX: reduceMotion ? 1 : 0,
@@ -122,9 +129,9 @@ export function About() {
           }}
           viewport={viewportSettings}
           transition={{
-            duration: reduceMotion ? 0.01 : 1.2,
-            delay: reduceMotion ? 0 : 0.8,
-            ease: "easeInOut",
+            duration: reduceMotion ? 0.01 : 1,
+            delay: reduceMotion ? 0 : 0.55,
+            ease: [0.22, 1, 0.36, 1],
           }}
           style={{
             transformOrigin: "center",
@@ -132,34 +139,34 @@ export function About() {
           className="mb-12 h-[1px] w-full max-w-4xl bg-[#850F25]"
         />
 
-        {/* Centered introduction */}
+        {/* Introduction */}
         <motion.p
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportSettings}
           transition={{
-            duration: 0.8,
-            delay: 0.15,
-            ease: "easeOut",
+            duration: reduceMotion ? 0.01 : 0.75,
+            delay: reduceMotion ? 0 : 0.1,
+            ease: [0.22, 1, 0.36, 1],
           }}
-          className="mx-auto mb-6 max-w-4xl text-center text-xl leading-relaxed sm:text-2xl"
+          className="mx-auto mb-6 max-w-4xl text-center text-lg leading-relaxed sm:text-2xl"
         >
           I'm Cynthia Andraos, a graphic designer with 5+ years
           of experience creating distinctive and meaningful
           visual experiences.
         </motion.p>
 
-        {/* Centered description */}
+        {/* Description */}
         <motion.p
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportSettings}
           transition={{
-            duration: 0.8,
-            delay: 0.25,
-            ease: "easeOut",
+            duration: reduceMotion ? 0.01 : 0.75,
+            delay: reduceMotion ? 0 : 0.15,
+            ease: [0.22, 1, 0.36, 1],
           }}
           className="mx-auto mb-10 max-w-3xl text-center text-base leading-8 text-[#704B50]"
         >
@@ -169,15 +176,15 @@ export function About() {
           to bring every idea to life.
         </motion.p>
 
-        {/* Centered animated specialties */}
+        {/* Specialty tags */}
         <div className="mb-10 flex max-w-4xl flex-wrap justify-center gap-3">
           {specialties.map((item, index) => (
             <motion.span
               key={item}
               initial={{
                 opacity: 0,
-                y: reduceMotion ? 0 : 25,
-                scale: reduceMotion ? 1 : 0.95,
+                y: reduceMotion ? 0 : 20,
+                scale: reduceMotion ? 1 : 0.96,
               }}
               whileInView={{
                 opacity: 1,
@@ -186,8 +193,8 @@ export function About() {
               }}
               viewport={viewportSettings}
               transition={{
-                duration: 0.5,
-                delay: reduceMotion ? 0 : 0.2 + index * 0.12,
+                duration: reduceMotion ? 0.01 : 0.55,
+                delay: reduceMotion ? 0 : index * 0.1,
                 ease: "easeOut",
               }}
               whileHover={
@@ -208,15 +215,15 @@ export function About() {
           ))}
         </div>
 
-        {/* Centered animated buttons */}
+        {/* Action buttons */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportSettings}
           transition={{
-            duration: 0.8,
-            delay: 0.4,
+            duration: reduceMotion ? 0.01 : 0.75,
+            delay: reduceMotion ? 0 : 0.15,
             ease: "easeOut",
           }}
           className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:gap-4"
@@ -265,3 +272,4 @@ export function About() {
     </section>
   );
 }
+
