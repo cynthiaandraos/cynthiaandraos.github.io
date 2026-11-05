@@ -18,13 +18,23 @@ export default function App() {
       <Hero />
       <About />
       <Skills />
-      <Projects />
+
+      {/* PACKAGING & LABELS — FIRST PROJECTS */}
       <Packaging />
       <Aurelle />
+
+      {/* ADVERTISING */}
       <AurelleAdvertising />
+
+      {/* OTHER DESIGN PROJECTS */}
       <Flyers />
       <SocialMedia />
       <PrintDesign />
+
+      {/* LOGOS & BRAND IDENTITY — LAST PROJECT SECTION */}
+      <Projects />
+
+      {/* CONTACT */}
       <Contact />
       <Footer />
     </div>
