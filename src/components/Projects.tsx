@@ -1,5 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
+import type { TouchEvent } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowLeft,
@@ -59,7 +60,10 @@ const projects: Project[] = [
     category: "Concept Brand Identity & Logo Design",
     cover: aurelleLogo,
     images: [
-      { src: aurelleLogo, title: "AURELLE Skincare Logo" },
+      {
+        src: aurelleLogo,
+        title: "AURELLE Skincare Logo",
+      },
     ],
   },
   {
@@ -124,7 +128,10 @@ const projects: Project[] = [
     category: "Logo Design & Brand Identity",
     cover: domina,
     images: [
-      { src: domina, title: "Domina Real Estate Logo" },
+      {
+        src: domina,
+        title: "Domina Real Estate Logo",
+      },
     ],
   },
   {
@@ -132,7 +139,10 @@ const projects: Project[] = [
     category: "Logo Design & Brand Identity",
     cover: jouy,
     images: [
-      { src: jouy, title: "مونة إم جوي Logo" },
+      {
+        src: jouy,
+        title: "مونة إم جوي Logo",
+      },
       {
         src: jouyPackagingJars,
         title: "Jouy Product Packaging - Jars in Box",
@@ -163,7 +173,10 @@ const projects: Project[] = [
     category: "Logo Design & Brand Identity",
     cover: oMarket,
     images: [
-      { src: oMarket, title: "O-Market Logo" },
+      {
+        src: oMarket,
+        title: "O-Market Logo",
+      },
     ],
   },
 ];
@@ -174,9 +187,10 @@ export function Projects() {
 
   const [activeImage, setActiveImage] = useState(0);
 
-  const touchStart = useRef<{ x: number; y: number } | null>(
-    null
-  );
+  const touchStart = useRef<{
+    x: number;
+    y: number;
+  } | null>(null);
 
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -187,6 +201,7 @@ export function Projects() {
         ? document.activeElement
         : null;
 
+    touchStart.current = null;
     setActiveImage(0);
     setSelectedProject(project);
   };
@@ -223,7 +238,9 @@ export function Projects() {
   useEffect(() => {
     if (!selectedProject) return;
 
-    const previousOverflow = document.body.style.overflow;
+    const previousOverflow =
+      document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
 
     closeButtonRef.current?.focus();
@@ -244,16 +261,23 @@ export function Projects() {
       if (event.key === "ArrowLeft") {
         setActiveImage(
           (current) =>
-            (current - 1 + selectedProject.images.length) %
+            (current -
+              1 +
+              selectedProject.images.length) %
             selectedProject.images.length
         );
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow =
+        previousOverflow;
+
       window.removeEventListener(
         "keydown",
         handleKeyDown
@@ -262,9 +286,11 @@ export function Projects() {
   }, [selectedProject]);
 
   const handleTouchStart = (
-    event: React.TouchEvent<HTMLDivElement>
+    event: TouchEvent<HTMLDivElement>
   ) => {
     const touch = event.touches[0];
+
+    if (!touch) return;
 
     touchStart.current = {
       x: touch.clientX,
@@ -273,11 +299,18 @@ export function Projects() {
   };
 
   const handleTouchEnd = (
-    event: React.TouchEvent<HTMLDivElement>
+    event: TouchEvent<HTMLDivElement>
   ) => {
-    if (!touchStart.current || !selectedProject) return;
+    if (!touchStart.current || !selectedProject) {
+      return;
+    }
 
     const touch = event.changedTouches[0];
+
+    if (!touch) {
+      touchStart.current = null;
+      return;
+    }
 
     const differenceX =
       touch.clientX - touchStart.current.x;
@@ -287,11 +320,14 @@ export function Projects() {
 
     touchStart.current = null;
 
-    if (selectedProject.images.length <= 1) return;
+    if (selectedProject.images.length <= 1) {
+      return;
+    }
 
     if (
       Math.abs(differenceX) > 45 &&
-      Math.abs(differenceX) > Math.abs(differenceY) * 1.2
+      Math.abs(differenceX) >
+        Math.abs(differenceY) * 1.2
     ) {
       if (differenceX < 0) {
         nextImage();
@@ -308,7 +344,7 @@ export function Projects() {
     >
       <div className="mx-auto max-w-7xl">
 
-        {/* Logo Designs heading */}
+        {/* Logo Design heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -320,13 +356,16 @@ export function Projects() {
             02 / LOGO DESIGN & BRANDING
           </p>
 
+          {/* Bold italic title */}
           <h2
-            className="text-5xl text-[#681523] md:text-7xl"
+            className="text-5xl italic text-[#850F25] md:text-7xl"
             style={{
-              fontFamily: "'Bodoni Moda', Georgia, serif",
+              fontFamily:
+                "'Bodoni Moda', Georgia, serif",
+              fontWeight: 700,
             }}
           >
-            Logo <span className="italic">Designs</span>
+            Logo Design
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
@@ -396,7 +435,8 @@ export function Projects() {
         <p
           className="mt-16 text-center text-2xl italic text-[#850F25]"
           style={{
-            fontFamily: "'Bodoni Moda', Georgia, serif",
+            fontFamily:
+              "'Bodoni Moda', Georgia, serif",
           }}
         >
           Every design tells a story.
@@ -479,12 +519,18 @@ export function Projects() {
               <div
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
-                className="relative flex min-h-0 flex-1 items-center justify-center bg-[#F7EDE8] p-4 pt-20 pb-20 sm:p-6"
+                onTouchCancel={() => {
+                  touchStart.current = null;
+                }}
+                className="relative flex min-h-0 flex-1 items-center justify-center bg-[#F7EDE8] p-4 pb-20 pt-20 sm:p-6"
                 style={{
                   touchAction: "pan-y",
                 }}
               >
-                <AnimatePresence mode="wait" initial={false}>
+                <AnimatePresence
+                  mode="wait"
+                  initial={false}
+                >
                   <motion.img
                     key={`${selectedProject.title}-${activeImage}`}
                     src={
