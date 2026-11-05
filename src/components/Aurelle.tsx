@@ -1,5 +1,6 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { TouchEvent } from "react";
 import {
   motion,
   AnimatePresence,
@@ -49,9 +50,18 @@ const projects: AurelleProject[] = [
       "Luxury serum bottle, matching carton, and complete packaging presentation.",
     cover: serumCover,
     images: [
-      { src: serum, label: "Radiance Serum Bottle · 30 ml" },
-      { src: serumBox, label: "Radiance Serum Packaging Box" },
-      { src: serumSet, label: "Radiance Serum Packaging Set" },
+      {
+        src: serum,
+        label: "Radiance Serum Bottle · 30 ml",
+      },
+      {
+        src: serumBox,
+        label: "Radiance Serum Packaging Box",
+      },
+      {
+        src: serumSet,
+        label: "Radiance Serum Packaging Set",
+      },
     ],
   },
   {
@@ -62,9 +72,18 @@ const projects: AurelleProject[] = [
       "Elegant face cream jar with coordinating box and product packaging mockup.",
     cover: faceCreamCover,
     images: [
-      { src: faceCream, label: "Hydrating Face Cream Jar · 50 ml" },
-      { src: faceCreamBox, label: "Hydrating Face Cream Packaging Box" },
-      { src: faceCreamSet, label: "Hydrating Face Cream Packaging Set" },
+      {
+        src: faceCream,
+        label: "Hydrating Face Cream Jar · 50 ml",
+      },
+      {
+        src: faceCreamBox,
+        label: "Hydrating Face Cream Packaging Box",
+      },
+      {
+        src: faceCreamSet,
+        label: "Hydrating Face Cream Packaging Set",
+      },
     ],
   },
   {
@@ -75,7 +94,10 @@ const projects: AurelleProject[] = [
       "Minimal, refined cleanser tube with ivory, burgundy, and gold packaging details.",
     cover: cleanserCover,
     images: [
-      { src: cleanser, label: "Gentle Cleanser Tube · 150 ml" },
+      {
+        src: cleanser,
+        label: "Gentle Cleanser Tube · 150 ml",
+      },
     ],
   },
   {
@@ -97,56 +119,155 @@ const projects: AurelleProject[] = [
 export function Aurelle() {
   const [selected, setSelected] =
     useState<AurelleProject | null>(null);
+
   const [activeImage, setActiveImage] = useState(0);
+
   const reduceMotion = useReducedMotion();
 
+  const touchStart = useRef<{
+    x: number;
+    y: number;
+  } | null>(null);
+
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  const previousFocusRef = useRef<HTMLElement | null>(
+    null
+  );
+
   const openProject = (project: AurelleProject) => {
-    setSelected(project);
+    previousFocusRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+
+    touchStart.current = null;
     setActiveImage(0);
+    setSelected(project);
   };
 
   const closeProject = () => {
+    touchStart.current = null;
     setSelected(null);
     setActiveImage(0);
+
+    requestAnimationFrame(() => {
+      previousFocusRef.current?.focus();
+    });
   };
 
   const nextImage = () => {
-    if (selected) {
-      setActiveImage(
-        (current) => (current + 1) % selected.images.length
-      );
+    if (!selected || selected.images.length <= 1) {
+      return;
     }
+
+    setActiveImage(
+      (current) =>
+        (current + 1) % selected.images.length
+    );
   };
 
   const previousImage = () => {
-    if (selected) {
-      setActiveImage(
-        (current) =>
-          (current - 1 + selected.images.length) %
-          selected.images.length
-      );
+    if (!selected || selected.images.length <= 1) {
+      return;
+    }
+
+    setActiveImage(
+      (current) =>
+        (current - 1 + selected.images.length) %
+        selected.images.length
+    );
+  };
+
+  const handleTouchStart = (
+    event: TouchEvent<HTMLDivElement>
+  ) => {
+    // Enable swipe navigation on phones only.
+    if (
+      window.matchMedia("(min-width: 640px)").matches
+    ) {
+      return;
+    }
+
+    const touch = event.touches[0];
+
+    if (!touch) return;
+
+    touchStart.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+    };
+  };
+
+  const handleTouchEnd = (
+    event: TouchEvent<HTMLDivElement>
+  ) => {
+    if (!touchStart.current || !selected) {
+      return;
+    }
+
+    const touch = event.changedTouches[0];
+
+    if (!touch) {
+      touchStart.current = null;
+      return;
+    }
+
+    const differenceX =
+      touch.clientX - touchStart.current.x;
+
+    const differenceY =
+      touch.clientY - touchStart.current.y;
+
+    touchStart.current = null;
+
+    if (selected.images.length <= 1) {
+      return;
+    }
+
+    if (
+      Math.abs(differenceX) > 45 &&
+      Math.abs(differenceX) >
+        Math.abs(differenceY) * 1.2
+    ) {
+      if (differenceX < 0) {
+        nextImage();
+      } else {
+        previousImage();
+      }
     }
   };
 
   useEffect(() => {
     if (!selected) return;
 
-    const previousOverflow = document.body.style.overflow;
+    const previousOverflow =
+      document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
+
+    closeButtonRef.current?.focus();
 
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setSelected(null);
+        setActiveImage(0);
       }
 
-      if (event.key === "ArrowRight") {
+      if (
+        event.key === "ArrowRight" &&
+        selected.images.length > 1
+      ) {
         setActiveImage(
           (current) =>
             (current + 1) % selected.images.length
         );
       }
 
-      if (event.key === "ArrowLeft") {
+      if (
+        event.key === "ArrowLeft" &&
+        selected.images.length > 1
+      ) {
         setActiveImage(
           (current) =>
             (current - 1 + selected.images.length) %
@@ -158,7 +279,9 @@ export function Aurelle() {
     window.addEventListener("keydown", handleKey);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow =
+        previousOverflow;
+
       window.removeEventListener("keydown", handleKey);
     };
   }, [selected]);
@@ -169,12 +292,17 @@ export function Aurelle() {
       className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24 text-[#681523]"
     >
       <div className="mx-auto max-w-7xl">
+
+        {/* Section heading */}
         <motion.div
           initial={{
             opacity: 0,
             y: reduceMotion ? 0 : 35,
           }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
           viewport={{ once: true }}
           transition={{
             duration: 0.8,
@@ -189,11 +317,15 @@ export function Aurelle() {
           <h2
             className="text-5xl text-[#850F25] md:text-7xl"
             style={{
-              fontFamily: "'Bodoni Moda', Georgia, serif",
+              fontFamily:
+                "'Bodoni Moda', Georgia, serif",
               fontWeight: 400,
             }}
           >
-            AURELLE <span className="italic">Skincare</span>
+            AURELLE{" "}
+            <span className="italic">
+              Skincare
+            </span>
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
@@ -206,6 +338,7 @@ export function Aurelle() {
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
+        {/* Project cards */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.article
@@ -218,14 +351,21 @@ export function Aurelle() {
                 opacity: 1,
                 y: 0,
               }}
-              viewport={{ once: true, amount: 0.1 }}
+              viewport={{
+                once: true,
+                amount: 0.1,
+              }}
               transition={{
                 duration: 0.65,
-                delay: reduceMotion ? 0 : index * 0.12,
+                delay: reduceMotion
+                  ? 0
+                  : index * 0.12,
                 ease: "easeOut",
               }}
               whileHover={
-                reduceMotion ? undefined : { y: -7 }
+                reduceMotion
+                  ? undefined
+                  : { y: -7 }
               }
               className="group h-full overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
@@ -279,6 +419,7 @@ export function Aurelle() {
         </div>
       </div>
 
+      {/* AURELLE gallery */}
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -287,7 +428,7 @@ export function Aurelle() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/85 p-3 backdrop-blur-sm md:p-8"
+            className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/85 p-0 backdrop-blur-sm sm:p-3 md:p-8"
             onClick={closeProject}
           >
             <motion.div
@@ -309,19 +450,13 @@ export function Aurelle() {
               role="dialog"
               aria-modal="true"
               aria-label={`${selected.title} gallery`}
-              onClick={(event) => event.stopPropagation()}
-              className="relative max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-3xl bg-[#FFF7F2] p-4 shadow-2xl md:p-8"
+              onClick={(event) =>
+                event.stopPropagation()
+              }
+              className="relative flex h-[100dvh] w-full flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-auto sm:max-h-[92vh] sm:max-w-4xl sm:overflow-y-auto sm:rounded-3xl sm:p-4 md:p-8"
             >
-              <button
-                type="button"
-                onClick={closeProject}
-                aria-label="Close gallery"
-                className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white transition hover:bg-[#A13A4B]"
-              >
-                <X size={22} />
-              </button>
-
-              <div className="mb-6 pr-12">
+              {/* Desktop gallery header */}
+              <div className="mb-6 hidden shrink-0 pr-12 sm:block">
                 <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[#A45D69]">
                   AURELLE Skincare
                 </p>
@@ -338,12 +473,42 @@ export function Aurelle() {
                 </h3>
               </div>
 
-              <div className="relative flex min-h-[260px] items-center justify-center overflow-hidden rounded-2xl bg-[#F8F0EC]">
-                <AnimatePresence mode="wait">
+              {/* Close button */}
+              <button
+                ref={closeButtonRef}
+                type="button"
+                onClick={closeProject}
+                aria-label="Close gallery"
+                className="absolute right-4 top-[calc(env(safe-area-inset-top)+16px)] z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white shadow-lg transition hover:bg-[#A13A4B] sm:top-4"
+              >
+                <X size={22} />
+              </button>
+
+              {/* Gallery image */}
+              <div
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                onTouchCancel={() => {
+                  touchStart.current = null;
+                }}
+                style={{
+                  touchAction: "pan-y",
+                }}
+                className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-[#F8F0EC] px-4 pb-24 pt-20 sm:min-h-[260px] sm:flex-none sm:rounded-2xl sm:p-0"
+              >
+                <AnimatePresence
+                  mode="wait"
+                  initial={false}
+                >
                   <motion.img
                     key={`${selected.id}-${activeImage}`}
-                    src={selected.images[activeImage].src}
-                    alt={selected.images[activeImage].label}
+                    src={
+                      selected.images[activeImage].src
+                    }
+                    alt={
+                      selected.images[activeImage].label
+                    }
+                    draggable={false}
                     initial={{
                       opacity: 0,
                       x: reduceMotion ? 0 : 20,
@@ -356,18 +521,23 @@ export function Aurelle() {
                       opacity: 0,
                       x: reduceMotion ? 0 : -20,
                     }}
-                    transition={{ duration: 0.25 }}
-                    className="max-h-[60vh] w-full object-contain"
+                    transition={{
+                      duration: reduceMotion
+                        ? 0
+                        : 0.25,
+                    }}
+                    className="h-full w-full select-none object-contain sm:h-auto sm:max-h-[60vh]"
                   />
                 </AnimatePresence>
 
+                {/* Desktop navigation arrows */}
                 {selected.images.length > 1 && (
                   <>
                     <button
                       type="button"
                       onClick={previousImage}
                       aria-label="Previous image"
-                      className="absolute left-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#681523]/90 text-white hover:bg-[#850F25]"
+                      className="absolute left-3 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#681523]/90 text-white hover:bg-[#850F25] sm:flex"
                     >
                       <ChevronLeft size={24} />
                     </button>
@@ -376,15 +546,40 @@ export function Aurelle() {
                       type="button"
                       onClick={nextImage}
                       aria-label="Next image"
-                      className="absolute right-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#681523]/90 text-white hover:bg-[#850F25]"
+                      className="absolute right-3 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#681523]/90 text-white hover:bg-[#850F25] sm:flex"
                     >
                       <ChevronRight size={24} />
                     </button>
                   </>
                 )}
+
+                {/* Mobile gallery information */}
+                <div className="absolute inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+16px)] z-20 text-center sm:hidden">
+                  <p
+                    className="mb-2 text-lg text-[#681523]"
+                    style={{
+                      fontFamily:
+                        "'Bodoni Moda', Georgia, serif",
+                    }}
+                  >
+                    {selected.title}
+                  </p>
+
+                  <p className="text-xs text-[#A45D69]">
+                    {activeImage + 1} /{" "}
+                    {selected.images.length}
+                  </p>
+
+                  {selected.images.length > 1 && (
+                    <p className="mt-2 text-[11px] uppercase tracking-widest text-[#A45D69]">
+                      Swipe to explore
+                    </p>
+                  )}
+                </div>
               </div>
 
-              <div className="mt-5 text-center">
+              {/* Desktop image information */}
+              <div className="mt-5 hidden shrink-0 text-center sm:block">
                 <p className="text-sm font-medium text-[#681523]">
                   {selected.images[activeImage].label}
                 </p>
@@ -395,28 +590,35 @@ export function Aurelle() {
                 </p>
               </div>
 
+              {/* Desktop thumbnails */}
               {selected.images.length > 1 && (
-                <div className="mt-5 flex flex-wrap justify-center gap-3">
-                  {selected.images.map((image, index) => (
-                    <button
-                      key={image.label}
-                      type="button"
-                      onClick={() => setActiveImage(index)}
-                      aria-label={`View ${image.label}`}
-                      aria-pressed={activeImage === index}
-                      className={`h-20 w-20 overflow-hidden rounded-xl border-2 bg-white p-1 transition ${
-                        activeImage === index
-                          ? "border-[#850F25]"
-                          : "border-[#E8D2CF]"
-                      }`}
-                    >
-                      <img
-                        src={image.src}
-                        alt=""
-                        className="h-full w-full object-contain"
-                      />
-                    </button>
-                  ))}
+                <div className="mt-5 hidden flex-wrap justify-center gap-3 sm:flex">
+                  {selected.images.map(
+                    (image, index) => (
+                      <button
+                        key={image.label}
+                        type="button"
+                        onClick={() =>
+                          setActiveImage(index)
+                        }
+                        aria-label={`View ${image.label}`}
+                        aria-pressed={
+                          activeImage === index
+                        }
+                        className={`h-20 w-20 overflow-hidden rounded-xl border-2 bg-white p-1 transition ${
+                          activeImage === index
+                            ? "border-[#850F25]"
+                            : "border-[#E8D2CF]"
+                        }`}
+                      >
+                        <img
+                          src={image.src}
+                          alt=""
+                          className="h-full w-full object-contain"
+                        />
+                      </button>
+                    )
+                  )}
                 </div>
               )}
             </motion.div>
