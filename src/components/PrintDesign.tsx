@@ -185,18 +185,16 @@ export function PrintDesign() {
             06 / PRINT & STATIONERY
           </p>
 
+          {/* BOLD ITALIC TITLE */}
           <h2
-            className="text-5xl text-[#850F25] md:text-7xl"
+            className="text-5xl italic text-[#850F25] md:text-7xl"
             style={{
               fontFamily:
                 "'Bodoni Moda', Georgia, serif",
-              fontWeight: 400,
+              fontWeight: 700,
             }}
           >
-            Business Cards{" "}
-            <span className="italic">
-              & Vouchers
-            </span>
+            Business Cards &amp; Vouchers
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
