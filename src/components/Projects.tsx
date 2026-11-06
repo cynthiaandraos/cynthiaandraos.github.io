@@ -21,7 +21,10 @@ import manymodaBag from "../assets/manymoda-shopping-bag.jpeg";
 import jouyPackagingJars from "../assets/jouy-packaging-jars.jpeg";
 import jouyProductLabel from "../assets/jouy-product-label.jpeg";
 import houseOfBeautyStorefront from "../assets/house-of-beauty-storefront.png";
-import goldenMarkCarBranding from "../assets/golden-mark-car-branding.jpeg";
+import goldenMarkCarRear from "../assets/golden-mark-car-rear.png";
+import goldenMarkGlassStorefront from "../assets/golden-mark-glass-storefront.png";
+import goldenMarkCarFront from "../assets/golden-mark-car-front.png";
+import goldenMarkOfficeFacade from "../assets/golden-mark-office-facade.png";
 import aurelleLogo from "../assets/aurelle-logo-transparent.png";
 import snackElKhal from "../assets/snack-el-khal-logo.png";
 import snackMenuAppetizers from "../assets/snack-el-khal-menu-appetizers.jpeg";
@@ -51,10 +54,10 @@ const projects: Project[] = [
     cover: goldenMark,
     images: [
       { src: goldenMark, title: "Golden Mark Logo" },
-      {
-        src: goldenMarkCarBranding,
-        title: "Golden Mark Vehicle Branding",
-      },
+      { src: goldenMarkCarRear, title: "Golden Mark Vehicle Branding – Rear View" },
+      { src: goldenMarkGlassStorefront, title: "Golden Mark Glass Storefront" },
+      { src: goldenMarkCarFront, title: "Golden Mark Vehicle Branding – Front View" },
+      { src: goldenMarkOfficeFacade, title: "Golden Mark Office Facade" },
     ],
   },
   {
