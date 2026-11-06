@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { TouchEvent } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { createPortal } from "react-dom";
 import {
   ArrowLeft,
   ArrowRight,
@@ -461,7 +462,8 @@ export function SocialMedia() {
         </div>
       </div>
 
-      {/* Campaign gallery */}
+      {/* Render the gallery outside the section stacking context. */}
+      {createPortal(
       <AnimatePresence>
         {selectedProject && (
           <motion.div
@@ -471,7 +473,7 @@ export function SocialMedia() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={closeProject}
-            className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/90 p-0 backdrop-blur-sm sm:p-5"
+            className="fixed inset-0 z-[2147483647] flex items-center justify-center bg-[#210C12]/90 p-0 backdrop-blur-sm sm:p-5"
           >
             <motion.div
               initial={{
@@ -701,7 +703,9 @@ export function SocialMedia() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body
+      )}
     </section>
   );
 }
