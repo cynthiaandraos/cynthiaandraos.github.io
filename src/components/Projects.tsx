@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { TouchEvent } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { createPortal } from "react-dom";
 import {
   ArrowLeft,
   ArrowRight,
@@ -381,9 +382,10 @@ export function Projects() {
   };
 
   return (
+    <>
     <section
       id="portfolio"
-      className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24"
+      className="scroll-mt-28 bg-[#FFF7F2] px-4 py-16 sm:px-6 sm:py-24"
     >
       <div className="mx-auto max-w-7xl">
 
@@ -401,7 +403,7 @@ export function Projects() {
 
           {/* Bold italic title */}
           <h2
-            className="text-5xl italic text-[#850F25] md:text-7xl"
+            className="text-4xl italic text-[#850F25] sm:text-5xl md:text-7xl"
             style={{
               fontFamily:
                 "'Bodoni Moda', Georgia, serif",
@@ -477,7 +479,7 @@ export function Projects() {
         </div>
 
         <p
-          className="mt-16 text-center text-2xl italic text-[#850F25]"
+          className="mt-12 text-center text-xl italic text-[#850F25] sm:mt-16 sm:text-2xl"
           style={{
             fontFamily:
               "'Bodoni Moda', Georgia, serif",
@@ -487,7 +489,10 @@ export function Projects() {
         </p>
       </div>
 
-      {/* Project gallery modal */}
+    </section>
+
+      {/* Portal keeps gallery above the fixed header and animated sections. */}
+      {createPortal(
       <AnimatePresence>
         {selectedProject && (
           <motion.div
@@ -518,7 +523,7 @@ export function Projects() {
               role="dialog"
               aria-modal="true"
               aria-label={`${selectedProject.title} gallery`}
-              className="relative flex h-[100dvh] w-full flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-[90dvh] sm:max-w-5xl sm:rounded-2xl"
+              className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-[90dvh] sm:max-w-5xl sm:rounded-2xl"
             >
               {/* Desktop gallery header */}
               <div className="hidden shrink-0 items-center justify-between gap-4 border-b border-[#E8D2CF] px-6 py-4 sm:flex">
@@ -566,7 +571,7 @@ export function Projects() {
                 onTouchCancel={() => {
                   touchStart.current = null;
                 }}
-                className="relative flex min-h-0 flex-1 items-center justify-center bg-[#F7EDE8] p-4 pb-20 pt-20 sm:p-6"
+                className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-[#F7EDE8] px-3 pb-24 pt-16 sm:p-6"
                 style={{
                   touchAction: "pan-y",
                 }}
@@ -619,7 +624,7 @@ export function Projects() {
                 )}
 
                 {/* Mobile gallery information */}
-                <div className="absolute inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+16px)] z-20 text-center sm:hidden">
+                <div className="absolute inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+12px)] z-20 rounded-xl bg-[#F7EDE8]/95 px-2 py-2 text-center backdrop-blur-sm sm:hidden">
                   <p
                     className="mb-2 text-lg text-[#681523]"
                     style={{
@@ -691,7 +696,9 @@ export function Projects() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
-    </section>
+      </AnimatePresence>,
+      document.body
+      )}
+    </>
   );
 }
