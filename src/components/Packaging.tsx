@@ -33,7 +33,27 @@ import takeawayCover from "../assets/5beans-takeaway-cover.png";
 import snackCover from "../assets/5beans-snack-cover.png";
 import christmasCover from "../assets/5beans-christmas-cover.png";
 
+// Little Bloom baby collection packaging
+import littleBloomGiftBag from "../assets/Little-Bloom-Gift-Bag.png";
+import littleBloomShoppingBag from "../assets/little-bloom-shopping-bag.png";
+import littleBloomBoxGift from "../assets/little-bloom-box-gift.png";
+import littleBloomGiftBoxPackaging from "../assets/Little-Bloom-Gift-Box-Packaging.png";
+
 const collections = [
+  {
+    id: 6,
+    title: "Little Bloom – Baby Collection",
+    category: "Luxury Gift Packaging & Brand Identity",
+    cover: littleBloomBoxGift,
+    description:
+      "Luxury blush pink and cream baby gift packaging, including shopping bags, gift boxes, and multiple packaging views.",
+    images: [
+      { src: littleBloomGiftBag, label: "Little Bloom Gift Bag" },
+      { src: littleBloomShoppingBag, label: "Shopping Bag – Multiple Views" },
+      { src: littleBloomBoxGift, label: "Little Bloom Gift Box" },
+      { src: littleBloomGiftBoxPackaging, label: "Gift Box – Inside, Back & Side Views" },
+    ],
+  },
   {
     id: 1,
     title: "Coffee Packaging",
@@ -449,7 +469,7 @@ export function Packaging() {
               {/* Desktop header */}
               <div className="mb-6 hidden shrink-0 pr-12 sm:block">
                 <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[#A45D69]">
-                  5 Beans Coffee Shop
+                  {selected.id === 6 ? "Little Bloom – Baby Collection" : "5 Beans Coffee Shop"}
                 </p>
 
                 <h3
