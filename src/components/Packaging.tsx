@@ -50,8 +50,20 @@ import aurelleCleanser from "../assets/aurelle-gentle-cleanser.png";
 import aurelleSerumCover from "../assets/aurelle-serum-cover.png";
 import aurelleFaceCreamCover from "../assets/aurelle-face-cream-cover.png";
 import aurelleCleanserCover from "../assets/aurelle-cleanser-cover.png";
+import aurelleLuxuryShoppingBag from "../assets/aurelle-luxury-shopping-bag.png";
 
 const collections = [
+  {
+    id: 10,
+    title: "AURELLE – Luxury Shopping Bag",
+    category: "Brand Identity · Packaging Design",
+    cover: aurelleLuxuryShoppingBag,
+    description:
+      "A luxury shopping bag concept featuring AURELLE's signature burgundy, champagne-gold detailing, and elegant brand presentation.",
+    images: [
+      { src: aurelleLuxuryShoppingBag, label: "AURELLE Luxury Shopping Bag" },
+    ],
+  },
   {
     id: 7,
     title: "AURELLE – Radiance Serum",
