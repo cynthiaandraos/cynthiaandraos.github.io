@@ -58,25 +58,6 @@ const projects: Project[] = [
     ],
   },
   {
-    title: "Little Bloom – Baby Collection",
-    category: "Logo Design & Brand Identity",
-    cover: littleBloomLogo,
-    images: [
-      { src: littleBloomLogo, title: "Little Bloom Logo" },
-    ],
-  },
-  {
-    title: "AURELLE Skincare",
-    category: "Concept Brand Identity & Logo Design",
-    cover: aurelleLogo,
-    images: [
-      {
-        src: aurelleLogo,
-        title: "AURELLE Skincare Logo",
-      },
-    ],
-  },
-  {
     title: "MY Fitness by Myriam",
     category: "Logo Design & Brand Identity",
     cover: myFitness,
@@ -103,6 +84,25 @@ const projects: Project[] = [
       {
         src: houseOfBeautyStorefront,
         title: "House of Beauty Storefront Branding",
+      },
+    ],
+  },
+  {
+    title: "Little Bloom – Baby Collection",
+    category: "Logo Design & Brand Identity",
+    cover: littleBloomLogo,
+    images: [
+      { src: littleBloomLogo, title: "Little Bloom Logo" },
+    ],
+  },
+  {
+    title: "AURELLE Skincare",
+    category: "Concept Brand Identity & Logo Design",
+    cover: aurelleLogo,
+    images: [
+      {
+        src: aurelleLogo,
+        title: "AURELLE Skincare Logo",
       },
     ],
   },
@@ -433,13 +433,13 @@ export function Projects() {
             >
               {/* Cover */}
               <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
-                <div className={`absolute inset-0 flex items-center justify-center bg-[#F7EDE8] ${project.title === "Golden Mark" ? "p-0" : "p-6 sm:p-8"}`}>
+                <div className={`absolute inset-0 flex items-center justify-center bg-[#F7EDE8] ${["Golden Mark", "MY Fitness by Myriam", "House of Beauty"].includes(project.title) ? "p-0" : "p-6 sm:p-8"}`}>
                   <img
                     src={project.cover}
                     alt={project.title}
                     loading="lazy"
                     decoding="async"
-                    className={`block h-full w-full object-contain transition-transform duration-500 ${project.title === "Golden Mark" ? "scale-[1.18] group-hover:scale-[1.24]" : "group-hover:scale-105"}`}
+                    className={`block h-full w-full object-contain transition-transform duration-500 ${["Golden Mark", "MY Fitness by Myriam", "House of Beauty"].includes(project.title) ? "scale-[1.18] group-hover:scale-[1.24]" : "group-hover:scale-105"}`}
                   />
                 </div>
 
