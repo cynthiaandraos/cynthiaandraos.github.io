@@ -1,4 +1,6 @@
 
+import { createPortal } from "react-dom";
+
 import { useEffect, useState } from "react";
 import {
   motion,
@@ -40,7 +42,7 @@ import birthdayInvitationCover from "../assets/birthday-invitation-card-cover.pn
 const designs = [
   {
     id: 9,
-    title: "Birthday Invitation Design",
+    title: "Sophia’s 1st Birthday Invitation",
     category: "Kids Birthday Invitation Design",
     client: "Little Bloom",
     cover: birthdayInvitationCover,
@@ -315,6 +317,7 @@ export function PrintDesign() {
       </div>
 
       {/* ORIGINAL DESIGN POPUP */}
+      {createPortal(
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -324,7 +327,7 @@ export function PrintDesign() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             onClick={closeDesign}
-            className="fixed inset-0 z-[110] flex items-center justify-center bg-[#210C12]/90 p-3 backdrop-blur-sm md:p-6"
+            className="fixed inset-0 z-[2147483647] flex items-center justify-center bg-[#210C12]/90 p-3 backdrop-blur-sm md:p-6"
           >
             <motion.div
               initial={{
@@ -437,7 +440,9 @@ export function PrintDesign() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body
+      )}
 
     </section>
   );
