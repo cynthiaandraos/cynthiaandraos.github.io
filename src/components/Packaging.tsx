@@ -34,6 +34,7 @@ import snackCover from "../assets/5beans-snack-cover.png";
 import christmasCover from "../assets/5beans-christmas-cover.png";
 
 // Little Bloom baby collection packaging
+import littleBloomCover from "../assets/little-bloom-packaging-cover.png";
 import littleBloomGiftBag from "../assets/Little-Bloom-Gift-Bag.png";
 import littleBloomShoppingBag from "../assets/little-bloom-shopping-bag.png";
 import littleBloomBoxGift from "../assets/little-bloom-box-gift.png";
@@ -102,7 +103,7 @@ const collections = [
     id: 6,
     title: "Little Bloom – Baby Collection",
     category: "Luxury Gift Packaging & Brand Identity",
-    cover: littleBloomBoxGift,
+    cover: littleBloomCover,
     description:
       "Luxury blush pink and cream baby gift packaging, including shopping bags, gift boxes, and multiple packaging views.",
     images: [
