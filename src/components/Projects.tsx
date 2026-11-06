@@ -30,6 +30,13 @@ import snackMenuBurgers from "../assets/snack-el-khal-menu-burgers.jpeg";
 import snackPackaging from "../assets/snack-el-khal-packaging.jpeg";
 import snackSignage from "../assets/snack-el-khal-signage.jpeg";
 
+import littleBloomLogo from "../assets/little-bloom-logo-transparent-background.png";
+import littleBloomOriginalLogo from "../assets/little-bloom-logo.png";
+import littleBloomGiftBag from "../assets/Little-Bloom-Gift-Bag.png";
+import littleBloomShoppingBag from "../assets/little-bloom-shopping-bag.png";
+import littleBloomGiftBox from "../assets/little-bloom-box-gift.png";
+import littleBloomBoxPackaging from "../assets/Little-Bloom-Gift-Box-Packaging.png";
+
 type ProjectImage = {
   src: string;
   title: string;
@@ -43,6 +50,19 @@ type Project = {
 };
 
 const projects: Project[] = [
+  {
+    title: "Little Bloom – Baby Collection",
+    category: "Logo Design, Brand Identity & Packaging",
+    cover: littleBloomLogo,
+    images: [
+      { src: littleBloomLogo, title: "Little Bloom Transparent Logo" },
+      { src: littleBloomOriginalLogo, title: "Little Bloom Original Logo" },
+      { src: littleBloomGiftBag, title: "Little Bloom Gift Bag" },
+      { src: littleBloomShoppingBag, title: "Little Bloom Shopping Bag – Multiple Views" },
+      { src: littleBloomGiftBox, title: "Little Bloom Gift Box" },
+      { src: littleBloomBoxPackaging, title: "Little Bloom Gift Box – Inside, Back & Side Views" },
+    ],
+  },
   {
     title: "Golden Mark",
     category: "Logo Design & Brand Identity",
@@ -490,195 +510,4 @@ export function Projects() {
                 scale: 0.96,
                 y: 15,
               }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                y: 0,
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0.96,
-              }}
-              onClick={(event) =>
-                event.stopPropagation()
-              }
-              role="dialog"
-              aria-modal="true"
-              aria-label={`${selectedProject.title} gallery`}
-              className="relative flex h-[100dvh] w-full flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-[90dvh] sm:max-w-5xl sm:rounded-2xl"
-            >
-              {/* Desktop gallery header */}
-              <div className="hidden shrink-0 items-center justify-between gap-4 border-b border-[#E8D2CF] px-6 py-4 sm:flex">
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-[#A45D69]">
-                    {selectedProject.category}
-                  </p>
-
-                  <h3
-                    className="mt-1 text-2xl text-[#681523]"
-                    style={{
-                      fontFamily:
-                        "'Bodoni Moda', Georgia, serif",
-                    }}
-                  >
-                    {selectedProject.title}
-                  </h3>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={closeProject}
-                  aria-label="Close gallery"
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#681523] text-white"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-
-              {/* Mobile close button */}
-              <button
-                ref={closeButtonRef}
-                type="button"
-                onClick={closeProject}
-                aria-label="Close gallery"
-                className="absolute right-4 top-[calc(env(safe-area-inset-top)+16px)] z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white shadow-lg sm:hidden"
-              >
-                <X size={22} />
-              </button>
-
-              {/* Gallery image */}
-              <div
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-                onTouchCancel={() => {
-                  touchStart.current = null;
-                }}
-                className="relative flex min-h-0 flex-1 items-center justify-center bg-[#F7EDE8] p-4 pb-20 pt-20 sm:p-6"
-                style={{
-                  touchAction: "pan-y",
-                }}
-              >
-                <AnimatePresence
-                  mode="wait"
-                  initial={false}
-                >
-                  <motion.img
-                    key={`${selectedProject.title}-${activeImage}`}
-                    src={
-                      selectedProject.images[activeImage].src
-                    }
-                    alt={
-                      selectedProject.images[activeImage].title
-                    }
-                    loading="eager"
-                    decoding="async"
-                    fetchPriority="high"
-                    draggable={false}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="h-full w-full select-none object-contain"
-                  />
-                </AnimatePresence>
-
-                {/* Desktop navigation arrows */}
-                {selectedProject.images.length > 1 && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={previousImage}
-                      aria-label="Previous image"
-                      className="absolute left-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#681523] shadow-md sm:flex"
-                    >
-                      <ArrowLeft size={20} />
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={nextImage}
-                      aria-label="Next image"
-                      className="absolute right-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#681523] shadow-md sm:flex"
-                    >
-                      <ArrowRight size={20} />
-                    </button>
-                  </>
-                )}
-
-                {/* Mobile gallery information */}
-                <div className="absolute inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+16px)] z-20 text-center sm:hidden">
-                  <p
-                    className="mb-2 text-lg text-[#681523]"
-                    style={{
-                      fontFamily:
-                        "'Bodoni Moda', Georgia, serif",
-                    }}
-                  >
-                    {selectedProject.title}
-                  </p>
-
-                  <p className="text-xs text-[#A45D69]">
-                    {activeImage + 1} /{" "}
-                    {selectedProject.images.length}
-                  </p>
-
-                  {selectedProject.images.length > 1 && (
-                    <p className="mt-2 text-[11px] uppercase tracking-widest text-[#A45D69]">
-                      Swipe to explore
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* Desktop image title */}
-              <div className="hidden shrink-0 border-t border-[#E8D2CF] px-4 py-3 text-center sm:block">
-                <p className="text-sm font-medium text-[#681523]">
-                  {
-                    selectedProject.images[activeImage]
-                      .title
-                  }
-                </p>
-
-                <p className="mt-1 text-xs text-[#A45D69]">
-                  {activeImage + 1} /{" "}
-                  {selectedProject.images.length}
-                </p>
-              </div>
-
-              {/* Desktop gallery thumbnails */}
-              {selectedProject.images.length > 1 && (
-                <div className="hidden shrink-0 justify-center gap-3 overflow-x-auto border-t border-[#E8D2CF] p-3 sm:flex">
-                  {selectedProject.images.map(
-                    (image, index) => (
-                      <button
-                        key={image.title}
-                        type="button"
-                        onClick={() =>
-                          setActiveImage(index)
-                        }
-                        aria-label={`View ${image.title}`}
-                        className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 ${
-                          activeImage === index
-                            ? "border-[#850F25]"
-                            : "border-transparent opacity-60"
-                        }`}
-                      >
-                        <img
-                          src={image.src}
-                          alt={image.title}
-                          loading="lazy"
-                          decoding="async"
-                          className="h-full w-full object-contain"
-                        />
-                      </button>
-                    )
-                  )}
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
-  );
-}
+ 
