@@ -39,7 +39,53 @@ import littleBloomShoppingBag from "../assets/little-bloom-shopping-bag.png";
 import littleBloomBoxGift from "../assets/little-bloom-box-gift.png";
 import littleBloomGiftBoxPackaging from "../assets/Little-Bloom-Gift-Box-Packaging.png";
 
+// AURELLE skincare packaging
+import aurelleSerum from "../assets/aurelle-radiance-serum.png";
+import aurelleSerumBox from "../assets/aurelle-radiance-serum-box.png";
+import aurelleSerumSet from "../assets/aurelle-radiance-serum-set.png";
+import aurelleFaceCream from "../assets/aurelle-face-cream.png";
+import aurelleFaceCreamBox from "../assets/aurelle-face-cream-box.png";
+import aurelleFaceCreamSet from "../assets/aurelle-face-cream-set.png";
+import aurelleCleanser from "../assets/aurelle-gentle-cleanser.png";
+import aurelleSerumCover from "../assets/aurelle-serum-cover.png";
+import aurelleFaceCreamCover from "../assets/aurelle-face-cream-cover.png";
+import aurelleCleanserCover from "../assets/aurelle-cleanser-cover.png";
+
 const collections = [
+  {
+    id: 7,
+    title: "AURELLE – Radiance Serum",
+    category: "Skincare Packaging · 30 ml",
+    cover: aurelleSerumCover,
+    description: "Luxury serum bottle, matching carton, and complete packaging presentation.",
+    images: [
+      { src: aurelleSerum, label: "Radiance Serum Bottle · 30 ml" },
+      { src: aurelleSerumBox, label: "Radiance Serum Packaging Box" },
+      { src: aurelleSerumSet, label: "Radiance Serum Packaging Set" },
+    ],
+  },
+  {
+    id: 8,
+    title: "AURELLE – Hydrating Face Cream",
+    category: "Skincare Packaging · 50 ml",
+    cover: aurelleFaceCreamCover,
+    description: "Elegant face cream jar with coordinating box and product packaging mockup.",
+    images: [
+      { src: aurelleFaceCream, label: "Hydrating Face Cream Jar · 50 ml" },
+      { src: aurelleFaceCreamBox, label: "Hydrating Face Cream Packaging Box" },
+      { src: aurelleFaceCreamSet, label: "Hydrating Face Cream Packaging Set" },
+    ],
+  },
+  {
+    id: 9,
+    title: "AURELLE – Gentle Cleanser",
+    category: "Skincare Packaging · 150 ml",
+    cover: aurelleCleanserCover,
+    description: "Minimal, refined cleanser tube with ivory, burgundy, and gold packaging details.",
+    images: [
+      { src: aurelleCleanser, label: "Gentle Cleanser Tube · 150 ml" },
+    ],
+  },
   {
     id: 6,
     title: "Little Bloom – Baby Collection",
@@ -337,14 +383,13 @@ export function Packaging() {
               fontWeight: 700,
             }}
           >
-            5 Beans Coffee Shop
+            Packaging & Labels
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            Explore my packaging, product labels,
-            stickers, and branded merchandise.
-            Select a project to see the original
-            designs and finished products.
+            Explore packaging and label design for Little Bloom, 5 Beans,
+            and AURELLE Skincare. Select a project to view the
+            original designs and finished products.
           </p>
 
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
@@ -469,7 +514,7 @@ export function Packaging() {
               {/* Desktop header */}
               <div className="mb-6 hidden shrink-0 pr-12 sm:block">
                 <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[#A45D69]">
-                  {selected.id === 6 ? "Little Bloom – Baby Collection" : "5 Beans Coffee Shop"}
+                  {selected.id === 6 ? "Little Bloom – Baby Collection" : selected.id >= 7 ? "AURELLE Skincare" : "5 Beans Coffee Shop"}
                 </p>
 
                 <h3
