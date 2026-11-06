@@ -31,11 +31,6 @@ import snackPackaging from "../assets/snack-el-khal-packaging.jpeg";
 import snackSignage from "../assets/snack-el-khal-signage.jpeg";
 
 import littleBloomLogo from "../assets/little-bloom-logo-transparent-background.png";
-import littleBloomOriginalLogo from "../assets/little-bloom-logo.png";
-import littleBloomGiftBag from "../assets/Little-Bloom-Gift-Bag.png";
-import littleBloomShoppingBag from "../assets/little-bloom-shopping-bag.png";
-import littleBloomGiftBox from "../assets/little-bloom-box-gift.png";
-import littleBloomBoxPackaging from "../assets/Little-Bloom-Gift-Box-Packaging.png";
 
 type ProjectImage = {
   src: string;
@@ -52,15 +47,10 @@ type Project = {
 const projects: Project[] = [
   {
     title: "Little Bloom – Baby Collection",
-    category: "Logo Design, Brand Identity & Packaging",
+    category: "Logo Design & Brand Identity",
     cover: littleBloomLogo,
     images: [
-      { src: littleBloomLogo, title: "Little Bloom Transparent Logo" },
-      { src: littleBloomOriginalLogo, title: "Little Bloom Original Logo" },
-      { src: littleBloomGiftBag, title: "Little Bloom Gift Bag" },
-      { src: littleBloomShoppingBag, title: "Little Bloom Shopping Bag – Multiple Views" },
-      { src: littleBloomGiftBox, title: "Little Bloom Gift Box" },
-      { src: littleBloomBoxPackaging, title: "Little Bloom Gift Box – Inside, Back & Side Views" },
+      { src: littleBloomLogo, title: "Little Bloom Logo" },
     ],
   },
   {
