@@ -35,6 +35,7 @@ import christmasCover from "../assets/omarket-christmas-voucher-cover.png";
 
 // LITTLE BLOOM BIRTHDAY INVITATION
 import sophiaBirthdayInvitation from "../assets/sophia-first-birthday-invitation.png";
+import birthdayInvitationCover from "../assets/birthday-invitation-card-cover.png";
 
 const designs = [
   {
@@ -42,7 +43,7 @@ const designs = [
     title: "Sophia’s 1st Birthday Invitation",
     category: "Kids Birthday Invitation Design",
     client: "Little Bloom",
-    cover: sophiaBirthdayInvitation,
+    cover: birthdayInvitationCover,
     image: sophiaBirthdayInvitation,
     description:
       "A blush-pink first birthday invitation featuring a crowned teddy bear, satin bows, balloons, and elegant burgundy typography.",
