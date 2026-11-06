@@ -46,14 +46,6 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: "Little Bloom – Baby Collection",
-    category: "Logo Design & Brand Identity",
-    cover: littleBloomLogo,
-    images: [
-      { src: littleBloomLogo, title: "Little Bloom Logo" },
-    ],
-  },
-  {
     title: "Golden Mark",
     category: "Logo Design & Brand Identity",
     cover: goldenMark,
@@ -63,6 +55,14 @@ const projects: Project[] = [
         src: goldenMarkCarBranding,
         title: "Golden Mark Vehicle Branding",
       },
+    ],
+  },
+  {
+    title: "Little Bloom – Baby Collection",
+    category: "Logo Design & Brand Identity",
+    cover: littleBloomLogo,
+    images: [
+      { src: littleBloomLogo, title: "Little Bloom Logo" },
     ],
   },
   {
@@ -433,13 +433,13 @@ export function Projects() {
             >
               {/* Cover */}
               <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
-                <div className="absolute inset-0 flex items-center justify-center bg-[#F7EDE8] p-6 sm:p-8">
+                <div className={`absolute inset-0 flex items-center justify-center bg-[#F7EDE8] ${project.title === "Golden Mark" ? "p-0" : "p-6 sm:p-8"}`}>
                   <img
                     src={project.cover}
                     alt={project.title}
                     loading="lazy"
                     decoding="async"
-                    className="block h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                    className={`block h-full w-full object-contain transition-transform duration-500 ${project.title === "Golden Mark" ? "scale-[1.18] group-hover:scale-[1.24]" : "group-hover:scale-105"}`}
                   />
                 </div>
 
