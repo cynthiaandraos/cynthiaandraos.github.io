@@ -40,7 +40,7 @@ import birthdayInvitationCover from "../assets/birthday-invitation-card-cover.pn
 const designs = [
   {
     id: 9,
-    title: "Sophia’s 1st Birthday Invitation",
+    title: "Birthday Invitation Design",
     category: "Kids Birthday Invitation Design",
     client: "Little Bloom",
     cover: birthdayInvitationCover,
