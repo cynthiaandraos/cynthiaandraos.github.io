@@ -33,7 +33,20 @@ import fitnessCover from "../assets/myfitness-sessions-gift-card-cover.png";
 import easterCover from "../assets/omarket-easter-giveaway-cover.png";
 import christmasCover from "../assets/omarket-christmas-voucher-cover.png";
 
+// LITTLE BLOOM BIRTHDAY INVITATION
+import sophiaBirthdayInvitation from "../assets/sophia-first-birthday-invitation.png";
+
 const designs = [
+  {
+    id: 9,
+    title: "Sophia’s 1st Birthday Invitation",
+    category: "Kids Birthday Invitation Design",
+    client: "Little Bloom",
+    cover: sophiaBirthdayInvitation,
+    image: sophiaBirthdayInvitation,
+    description:
+      "A blush-pink first birthday invitation featuring a crowned teddy bear, satin bows, balloons, and elegant burgundy typography.",
+  },
   {
     id: 1,
     title: "Tuksi Services",
@@ -194,20 +207,19 @@ export function PrintDesign() {
               fontWeight: 700,
             }}
           >
-            Business Cards &amp; Vouchers
+            Print &amp; Stationery
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            A selection of business cards, gift
-            vouchers, event tickets, and loyalty
-            cards designed for different brands
-            and promotional purposes.
+            A selection of birthday invitations, business cards, gift
+            vouchers, event tickets, and loyalty cards designed for
+            different brands and celebrations.
           </p>
 
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
         </motion.div>
 
-        {/* EIGHT MATCHING COVER CARDS */}
+        {/* MATCHING PORTFOLIO COVER CARDS */}
         <div className="grid grid-cols-1 items-stretch gap-8 sm:grid-cols-2 lg:grid-cols-3">
 
           {designs.map((design, index) => (
