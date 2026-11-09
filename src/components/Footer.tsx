@@ -11,21 +11,20 @@ import caLogo from "../assets/CA-logo.png";
 export function Footer() {
   return (
     <footer className="bg-[#FFF7F2] text-[#2B1717]">
-      <div className="mx-auto max-w-7xl px-6 pb-10 pt-16">
-        <div className="grid gap-10 md:grid-cols-3">
-
+      <div className="mx-auto w-full max-w-7xl px-5 pb-8 pt-12 sm:px-6 sm:pb-10 sm:pt-16">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-10">
           {/* Logo and introduction */}
-          <div>
-            <a href="#home" className="inline-block">
+          <div className="min-w-0">
+            <a href="#home" aria-label="Back to home" className="inline-block rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#751728]">
               <img
                 src={caLogo}
                 alt="CA Graphic Designer Logo"
-                className="mb-5 h-20 w-auto object-contain"
+                className="mb-5 h-16 w-auto max-w-full object-contain sm:h-20"
               />
             </a>
 
             <h3
-              className="text-3xl text-[#751728]"
+              className="text-2xl text-[#751728] sm:text-3xl"
               style={{
                 fontFamily: "'Bodoni Moda', Georgia, serif",
                 fontWeight: 400,
@@ -45,35 +44,35 @@ export function Footer() {
           </div>
 
           {/* Navigation */}
-          <div className="md:mx-auto">
-            <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.25em] text-[#751728]">
+          <nav className="min-w-0 md:mx-auto" aria-label="Footer navigation">
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-[#751728] sm:mb-5">
               Explore
             </h4>
 
-            <div className="flex flex-col gap-4 text-sm">
-              <a href="#home" className="hover:text-[#A13A4B]">
+            <div className="flex flex-col gap-1 text-sm sm:gap-2">
+              <a href="#home" className="flex min-h-11 items-center rounded-md transition-colors hover:text-[#A13A4B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#751728]">
                 Home
               </a>
-              <a href="#about" className="hover:text-[#A13A4B]">
+              <a href="#about" className="flex min-h-11 items-center rounded-md transition-colors hover:text-[#A13A4B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#751728]">
                 About Me
               </a>
-              <a href="#projects" className="hover:text-[#A13A4B]">
+              <a href="#projects" className="flex min-h-11 items-center rounded-md transition-colors hover:text-[#A13A4B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#751728]">
                 My Portfolio
               </a>
-              <a href="#skills" className="hover:text-[#A13A4B]">
+              <a href="#skills" className="flex min-h-11 items-center rounded-md transition-colors hover:text-[#A13A4B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#751728]">
                 My Skills
               </a>
-              <a href="#services" className="hover:text-[#A13A4B]">
+              <a href="#services" className="flex min-h-11 items-center rounded-md transition-colors hover:text-[#A13A4B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#751728]">
                 My Services
               </a>
-              <a href="#contact" className="hover:text-[#A13A4B]">
+              <a href="#contact" className="flex min-h-11 items-center rounded-md transition-colors hover:text-[#A13A4B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#751728]">
                 Contact
               </a>
             </div>
-          </div>
+          </nav>
 
           {/* Contact and social links */}
-          <div>
+          <div className="min-w-0 sm:col-span-2 md:col-span-1">
             <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.25em] text-[#751728]">
               Let's Connect
             </h4>
@@ -87,21 +86,21 @@ export function Footer() {
               Have an idea?
             </p>
 
-            <div className="flex flex-col gap-4 text-sm">
+            <div className="flex min-w-0 flex-col gap-2 text-sm">
               <a
                 href="mailto:designer.rc@outlook.com"
-                className="flex items-center gap-3 break-all hover:text-[#A13A4B]"
+                className="flex min-h-11 min-w-0 items-center gap-3 rounded-md transition-colors hover:text-[#A13A4B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#751728]"
               >
-                <Mail size={18} className="shrink-0" />
-                designer.rc@outlook.com
+                <Mail size={18} className="shrink-0" aria-hidden="true" />
+                <span className="min-w-0 break-all">designer.rc@outlook.com</span>
               </a>
 
               <a
                 href="mailto:cynthiamelky49@gmail.com"
-                className="flex items-center gap-3 break-all hover:text-[#A13A4B]"
+                className="flex min-h-11 min-w-0 items-center gap-3 rounded-md transition-colors hover:text-[#A13A4B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#751728]"
               >
-                <Mail size={18} className="shrink-0" />
-                cynthiamelky49@gmail.com
+                <Mail size={18} className="shrink-0" aria-hidden="true" />
+                <span className="min-w-0 break-all">cynthiamelky49@gmail.com</span>
               </a>
             </div>
 
@@ -113,9 +112,9 @@ export function Footer() {
                 rel="noopener noreferrer"
                 aria-label="RC Designer Instagram"
                 title="Instagram - @rcd.esign"
-                className="flex h-12 w-12 items-center justify-center rounded-full bg-[#751728] text-white transition hover:-translate-y-1 hover:bg-[#A13A4B]"
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#751728] text-white transition hover:-translate-y-1 hover:bg-[#A13A4B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#751728]"
               >
-                <Instagram size={21} />
+                <Instagram size={21} aria-hidden="true" />
               </a>
 
               <a
@@ -124,9 +123,9 @@ export function Footer() {
                 rel="noopener noreferrer"
                 aria-label="Cynthia Andraos LinkedIn"
                 title="LinkedIn"
-                className="flex h-12 w-12 items-center justify-center rounded-full bg-[#751728] text-white transition hover:-translate-y-1 hover:bg-[#A13A4B]"
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#751728] text-white transition hover:-translate-y-1 hover:bg-[#A13A4B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#751728]"
               >
-                <Linkedin size={21} />
+                <Linkedin size={21} aria-hidden="true" />
               </a>
             </div>
 
@@ -137,8 +136,8 @@ export function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-14 flex flex-col items-center justify-between gap-5 border-t border-[#E5CFC8] pt-6 text-center md:flex-row md:text-left">
-          <p className="text-xs text-[#765A59]">
+        <div className="mt-12 flex flex-col items-center justify-between gap-5 border-t border-[#E5CFC8] pt-6 text-center md:mt-14 md:flex-row md:text-left">
+          <p className="text-xs leading-relaxed text-[#765A59]">
             © {new Date().getFullYear()} Cynthia Andraos.
             All rights reserved.
           </p>
@@ -149,10 +148,10 @@ export function Footer() {
 
           <a
             href="#home"
-            className="inline-flex items-center gap-2 text-xs text-[#751728] hover:text-[#A13A4B]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md text-xs text-[#751728] transition-colors hover:text-[#A13A4B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#751728]"
           >
             Back to Top
-            <ArrowUp size={15} />
+            <ArrowUp size={15} aria-hidden="true" />
           </a>
         </div>
       </div>
