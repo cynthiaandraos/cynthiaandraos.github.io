@@ -29,10 +29,10 @@ export function Contact() {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({
-      ...formData,
+    setFormData((current) => ({
+      ...current,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   const handleSubmit = (
@@ -55,10 +55,10 @@ export function Contact() {
   };
 
   const inputStyle =
-    "w-full rounded-xl border border-white/25 " +
-    "bg-white/10 px-5 py-4 text-white " +
+    "block w-full min-w-0 rounded-xl border border-white/25 " +
+    "bg-white/10 px-4 py-3.5 text-base text-white sm:px-5 sm:py-4 " +
     "placeholder:text-white/60 " +
-    "focus:border-white focus:outline-none " +
+    "focus:border-white focus:outline-none focus:ring-2 focus:ring-white/25 " +
     "transition-colors";
 
   const reveal = {
@@ -75,13 +75,13 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-[#681523] px-6 py-24 text-white"
+      className="relative scroll-mt-24 overflow-hidden bg-[#681523] px-4 py-16 text-white sm:px-6 sm:py-24"
     >
       {/* Decorative circles */}
       <div className="pointer-events-none absolute -left-32 top-10 h-80 w-80 rounded-full border border-white/15" />
       <div className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full border border-white/15" />
 
-      <div className="relative mx-auto max-w-7xl">
+      <div className="relative mx-auto w-full max-w-7xl min-w-0">
 
         {/* Heading */}
         <motion.div
@@ -93,14 +93,14 @@ export function Contact() {
             duration: 0.8,
             ease: "easeOut",
           }}
-          className="mb-16 text-center"
+          className="mb-12 text-center sm:mb-16"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#F0C9CB]">
             HAVE A PROJECT IN MIND?
           </p>
 
           <h2
-            className="text-5xl md:text-7xl"
+            className="text-4xl leading-tight sm:text-5xl md:text-7xl"
             style={{
               fontFamily: "'Bodoni Moda', Georgia, serif",
               fontWeight: 400,
@@ -119,7 +119,7 @@ export function Contact() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-2">
+        <div className="grid min-w-0 grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-14">
 
           {/* Contact information */}
           <motion.div
@@ -138,7 +138,7 @@ export function Contact() {
             }}
           >
             <h3
-              className="mb-6 text-4xl"
+              className="mb-6 text-3xl sm:text-4xl"
               style={{
                 fontFamily: "'Bodoni Moda', Georgia, serif",
                 fontWeight: 400,
@@ -162,9 +162,9 @@ export function Contact() {
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="flex items-center gap-5"
+                className="flex min-w-0 items-center gap-3 sm:gap-5"
               >
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/10">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 sm:h-14 sm:w-14">
                   <Mail size={24} strokeWidth={1.5} />
                 </div>
 
@@ -174,7 +174,7 @@ export function Contact() {
                   </p>
                   <a
                     href="mailto:designer.rc@outlook.com"
-                    className="break-all text-base hover:text-[#F0C9CB] sm:text-lg"
+                    className="break-all text-sm hover:text-[#F0C9CB] focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-lg"
                   >
                     designer.rc@outlook.com
                   </a>
@@ -188,9 +188,9 @@ export function Contact() {
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="flex items-center gap-5"
+                className="flex min-w-0 items-center gap-3 sm:gap-5"
               >
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/10">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 sm:h-14 sm:w-14">
                   <Mail size={24} strokeWidth={1.5} />
                 </div>
 
@@ -200,7 +200,7 @@ export function Contact() {
                   </p>
                   <a
                     href="mailto:cynthiamelky49@gmail.com"
-                    className="break-all text-base hover:text-[#F0C9CB] sm:text-lg"
+                    className="break-all text-sm hover:text-[#F0C9CB] focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-lg"
                   >
                     cynthiamelky49@gmail.com
                   </a>
@@ -214,9 +214,9 @@ export function Contact() {
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.15 }}
-                className="flex items-center gap-5"
+                className="flex min-w-0 items-center gap-3 sm:gap-5"
               >
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/10">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 sm:h-14 sm:w-14">
                   <Phone size={24} strokeWidth={1.5} />
                 </div>
 
@@ -226,7 +226,7 @@ export function Contact() {
                   </p>
                   <a
                     href="tel:+96176355977"
-                    className="text-lg hover:text-[#F0C9CB]"
+                    className="text-base hover:text-[#F0C9CB] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-lg"
                   >
                     +961 76 355 977
                   </a>
@@ -240,9 +240,9 @@ export function Contact() {
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex items-center gap-5"
+                className="flex min-w-0 items-center gap-3 sm:gap-5"
               >
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/10">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 sm:h-14 sm:w-14">
                   <MapPin size={24} strokeWidth={1.5} />
                 </div>
 
@@ -281,7 +281,7 @@ export function Contact() {
                       ? undefined
                       : { y: -4, scale: 1.08 }
                   }
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-[#F0C9CB] hover:text-[#681523]"
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-[#F0C9CB] hover:text-[#681523] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   <Instagram size={22} />
                 </motion.a>
@@ -296,7 +296,7 @@ export function Contact() {
                       ? undefined
                       : { y: -4, scale: 1.08 }
                   }
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-[#F0C9CB] hover:text-[#681523]"
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-[#F0C9CB] hover:text-[#681523] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   <Linkedin size={22} />
                 </motion.a>
@@ -319,7 +319,7 @@ export function Contact() {
                     ? undefined
                     : { y: -4, scale: 1.04 }
                 }
-                className="inline-flex items-center gap-3 rounded-full bg-[#FFF7F2] px-7 py-4 font-medium text-[#681523] transition-colors hover:bg-[#F0C9CB]"
+                className="inline-flex items-center gap-3 rounded-full bg-[#FFF7F2] px-7 py-4 font-medium text-[#681523] transition-colors hover:bg-[#F0C9CB] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Email Me
                 <ArrowUpRight size={19} />
@@ -343,10 +343,10 @@ export function Contact() {
               delay: 0.1,
               ease: "easeOut",
             }}
-            className="rounded-3xl border border-white/20 bg-white/5 p-6 md:p-9"
+            className="min-w-0 rounded-3xl border border-white/20 bg-white/5 p-4 sm:p-6 md:p-9"
           >
             <h3
-              className="mb-7 text-3xl"
+              className="mb-7 text-2xl sm:text-3xl"
               style={{
                 fontFamily: "'Bodoni Moda', Georgia, serif",
                 fontWeight: 400,
@@ -357,7 +357,7 @@ export function Contact() {
 
             <form
               onSubmit={handleSubmit}
-              className="space-y-5"
+              className="min-w-0 space-y-5"
             >
               <input
                 type="text"
@@ -418,7 +418,7 @@ export function Contact() {
                   onChange={(e) =>
                     setRecipient(e.target.value)
                   }
-                  className="w-full rounded-xl border border-white/25 bg-[#681523] px-5 py-4 text-white focus:border-white focus:outline-none"
+                  className="block w-full min-w-0 rounded-xl border border-white/25 bg-[#681523] px-4 py-3.5 text-base text-white focus:border-white focus:outline-none focus:ring-2 focus:ring-white/25 sm:px-5 sm:py-4"
                 >
                   <option value="designer.rc@outlook.com">
                     Design Email
@@ -441,7 +441,7 @@ export function Contact() {
                     ? undefined
                     : { scale: 0.98 }
                 }
-                className="flex w-full items-center justify-center gap-3 rounded-full bg-[#FFF7F2] px-7 py-4 font-medium text-[#681523] transition-colors hover:bg-[#F0C9CB]"
+                className="flex w-full items-center justify-center gap-3 rounded-full bg-[#FFF7F2] px-7 py-4 font-medium text-[#681523] transition-colors hover:bg-[#F0C9CB] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 <Send size={19} />
                 Prepare Email
@@ -466,10 +466,10 @@ export function Contact() {
             duration: 0.8,
             ease: "easeOut",
           }}
-          className="mt-20 border-t border-white/20 pt-10 text-center"
+          className="mt-16 border-t border-white/20 pt-10 text-center sm:mt-20"
         >
           <p
-            className="text-2xl italic text-[#F0C9CB] md:text-3xl"
+            className="text-xl italic text-[#F0C9CB] sm:text-2xl md:text-3xl"
             style={{
               fontFamily: "'Bodoni Moda', Georgia, serif",
             }}
