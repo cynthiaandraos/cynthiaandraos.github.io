@@ -1,6 +1,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { TouchEvent } from "react";
+import { createPortal } from "react-dom";
 import {
   motion,
   AnimatePresence,
@@ -323,12 +324,11 @@ export function Packaging() {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    closeButtonRef.current?.focus();
+    requestAnimationFrame(() => closeButtonRef.current?.focus());
 
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setSelected(null);
-        setActiveImage(0);
+        closeCollection();
       }
 
       if (
@@ -364,7 +364,7 @@ export function Packaging() {
   return (
     <section
       id="packaging"
-      className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24 text-[#681523]"
+      className="scroll-mt-28 bg-[#FFF7F2] px-4 py-16 text-[#681523] sm:px-6 sm:py-24"
     >
       <div className="mx-auto max-w-7xl">
         {/* Section heading */}
@@ -382,7 +382,7 @@ export function Packaging() {
             duration: 0.8,
             ease: "easeOut",
           }}
-          className="mb-14 text-center"
+          className="mb-10 text-center sm:mb-14"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
             01 / PACKAGING & LABELS
@@ -390,7 +390,7 @@ export function Packaging() {
 
           {/* Bold italic section title */}
           <h2
-            className="text-5xl italic text-[#850F25] md:text-7xl"
+            className="text-[clamp(2.35rem,9vw,3rem)] leading-tight italic text-[#850F25] md:text-7xl"
             style={{
               fontFamily: "'Bodoni Moda', Georgia, serif",
               fontWeight: 700,
@@ -409,7 +409,7 @@ export function Packaging() {
         </motion.div>
 
         {/* Packaging cards */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
           {collections.map((collection, index) => (
             <motion.article
               key={collection.id}
@@ -460,7 +460,7 @@ export function Packaging() {
                   </div>
                 </div>
 
-                <div className="flex w-full flex-1 flex-col p-6">
+                <div className="flex w-full flex-1 flex-col p-5 sm:p-6">
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {collection.category}
                   </p>
@@ -490,8 +490,9 @@ export function Packaging() {
         </div>
       </div>
 
-      {/* Packaging gallery */}
-      <AnimatePresence>
+      {/* Render outside the animated section so the modal is always above the fixed header. */}
+      {createPortal(
+        <AnimatePresence>
         {selected && (
           <motion.div
             key="collection-overlay"
@@ -522,7 +523,7 @@ export function Packaging() {
               aria-modal="true"
               aria-label={`${selected.title} gallery`}
               onClick={(event) => event.stopPropagation()}
-              className="relative flex h-[100dvh] w-full flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-auto sm:max-h-[92vh] sm:max-w-4xl sm:overflow-y-auto sm:rounded-3xl sm:p-4 md:p-8"
+              className="relative flex h-[100dvh] w-full flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-auto sm:max-h-[92dvh] sm:max-w-4xl sm:overflow-y-auto sm:rounded-3xl sm:p-4 md:p-8"
             >
               {/* Desktop header */}
               <div className="mb-6 hidden shrink-0 pr-12 sm:block">
@@ -547,7 +548,7 @@ export function Packaging() {
                 type="button"
                 onClick={closeCollection}
                 aria-label="Close gallery"
-                className="absolute right-4 top-[calc(env(safe-area-inset-top)+16px)] z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white shadow-lg transition hover:bg-[#A13A4B] sm:top-4"
+                className="absolute right-4 top-[calc(env(safe-area-inset-top,0px)+16px)] z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white shadow-lg transition hover:bg-[#A13A4B] sm:top-4"
               >
                 <X size={22} />
               </button>
@@ -560,7 +561,7 @@ export function Packaging() {
                   touchStart.current = null;
                 }}
                 style={{ touchAction: "pan-y" }}
-                className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-[#F8F0EC] px-4 pb-24 pt-20 sm:min-h-[260px] sm:flex-none sm:rounded-2xl sm:p-0"
+                className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-[#F8F0EC] px-3 pb-28 pt-20 sm:min-h-[260px] sm:flex-none sm:rounded-2xl sm:p-0"
               >
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.img
@@ -583,7 +584,7 @@ export function Packaging() {
                     transition={{
                       duration: reduceMotion ? 0 : 0.25,
                     }}
-                    className="h-full w-full select-none object-contain sm:h-auto sm:max-h-[60vh]"
+                    className="h-full w-full select-none object-contain sm:h-auto sm:max-h-[52dvh]"
                   />
                 </AnimatePresence>
 
@@ -611,7 +612,7 @@ export function Packaging() {
                 )}
 
                 {/* Mobile gallery information */}
-                <div className="absolute inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+16px)] text-center sm:hidden">
+                <div className="absolute inset-x-4 bottom-[calc(env(safe-area-inset-bottom,0px)+16px)] text-center sm:hidden">
                   <p
                     className="mb-2 text-lg text-[#681523]"
                     style={{
@@ -670,7 +671,9 @@ export function Packaging() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 }
