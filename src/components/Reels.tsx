@@ -18,56 +18,56 @@ const reels: Reel[] = [
     title: "Under Construction",
     category: "Construction & Interior",
     videoSrc: "/reels/construction-progress.mp4",
-    coverSrc: "/reels/covers/construction-progress.png",
+    coverSrc: "/reels/covers/under-construction.png",
   },
   {
     id: "firas-cauliflower",
     title: "Cauliflower & Tahini",
     category: "Food & Restaurants",
     videoSrc: "/reels/firas-cauliflower.mp4",
-    coverSrc: "/reels/covers/firas-cauliflower.png",
+    coverSrc: "/reels/covers/cauliflower-sandwich.png",
   },
   {
     id: "firas-delivery",
     title: "Machewe Firas Delivery",
     category: "Food & Restaurants",
     videoSrc: "/reels/firas-delivery.mp4",
-    coverSrc: "/reels/covers/firas-delivery.png",
+    coverSrc: "/reels/covers/machewe-firas-delivery.png",
   },
   {
     id: "firas-farrouj",
     title: "Farrouj Combo",
     category: "Food & Restaurants",
     videoSrc: "/reels/firas-farrouj.mp4",
-    coverSrc: "/reels/covers/firas-farrouj.png",
+    coverSrc: "/reels/covers/farouj-combo.png",
   },
   {
     id: "firas-feta-salad",
     title: "Fresh Feta Salad",
     category: "Food & Restaurants",
     videoSrc: "/reels/firas-feta-salad.mp4",
-    coverSrc: "/reels/covers/firas-feta-salad.png",
+    coverSrc: "/reels/covers/fresh-feta-salad.png",
   },
   {
     id: "firas-grill",
     title: "From Grill to Table",
     category: "Food & Restaurants",
     videoSrc: "/reels/firas-grill.mp4",
-    coverSrc: "/reels/covers/firas-grill.png",
+    coverSrc: "/reels/covers/from-grill-to-table.png",
   },
   {
     id: "firas-hawaii-burger",
     title: "Hawaii Burger Launch",
     category: "Food & Restaurants",
     videoSrc: "/reels/firas-hawaii-burger.mp4",
-    coverSrc: "/reels/covers/firas-hawaii-burger.png",
+    coverSrc: "/reels/covers/hawaii-burger-launch.png",
   },
   {
     id: "fitness-training",
     title: "Personal Training",
     category: "Fitness & Lifestyle",
     videoSrc: "/reels/fitness-training.mp4",
-    coverSrc: "/reels/covers/fitness-training.png",
+    coverSrc: "/reels/covers/personal-training.png",
   },
   {
     id: "omarket-kafta",
@@ -81,7 +81,7 @@ const reels: Reel[] = [
     title: "Creative Video Project",
     category: "Video & Motion",
     videoSrc: "/reels/video-22.mp4",
-    coverSrc: "/reels/covers/video-22.png",
+    coverSrc: "/reels/covers/creative-video-motion.png",
   },
 ];
 
@@ -110,9 +110,7 @@ export function Reels() {
     document.body.style.overflow = "hidden";
 
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setSelected(null);
-      }
+      if (event.key === "Escape") setSelected(null);
     };
 
     window.addEventListener("keydown", closeOnEscape);
@@ -129,7 +127,6 @@ export function Reels() {
       className="scroll-mt-24 bg-[#FFF7F2] px-4 py-20 text-[#2B1717] sm:px-6"
     >
       <div className="mx-auto max-w-7xl">
-        {/* Section Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -138,9 +135,7 @@ export function Reels() {
         >
           <h2
             className="text-4xl font-normal sm:text-5xl md:text-6xl"
-            style={{
-              fontFamily: "'Bodoni Moda', Georgia, serif",
-            }}
+            style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
           >
             Reels{" "}
             <span className="italic text-[#842E3D]">
@@ -149,12 +144,11 @@ export function Reels() {
           </h2>
 
           <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#765A59] sm:text-base">
-            Creative storytelling through video, motion,
-            branding, and social media content.
+            Creative storytelling through video, motion, branding,
+            and social media content.
           </p>
         </motion.div>
 
-        {/* Category Filters */}
         <div className="mb-10 flex flex-wrap justify-center gap-2">
           {categories.map((category) => (
             <button
@@ -173,7 +167,6 @@ export function Reels() {
           ))}
         </div>
 
-        {/* Reel Cards */}
         <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
           {filtered.map((reel, index) => (
             <motion.div
@@ -193,7 +186,6 @@ export function Reels() {
                 aria-label={`Play ${reel.title}`}
                 className="group relative block aspect-[9/16] w-full overflow-hidden rounded-2xl bg-[#EAD9D5] shadow-sm transition-shadow hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#842E3D]"
               >
-                {/* Custom Cover Image */}
                 <img
                   src={reel.coverSrc}
                   alt={`${reel.title} cover`}
@@ -201,7 +193,6 @@ export function Reels() {
                   className="absolute inset-0 h-full w-full object-cover"
                 />
 
-                {/* Play Button Overlay */}
                 <span className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/30">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-[#681523] shadow-lg transition-transform group-hover:scale-110 sm:h-14 sm:w-14">
                     <Play
@@ -213,7 +204,6 @@ export function Reels() {
                 </span>
               </button>
 
-              {/* Reel Information */}
               <h3 className="mt-3 truncate text-sm font-medium sm:text-base">
                 {reel.title}
               </h3>
@@ -226,7 +216,6 @@ export function Reels() {
         </div>
       </div>
 
-      {/* Fullscreen Video Player */}
       {selected &&
         typeof document !== "undefined" &&
         createPortal(
@@ -245,7 +234,6 @@ export function Reels() {
               aria-label={`${selected.title} video`}
               className="relative flex max-h-[95dvh] w-full max-w-5xl flex-col items-center justify-center"
             >
-              {/* Close Button */}
               <button
                 type="button"
                 onClick={() => setSelected(null)}
@@ -255,11 +243,9 @@ export function Reels() {
                 <X size={24} />
               </button>
 
-              {/* Original Video - No Cropping */}
               <video
                 key={selected.id}
                 src={selected.videoSrc}
-                poster={selected.coverSrc}
                 controls
                 autoPlay
                 playsInline
