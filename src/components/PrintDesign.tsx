@@ -1,7 +1,7 @@
 
 import { createPortal } from "react-dom";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
   AnimatePresence,
@@ -140,8 +140,12 @@ export function PrintDesign() {
 
   const [zoomed, setZoomed] = useState(false);
   const reduceMotion = useReducedMotion();
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   const openDesign = (design: PrintProject) => {
+    previousFocusRef.current = document.activeElement instanceof HTMLElement
+      ? document.activeElement : null;
     setSelected(design);
     setZoomed(false);
   };
@@ -149,6 +153,7 @@ export function PrintDesign() {
   const closeDesign = () => {
     setSelected(null);
     setZoomed(false);
+    requestAnimationFrame(() => previousFocusRef.current?.focus());
   };
 
   useEffect(() => {
@@ -156,8 +161,7 @@ export function PrintDesign() {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setSelected(null);
-        setZoomed(false);
+        closeDesign();
       }
     };
 
@@ -165,6 +169,7 @@ export function PrintDesign() {
       document.body.style.overflow;
 
     document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
@@ -179,7 +184,7 @@ export function PrintDesign() {
   return (
     <section
       id="print-design"
-      className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24 text-[#681523]"
+      className="scroll-mt-28 bg-[#FFF7F2] px-4 py-16 text-[#681523] sm:px-6 sm:py-20 md:py-24"
     >
       <div className="mx-auto max-w-7xl">
 
@@ -195,7 +200,7 @@ export function PrintDesign() {
           }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-14 text-center"
+          className="mb-10 text-center sm:mb-14"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
             06 / PRINT & STATIONERY
@@ -203,7 +208,7 @@ export function PrintDesign() {
 
           {/* BOLD ITALIC TITLE */}
           <h2
-            className="text-5xl italic text-[#850F25] md:text-7xl"
+            className="text-[clamp(2.35rem,9vw,3rem)] leading-tight italic text-[#850F25] md:text-7xl"
             style={{
               fontFamily:
                 "'Bodoni Moda', Georgia, serif",
@@ -223,7 +228,7 @@ export function PrintDesign() {
         </motion.div>
 
         {/* MATCHING PORTFOLIO COVER CARDS */}
-        <div className="grid grid-cols-1 items-stretch gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
 
           {designs.map((design, index) => (
             <motion.article
@@ -277,7 +282,7 @@ export function PrintDesign() {
                 </div>
 
                 {/* PROJECT INFORMATION */}
-                <div className="flex w-full flex-1 flex-col bg-white p-6">
+                <div className="flex w-full flex-1 flex-col bg-white p-5 sm:p-6">
 
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {design.category}
@@ -327,7 +332,7 @@ export function PrintDesign() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             onClick={closeDesign}
-            className="fixed inset-0 z-[2147483647] flex items-center justify-center bg-[#210C12]/90 p-3 backdrop-blur-sm md:p-6"
+            className="fixed inset-0 z-[2147483647] flex items-center justify-center bg-[#210C12]/90 p-0 backdrop-blur-sm sm:p-3 md:p-6"
           >
             <motion.div
               initial={{
@@ -351,11 +356,11 @@ export function PrintDesign() {
               onClick={(event) =>
                 event.stopPropagation()
               }
-              className="flex max-h-[94vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-[#FFF7F2] shadow-2xl"
+              className="flex h-[100dvh] max-h-[100dvh] w-full max-w-5xl flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-auto sm:max-h-[94dvh] sm:rounded-2xl"
             >
 
               {/* POPUP HEADER */}
-              <div className="flex items-center justify-between gap-3 border-b border-[#E8D2CF] px-4 py-4 sm:px-6">
+              <div className="flex shrink-0 items-center justify-between gap-2 border-b border-[#E8D2CF] px-3 pb-3 pt-[calc(env(safe-area-inset-top)+12px)] sm:gap-3 sm:px-6 sm:py-4">
 
                 <div className="min-w-0">
                   <p className="text-xs uppercase tracking-widest text-[#A45D69]">
@@ -363,7 +368,7 @@ export function PrintDesign() {
                   </p>
 
                   <h3
-                    className="mt-1 text-lg text-[#681523] sm:text-2xl"
+                    className="mt-1 text-base leading-snug text-[#681523] sm:text-2xl"
                     style={{
                       fontFamily:
                         "'Bodoni Moda', Georgia, serif",
@@ -373,7 +378,7 @@ export function PrintDesign() {
                   </h3>
                 </div>
 
-                <div className="flex shrink-0 gap-2">
+                <div className="flex shrink-0 gap-1.5 sm:gap-2">
 
                   {/* ZOOM BUTTON */}
                   <button
@@ -386,7 +391,7 @@ export function PrintDesign() {
                         ? "Fit design to screen"
                         : "Zoom in"
                     }
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F0DFD9] text-[#681523] transition hover:bg-[#E7CCC5]"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F0DFD9] text-[#681523] transition hover:bg-[#E7CCC5]"
                   >
                     {zoomed ? (
                       <ZoomOut size={20} />
@@ -398,9 +403,10 @@ export function PrintDesign() {
                   {/* CLOSE BUTTON */}
                   <button
                     type="button"
+                    ref={closeButtonRef}
                     onClick={closeDesign}
                     aria-label="Close design"
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#681523] text-white transition hover:bg-[#850F25]"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#681523] text-white transition hover:bg-[#850F25]"
                   >
                     <X size={20} />
                   </button>
@@ -409,7 +415,7 @@ export function PrintDesign() {
               </div>
 
               {/* ORIGINAL IMAGE */}
-              <div className="min-h-0 flex-1 overflow-auto bg-[#F7EDE8] p-3 sm:p-6">
+              <div className="min-h-0 flex-1 overflow-auto overscroll-contain bg-[#F7EDE8] p-3 sm:p-6">
 
                 <div
                   className={
@@ -423,8 +429,8 @@ export function PrintDesign() {
                     alt={`${selected.title} original design`}
                     className={
                       zoomed
-                        ? "h-auto w-[1100px] max-w-none"
-                        : "max-h-[70vh] max-w-full object-contain"
+                        ? "h-auto w-[900px] max-w-none sm:w-[1100px]"
+                        : "max-h-full max-w-full object-contain"
                     }
                   />
                 </div>
@@ -432,7 +438,7 @@ export function PrintDesign() {
               </div>
 
               {/* POPUP FOOTER */}
-              <div className="border-t border-[#E8D2CF] px-4 py-3 text-center text-xs text-[#704B50]">
+              <div className="shrink-0 border-t border-[#E8D2CF] px-4 pb-[calc(env(safe-area-inset-bottom)+12px)] pt-3 text-center text-[11px] text-[#704B50] sm:py-3 sm:text-xs">
                 View the original design. Use the zoom
                 button for details, or press Esc to close.
               </div>
