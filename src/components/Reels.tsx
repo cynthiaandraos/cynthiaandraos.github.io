@@ -13,34 +13,10 @@ type Reel = {
 
 const reels: Reel[] = [
   {
-    id: "construction-design",
-    title: "Beauty Is Simplicity",
-    category: "Construction & Interior",
-    videoSrc: "/reels/construction-design.mp4",
-  },
-  {
-    id: "construction-interior",
-    title: "Interior Design",
-    category: "Construction & Interior",
-    videoSrc: "/reels/construction-interior.mp4",
-  },
-  {
     id: "construction-progress",
     title: "Under Construction",
     category: "Construction & Interior",
     videoSrc: "/reels/construction-progress.mp4",
-  },
-  {
-    id: "construction-quality",
-    title: "Quality Construction",
-    category: "Construction & Interior",
-    videoSrc: "/reels/construction-quality.mp4",
-  },
-  {
-    id: "construction-sauna",
-    title: "Luxury Sauna",
-    category: "Construction & Interior",
-    videoSrc: "/reels/construction-sauna.mp4",
   },
   {
     id: "firas-cauliflower",
@@ -91,26 +67,8 @@ const reels: Reel[] = [
     videoSrc: "/reels/omarket-kafta.mp4",
   },
   {
-    id: "omarket-meat",
-    title: "Nice to Meat You",
-    category: "Food & Branding",
-    videoSrc: "/reels/omarket-meat.mp4",
-  },
-  {
-    id: "rose-promo",
-    title: "Rosé Promotion",
-    category: "Lifestyle & Creative",
-    videoSrc: "/reels/rose-promo.mp4",
-  },
-  {
-    id: "video-21",
-    title: "Creative Project 01",
-    category: "Video & Motion",
-    videoSrc: "/reels/video-21.mp4",
-  },
-  {
     id: "video-22",
-    title: "Creative Project 02",
+    title: "Creative Video Project",
     category: "Video & Motion",
     videoSrc: "/reels/video-22.mp4",
   },
@@ -122,7 +80,6 @@ const categories = [
   "Food & Restaurants",
   "Food & Branding",
   "Fitness & Lifestyle",
-  "Lifestyle & Creative",
   "Video & Motion",
 ];
 
