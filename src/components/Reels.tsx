@@ -124,10 +124,6 @@ export function Reels() {
           viewport={{ once: true }}
           className="mb-10 text-center"
         >
-          <p className="mb-3 text-xs uppercase tracking-[0.25em] text-[#842E3D]">
-            Creative Portfolio
-          </p>
-
           <h2
             className="text-4xl font-normal sm:text-5xl md:text-6xl"
             style={{
