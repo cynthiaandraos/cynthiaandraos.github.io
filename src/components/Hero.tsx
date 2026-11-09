@@ -12,7 +12,8 @@ const navigation = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Services", href: "#services" },
-  { label: "Portfolio", href: "#portfolio" },
+  { label: "Projects", href: "#portfolio" },
+  { label: "Reels", href: "#reels" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -93,7 +94,7 @@ export function Hero() {
 
         <nav
           aria-label="Main navigation"
-          className="hidden items-center justify-center gap-5 text-sm font-medium text-[#681523] lg:flex xl:gap-8"
+          className="hidden items-center justify-center gap-4 text-sm font-medium text-[#681523] lg:flex xl:gap-7"
         >
           {navigation.map((item) => (
             <a
