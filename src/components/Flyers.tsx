@@ -1,5 +1,6 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   motion,
   AnimatePresence,
@@ -80,10 +81,15 @@ export function Flyers() {
 
   const [zoomed, setZoomed] = useState(false);
   const reduceMotion = useReducedMotion();
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   const openFlyer = (flyer: Flyer) => {
     // Start downloading the original flyer immediately.
     preloadImage(flyer.image);
+    previousFocusRef.current = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
 
     setSelected(flyer);
     setZoomed(false);
@@ -92,6 +98,7 @@ export function Flyers() {
   const closeFlyer = () => {
     setSelected(null);
     setZoomed(false);
+    requestAnimationFrame(() => previousFocusRef.current?.focus());
   };
 
   useEffect(() => {
@@ -99,13 +106,13 @@ export function Flyers() {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setSelected(null);
-        setZoomed(false);
+        closeFlyer();
       }
     };
 
     const oldOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    requestAnimationFrame(() => closeButtonRef.current?.focus());
 
     window.addEventListener("keydown", handleKeyDown);
 
@@ -121,7 +128,7 @@ export function Flyers() {
   return (
     <section
       id="flyers"
-      className="bg-[#FFF7F2] px-6 py-24 text-[#681523]"
+      className="bg-[#FFF7F2] px-4 py-16 text-[#681523] sm:px-6 sm:py-20 md:py-24"
     >
       <div className="mx-auto max-w-6xl">
 
@@ -145,7 +152,7 @@ export function Flyers() {
 
           {/* BOLD ITALIC TITLE */}
           <h2
-            className="text-5xl italic text-[#850F25] md:text-7xl"
+            className="text-4xl italic text-[#850F25] sm:text-5xl md:text-7xl"
             style={{
               fontFamily:
                 "'Bodoni Moda', Georgia, serif",
@@ -253,6 +260,7 @@ export function Flyers() {
       </div>
 
       {/* FULL-SIZE ORIGINAL FLYER VIEWER */}
+      {createPortal(
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -260,7 +268,7 @@ export function Flyers() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[110] flex items-center justify-center bg-[#210C12]/90 p-3 backdrop-blur-sm md:p-6"
+            className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/90 p-0 backdrop-blur-sm sm:p-3 md:p-6"
             onClick={closeFlyer}
           >
             <motion.div
@@ -285,18 +293,18 @@ export function Flyers() {
               onClick={(event) =>
                 event.stopPropagation()
               }
-              className="flex max-h-[94vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl bg-[#FFF7F2] shadow-2xl"
+              className="flex h-[100dvh] w-full max-w-4xl flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-auto sm:max-h-[92dvh] sm:rounded-2xl"
             >
 
               {/* MODAL HEADER */}
-              <div className="flex items-center justify-between gap-3 border-b border-[#E8D2CF] px-4 py-4 sm:px-6">
+              <div className="flex shrink-0 items-center justify-between gap-3 border-b border-[#E8D2CF] px-3 pb-3 pt-[calc(env(safe-area-inset-top)+12px)] sm:px-6 sm:py-4">
                 <div className="min-w-0">
                   <p className="text-xs uppercase tracking-widest text-[#A45D69]">
                     {selected.client}
                   </p>
 
                   <h3
-                    className="mt-1 text-lg text-[#681523] sm:text-2xl"
+                    className="mt-1 text-base leading-tight text-[#681523] sm:text-2xl"
                     style={{
                       fontFamily:
                         "'Bodoni Moda', Georgia, serif",
@@ -306,7 +314,7 @@ export function Flyers() {
                   </h3>
                 </div>
 
-                <div className="flex shrink-0 gap-2">
+                <div className="flex shrink-0 gap-1.5 sm:gap-2">
                   <button
                     type="button"
                     onClick={() =>
@@ -327,10 +335,11 @@ export function Flyers() {
                   </button>
 
                   <button
+                    ref={closeButtonRef}
                     type="button"
                     onClick={closeFlyer}
                     aria-label="Close flyer"
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#681523] text-white transition hover:bg-[#850F25]"
+                    className="flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white transition hover:bg-[#850F25]"
                   >
                     <X size={20} />
                   </button>
@@ -338,11 +347,11 @@ export function Flyers() {
               </div>
 
               {/* ORIGINAL FLYER IMAGE */}
-              <div className="min-h-0 flex-1 overflow-auto bg-[#F7EDE8] p-3 sm:p-6">
+              <div className="min-h-0 flex-1 overflow-auto overscroll-contain bg-[#F7EDE8] p-3 sm:p-6">
                 <div
                   className={
                     zoomed
-                      ? "flex min-w-max justify-center"
+                      ? "flex min-h-full min-w-max items-start justify-center"
                       : "flex h-full items-center justify-center"
                   }
                 >
@@ -355,14 +364,14 @@ export function Flyers() {
                     className={
                       zoomed
                         ? "h-auto w-[900px] max-w-none"
-                        : "max-h-[70vh] max-w-full object-contain"
+                        : "mx-auto block h-auto max-h-full max-w-full object-contain"
                     }
                   />
                 </div>
               </div>
 
               {/* MODAL FOOTER */}
-              <div className="border-t border-[#E8D2CF] px-4 py-3 text-center text-xs text-[#704B50]">
+              <div className="shrink-0 border-t border-[#E8D2CF] px-4 pb-[calc(env(safe-area-inset-bottom)+12px)] pt-3 text-center text-[11px] text-[#704B50] sm:py-3 sm:text-xs">
                 Use the zoom button to view the flyer details.
                 Press Esc to close.
               </div>
@@ -370,7 +379,9 @@ export function Flyers() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body
+      )}
     </section>
   );
 }
