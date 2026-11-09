@@ -1,7 +1,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { TouchEvent } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { createPortal } from "react-dom";
 import {
   ArrowLeft,
@@ -169,6 +169,7 @@ export function SocialMedia() {
 
   const [activeImage, setActiveImage] = useState(0);
   const [zoomed, setZoomed] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   const touchStart = useRef<{
     x: number;
@@ -269,6 +270,10 @@ export function SocialMedia() {
   const handleTouchEnd = (
     event: TouchEvent<HTMLDivElement>
   ) => {
+    if (zoomed) {
+      touchStart.current = null;
+      return;
+    }
     if (!touchStart.current || !selectedProject) return;
 
     const touch = event.changedTouches[0];
@@ -354,7 +359,7 @@ export function SocialMedia() {
   return (
     <section
       id="social-media"
-      className="scroll-mt-28 bg-[#FFF7F2] px-6 py-24 text-[#681523]"
+      className="scroll-mt-24 bg-[#FFF7F2] px-4 py-16 text-[#681523] sm:px-6 sm:py-24"
     >
       <div className="mx-auto max-w-7xl">
 
@@ -368,7 +373,7 @@ export function SocialMedia() {
         >
           {/* Bold italic title */}
           <h2
-            className="text-5xl italic text-[#850F25] md:text-7xl"
+            className="text-[clamp(2.35rem,9vw,3rem)] leading-tight italic text-[#850F25] md:text-7xl"
             style={{
               fontFamily:
                 "'Bodoni Moda', Georgia, serif",
@@ -389,7 +394,7 @@ export function SocialMedia() {
         </motion.div>
 
         {/* Campaign cards */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.article
               key={project.id}
@@ -428,7 +433,7 @@ export function SocialMedia() {
                 </div>
 
                 {/* Card details */}
-                <div className="flex-1 p-6">
+                <div className="flex-1 p-5 sm:p-6">
                   <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                     {project.category}
                   </p>
@@ -497,7 +502,7 @@ export function SocialMedia() {
               role="dialog"
               aria-modal="true"
               aria-label={`${selectedProject.title} gallery`}
-              className="relative flex h-[100dvh] w-full flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-[92dvh] sm:max-w-5xl sm:rounded-2xl"
+              className="relative flex h-[100dvh] max-h-[100dvh] w-full flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-[92dvh] sm:max-w-5xl sm:rounded-2xl"
             >
               {/* Desktop gallery header */}
               <div className="hidden shrink-0 items-center justify-between gap-3 border-b border-[#E8D2CF] px-6 py-4 sm:flex">
@@ -556,7 +561,7 @@ export function SocialMedia() {
                 type="button"
                 onClick={closeProject}
                 aria-label="Close gallery"
-                className="absolute right-4 top-[calc(env(safe-area-inset-top)+16px)] z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white shadow-lg sm:hidden"
+                className="absolute right-4 top-[calc(env(safe-area-inset-top,0px)+16px)] z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white shadow-lg sm:hidden"
               >
                 <X size={22} />
               </button>
@@ -595,7 +600,7 @@ export function SocialMedia() {
                     />
                   </div>
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center px-4 pb-24 pt-20 sm:p-4">
+                  <div className="flex h-full w-full items-center justify-center px-3 pb-28 pt-20 sm:p-4">
                     <AnimatePresence mode="wait" initial={false}>
                       <motion.img
                         key={`${selectedProject.id}-${activeImage}`}
@@ -608,7 +613,7 @@ export function SocialMedia() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.2 }}
                         className="block h-full w-full select-none object-contain"
                       />
                     </AnimatePresence>
@@ -639,7 +644,7 @@ export function SocialMedia() {
                 )}
 
                 {/* Mobile gallery information */}
-                <div className="absolute inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+16px)] z-20 text-center sm:hidden">
+                <div className="pointer-events-none absolute inset-x-4 bottom-[calc(env(safe-area-inset-bottom,0px)+16px)] z-20 text-center sm:hidden">
                   <p
                     className="mb-2 text-lg text-[#681523]"
                     style={{
@@ -684,7 +689,7 @@ export function SocialMedia() {
                     onClick={() => selectImage(index)}
                     aria-label={`View ${image.title}`}
                     aria-pressed={activeImage === index}
-                    className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition ${
+                    className={`h-14 w-14 shrink-0 overflow-hidden rounded-lg border-2 transition md:h-20 md:w-20 ${
                       activeImage === index
                         ? "border-[#850F25]"
                         : "border-transparent opacity-60 hover:opacity-100"
