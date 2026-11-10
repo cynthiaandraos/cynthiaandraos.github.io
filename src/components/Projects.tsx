@@ -1,7 +1,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { TouchEvent } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { createPortal } from "react-dom";
 import {
   ArrowLeft,
@@ -212,6 +212,7 @@ function preloadImage(src: string) {
 }
 
 export function Projects() {
+  const reduceMotion = useReducedMotion();
   const [selectedProject, setSelectedProject] =
     useState<Project | null>(null);
 
@@ -391,10 +392,10 @@ export function Projects() {
 
         {/* Logo Design heading */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: reduceMotion ? 0 : 0.65, ease: "easeOut" }}
           className="mb-14 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
@@ -425,16 +426,18 @@ export function Projects() {
             <motion.button
               key={project.title}
               type="button"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial={reduceMotion ? false : { opacity: 0, y: 48, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.12 }}
               transition={{
-                duration: 0.5,
-                delay: index * 0.08,
+                duration: reduceMotion ? 0 : 0.6,
+                delay: reduceMotion ? 0 : (index % 3) * 0.09,
+                ease: "easeOut",
               }}
-              whileHover={{ y: -5 }}
+              whileHover={reduceMotion ? undefined : { y: -6 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.985 }}
               onClick={() => openProject(project)}
-              className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white p-0 text-left shadow-sm transition-shadow hover:shadow-xl"
+              className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white p-0 text-left shadow-sm transition-shadow duration-300 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#850F25]"
             >
               {/* Cover */}
               <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
@@ -448,7 +451,7 @@ export function Projects() {
                   />
                 </div>
 
-                <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#681523] shadow-sm">
+                <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#681523] shadow-sm transition-transform duration-300 motion-safe:group-hover:rotate-12">
                   <ArrowUpRight size={20} />
                 </div>
               </div>
@@ -478,7 +481,11 @@ export function Projects() {
           ))}
         </div>
 
-        <p
+        <motion.p
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: reduceMotion ? 0 : 0.6 }}
           className="mt-12 text-center text-xl italic text-[#850F25] sm:mt-16 sm:text-2xl"
           style={{
             fontFamily:
@@ -486,7 +493,7 @@ export function Projects() {
           }}
         >
           Every design tells a story.
-        </p>
+        </motion.p>
       </div>
 
     </section>
@@ -503,10 +510,10 @@ export function Projects() {
             className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/90 p-0 backdrop-blur-sm sm:p-6"
           >
             <motion.div
-              initial={{
+              initial={reduceMotion ? false : {
                 opacity: 0,
-                scale: 0.96,
-                y: 15,
+                scale: 0.94,
+                y: 24,
               }}
               animate={{
                 opacity: 1,
@@ -516,7 +523,9 @@ export function Projects() {
               exit={{
                 opacity: 0,
                 scale: 0.96,
+                y: 12,
               }}
+              transition={{ duration: reduceMotion ? 0 : 0.3, ease: "easeOut" }}
               onClick={(event) =>
                 event.stopPropagation()
               }
@@ -592,10 +601,10 @@ export function Projects() {
                     decoding="async"
                     fetchPriority="high"
                     draggable={false}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+                    initial={reduceMotion ? false : { opacity: 0, x: 12, scale: 0.985 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -12, scale: 0.985 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.25, ease: "easeOut" }}
                     className="h-full w-full select-none object-contain"
                   />
                 </AnimatePresence>
