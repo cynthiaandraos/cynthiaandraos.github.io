@@ -480,20 +480,6 @@ export function Projects() {
             </motion.button>
           ))}
         </div>
-
-        <motion.p
-          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: reduceMotion ? 0 : 0.6 }}
-          className="mt-12 text-center text-xl italic text-[#850F25] sm:mt-16 sm:text-2xl"
-          style={{
-            fontFamily:
-              "'Bodoni Moda', Georgia, serif",
-          }}
-        >
-          Every design tells a story.
-        </motion.p>
       </div>
 
     </section>
