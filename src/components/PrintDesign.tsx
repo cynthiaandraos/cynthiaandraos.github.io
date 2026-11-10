@@ -440,7 +440,7 @@ export function PrintDesign() {
         )}
       </AnimatePresence>,
       document.body
-      )}
+      ) : null}
 
     </section>
   );
