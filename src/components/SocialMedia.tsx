@@ -359,16 +359,16 @@ export function SocialMedia() {
   return (
     <section
       id="social-media"
-      className="scroll-mt-24 bg-[#FFF7F2] px-4 py-16 text-[#681523] sm:px-6 sm:py-24"
+      className="scroll-mt-24 overflow-hidden bg-[#FFF7F2] px-4 py-16 text-[#681523] sm:px-6 sm:py-24"
     >
       <div className="mx-auto max-w-7xl">
 
         {/* Section heading */}
         <motion.div
-          initial={{ opacity: 0, y: 35 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: reduceMotion ? 0.01 : 0.7, ease: "easeOut" }}
           className="mb-14 text-center"
         >
           {/* Bold italic title */}
@@ -398,18 +398,20 @@ export function SocialMedia() {
           {projects.map((project, index) => (
             <motion.article
               key={project.id}
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial={reduceMotion ? false : { opacity: 0, y: 45, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.12 }}
               transition={{
-                duration: 0.6,
-                delay: index * 0.1,
+                duration: reduceMotion ? 0.01 : 0.6,
+                delay: reduceMotion ? 0 : (index % 3) * 0.12,
+                ease: "easeOut",
               }}
-              whileHover={{ y: -6 }}
+              whileHover={reduceMotion ? undefined : { y: -7, scale: 1.015 }}
               className="group flex flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-[#F7EDE8] shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
-              <button
+              <motion.button
                 type="button"
+                whileTap={reduceMotion ? undefined : { scale: 0.985 }}
                 onClick={() => openProject(project)}
                 aria-label={`View ${project.title} - ${project.subtitle}`}
                 className="flex h-full w-full cursor-pointer flex-col overflow-hidden bg-transparent p-0 text-left"
@@ -461,7 +463,7 @@ export function SocialMedia() {
                     <ArrowUpRight size={16} />
                   </p>
                 </div>
-              </button>
+              </motion.button>
             </motion.article>
           ))}
         </div>
@@ -481,10 +483,10 @@ export function SocialMedia() {
             className="fixed inset-0 z-[2147483647] flex items-center justify-center bg-[#210C12]/90 p-0 backdrop-blur-sm sm:p-5"
           >
             <motion.div
-              initial={{
+              initial={reduceMotion ? false : {
                 opacity: 0,
-                y: 15,
-                scale: 0.97,
+                y: 25,
+                scale: 0.93,
               }}
               animate={{
                 opacity: 1,
@@ -493,9 +495,10 @@ export function SocialMedia() {
               }}
               exit={{
                 opacity: 0,
-                scale: 0.97,
+                y: reduceMotion ? 0 : 10,
+                scale: reduceMotion ? 1 : 0.96,
               }}
-              transition={{ duration: 0.25 }}
+              transition={{ duration: reduceMotion ? 0.01 : 0.35, ease: "easeOut" }}
               onClick={(event) =>
                 event.stopPropagation()
               }
@@ -610,10 +613,10 @@ export function SocialMedia() {
                         decoding="async"
                         fetchPriority="high"
                         draggable={false}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: reduceMotion ? 0 : 0.2 }}
+                        initial={reduceMotion ? false : { opacity: 0, x: 18 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: reduceMotion ? 0 : -18 }}
+                        transition={{ duration: reduceMotion ? 0.01 : 0.24, ease: "easeOut" }}
                         className="block h-full w-full select-none object-contain"
                       />
                     </AnimatePresence>
