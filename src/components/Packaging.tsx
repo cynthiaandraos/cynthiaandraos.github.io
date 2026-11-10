@@ -413,34 +413,25 @@ export function Packaging() {
           {collections.map((collection, index) => (
             <motion.article
               key={collection.id}
-              initial={{
-                opacity: 0,
-                y: reduceMotion ? 0 : 40,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
+              initial={reduceMotion ? false : { opacity: 0, y: 32, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{
                 once: true,
                 amount: 0.1,
               }}
               transition={{
-                duration: 0.65,
-                delay: reduceMotion
-                  ? 0
-                  : (index % 3) * 0.12,
+                duration: reduceMotion ? 0.01 : 0.55,
+                delay: reduceMotion ? 0 : (index % 2) * 0.09,
                 ease: "easeOut",
               }}
-              whileHover={
-                reduceMotion ? undefined : { y: -7 }
-              }
-              className="group h-full overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
+              whileHover={reduceMotion ? undefined : { y: -7 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.975 }}
+              className="group h-full overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl active:shadow-lg"
             >
               <button
                 type="button"
                 onClick={() => openCollection(collection)}
-                className="flex h-full w-full cursor-pointer flex-col text-left"
+                className="flex h-full w-full cursor-pointer flex-col text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#850F25]"
                 aria-label={`Open ${collection.title} gallery`}
               >
                 <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F8F0EC]">
@@ -448,10 +439,10 @@ export function Packaging() {
                     src={collection.cover}
                     alt={collection.title}
                     loading="lazy"
-                    className={`h-full w-full object-cover object-center transition-transform duration-700 ${
+                    className={`h-full w-full object-cover object-center transition-transform duration-700 motion-reduce:transition-none ${
                       collection.id === 3
-                        ? "scale-[1.08] group-hover:scale-[1.13]"
-                        : "group-hover:scale-105"
+                        ? "scale-[1.08] motion-safe:group-hover:scale-[1.13]"
+                        : "motion-safe:group-hover:scale-105"
                     }`}
                   />
 
@@ -499,7 +490,7 @@ export function Packaging() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: reduceMotion ? 0.01 : 0.25 }}
             className="fixed inset-0 z-[10010] flex items-center justify-center bg-[#210C12]/85 p-0 backdrop-blur-sm sm:p-3 md:p-8"
             onClick={closeCollection}
           >
@@ -518,7 +509,7 @@ export function Packaging() {
                 opacity: 0,
                 scale: reduceMotion ? 1 : 0.97,
               }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: reduceMotion ? 0.01 : 0.3 }}
               role="dialog"
               aria-modal="true"
               aria-label={`${selected.title} gallery`}
