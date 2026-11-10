@@ -134,16 +134,13 @@ export function Flyers() {
 
         {/* SECTION HEADING */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: reduceMotion ? 0 : 35,
-          }}
+          initial={reduceMotion ? false : { opacity: 0, y: 35 }}
           whileInView={{
             opacity: 1,
             y: 0,
           }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: reduceMotion ? 0.01 : 0.7, ease: "easeOut" }}
           className="mb-14 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
@@ -175,29 +172,23 @@ export function Flyers() {
           {flyers.map((flyer, index) => (
             <motion.article
               key={flyer.id}
-              initial={{
-                opacity: 0,
-                y: reduceMotion ? 0 : 40,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
+              initial={reduceMotion ? false : { opacity: 0, y: 45, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{
                 once: true,
                 amount: 0.1,
               }}
               transition={{
-                duration: 0.65,
-                delay: reduceMotion
-                  ? 0
-                  : index * 0.15,
+                duration: reduceMotion ? 0.01 : 0.6,
+                delay: reduceMotion ? 0 : (index % 2) * 0.12,
+                ease: "easeOut",
               }}
               whileHover={
                 reduceMotion
                   ? undefined
                   : { y: -7 }
               }
+              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
               className="group overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
               <button
@@ -260,7 +251,7 @@ export function Flyers() {
       </div>
 
       {/* FULL-SIZE ORIGINAL FLYER VIEWER */}
-      {createPortal(
+      {typeof document !== "undefined" && createPortal(
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -272,21 +263,14 @@ export function Flyers() {
             onClick={closeFlyer}
           >
             <motion.div
-              initial={{
-                opacity: 0,
-                y: reduceMotion ? 0 : 20,
-                scale: reduceMotion ? 1 : 0.97,
-              }}
+              initial={reduceMotion ? false : { opacity: 0, y: 25, scale: 0.93 }}
               animate={{
                 opacity: 1,
                 y: 0,
                 scale: 1,
               }}
-              exit={{
-                opacity: 0,
-                scale: 0.97,
-              }}
-              transition={{ duration: 0.25 }}
+              exit={{ opacity: 0, scale: reduceMotion ? 1 : 0.96, y: reduceMotion ? 0 : 10 }}
+              transition={{ duration: reduceMotion ? 0.01 : 0.35, ease: "easeOut" }}
               role="dialog"
               aria-modal="true"
               aria-label={selected.title}
@@ -355,7 +339,11 @@ export function Flyers() {
                       : "flex h-full items-center justify-center"
                   }
                 >
-                  <img
+                  <motion.img
+                    key={selected.id}
+                    initial={reduceMotion ? false : { opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: reduceMotion ? 0.01 : 0.35 }}
                     src={selected.image}
                     alt={selected.title}
                     loading="eager"
