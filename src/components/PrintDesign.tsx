@@ -190,16 +190,13 @@ export function PrintDesign() {
 
         {/* SECTION HEADING */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: reduceMotion ? 0 : 35,
-          }}
+          initial={reduceMotion ? false : { opacity: 0, y: 35 }}
           whileInView={{
             opacity: 1,
             y: 0,
           }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: reduceMotion ? 0 : 0.7, ease: "easeOut" }}
           className="mb-10 text-center sm:mb-14"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
@@ -233,29 +230,23 @@ export function PrintDesign() {
           {designs.map((design, index) => (
             <motion.article
               key={design.id}
-              initial={{
-                opacity: 0,
-                y: reduceMotion ? 0 : 40,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
+              initial={reduceMotion ? false : { opacity: 0, y: 40, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{
                 once: true,
                 amount: 0.1,
               }}
               transition={{
-                duration: 0.65,
-                delay: reduceMotion
-                  ? 0
-                  : (index % 3) * 0.12,
+                duration: reduceMotion ? 0 : 0.6,
+                delay: reduceMotion ? 0 : (index % 3) * 0.1,
+                ease: "easeOut",
               }}
               whileHover={
                 reduceMotion
                   ? undefined
                   : { y: -7 }
               }
+              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
               className="group h-full overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
               <button
@@ -322,7 +313,7 @@ export function PrintDesign() {
       </div>
 
       {/* ORIGINAL DESIGN POPUP */}
-      {createPortal(
+      {typeof document !== "undefined" ? createPortal(
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -330,15 +321,15 @@ export function PrintDesign() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: reduceMotion ? 0 : 0.25 }}
             onClick={closeDesign}
             className="fixed inset-0 z-[2147483647] flex items-center justify-center bg-[#210C12]/90 p-0 backdrop-blur-sm sm:p-3 md:p-6"
           >
             <motion.div
               initial={{
                 opacity: 0,
-                y: reduceMotion ? 0 : 20,
-                scale: reduceMotion ? 1 : 0.97,
+                y: reduceMotion ? 0 : 25,
+                scale: reduceMotion ? 1 : 0.94,
               }}
               animate={{
                 opacity: 1,
@@ -347,9 +338,10 @@ export function PrintDesign() {
               }}
               exit={{
                 opacity: 0,
-                scale: 0.97,
+                scale: reduceMotion ? 1 : 0.97,
+                y: reduceMotion ? 0 : 10,
               }}
-              transition={{ duration: 0.25 }}
+              transition={{ duration: reduceMotion ? 0 : 0.32, ease: "easeOut" }}
               role="dialog"
               aria-modal="true"
               aria-label={`${selected.title} full design`}
