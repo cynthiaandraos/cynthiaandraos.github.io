@@ -119,9 +119,9 @@ export function Signage() {
             transition={{ duration: reduceMotion ? 0 : 0.65, ease: "easeOut" }}
             className="mb-14 text-center"
           >
-            <p className="mb-4 text-xs tracking-[0.3em] text-[#A45D69]">09 / Signage &amp; Environmental Branding</p>
+            <p className="mb-4 text-xs tracking-[0.3em] text-[#A45D69]">10 / SIGNAGE DESIGN</p>
             <h2 className="text-4xl italic text-[#850F25] sm:text-5xl md:text-7xl" style={{ fontFamily: "'Bodoni Moda', Georgia, serif", fontWeight: 700 }}>
-              Signage &amp; Environmental Branding
+              Signage Design
             </h2>
             <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
               Creative signage and environmental branding designs that bring visual identities into physical spaces.
@@ -223,4 +223,3 @@ export function Signage() {
     </>
   );
 }
-
