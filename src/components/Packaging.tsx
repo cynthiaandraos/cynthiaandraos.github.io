@@ -54,6 +54,23 @@ import aurelleFaceCreamCover from "../assets/aurelle-face-cream-cover.png";
 import aurelleCleanserCover from "../assets/aurelle-cleanser-cover.png";
 import aurelleLuxuryShoppingBag from "../assets/aurelle-luxury-shopping-bag.png";
 
+const oliviaAsset = (filename: string) => `${import.meta.env.BASE_URL}olivia/${filename}`;
+
+const collections = [
+  {
+    id: 11,
+    title: "OLIV-IA – Olive Oil Packaging",
+    category: "Olive Oil Bottles · Packaging Design",
+    cover: oliviaAsset("oliv-ia-product-mockup.png"),
+    description: "OLIV-IA olive oil bottle packaging, branded gift boxes, shopping bags and product presentation.",
+    images: [
+      { src: oliviaAsset("oliv-ia-product-mockup.png"), label: "Product Packaging Mockup" },
+      { src: oliviaAsset("olivia-large-bottle.png"), label: "Large Olive Oil Bottle" },
+      { src: oliviaAsset("oliv-ia-gift-box.png"), label: "Branded Gift Box" },
+      { src: oliviaAsset("oliv-ia-shopping-bag.png"), label: "Shopping Bag" },
+      { src: oliviaAsset("olivia-hang-tag.png"), label: "Bottle Hang Tag" },
+    ],
+  },
 const collections = [
   {
     id: 10,
