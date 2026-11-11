@@ -144,7 +144,7 @@ export function Flyers() {
           className="mb-14 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
-            04 / PRINT & PROMOTIONAL DESIGN
+            04 / PROMOTIONAL DESIGN
           </p>
 
           {/* BOLD ITALIC TITLE */}
@@ -156,13 +156,13 @@ export function Flyers() {
               fontWeight: 700,
             }}
           >
-            Flyers &amp; Promotional Design
+            Promotional Design
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            A selection of promotional and marketing materials designed
-            to communicate brand messages through engaging visuals,
-            thoughtful layouts, and creative design.
+            Explore promotional flyer designs for 5 Beans Coffee Shop and
+            MY Fitness by Myriam, created to communicate services,
+            locations, and brand messages through engaging visuals.
           </p>
 
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
