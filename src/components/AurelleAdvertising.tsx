@@ -221,12 +221,13 @@ export function AurelleAdvertising() {
               fontWeight: 700,
             }}
           >
-            Aurelle Advertising Campaign
+            Advertising &amp; Campaign Design
           </h2>
 
           <p className="mx-auto max-w-2xl text-sm leading-relaxed text-[#76565B] sm:text-base">
-            A collection of luxury skincare advertisements
-            and elegant beauty campaigns.
+            A showcase of creative advertising concepts,
+            combining visual storytelling, elegant compositions,
+            and impactful brand communication.
           </p>
         </motion.div>
 
