@@ -52,7 +52,7 @@ const campaigns = [
     cover: oliviaAsset("olivia-pouring-ad.png"),
     image: oliviaAsset("olivia-pouring-ad.png"),
   },
-const campaigns = [
+
   {
     title: "Full Skincare Collection",
     category: "Luxury Product Advertising",
