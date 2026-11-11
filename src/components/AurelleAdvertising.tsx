@@ -13,6 +13,45 @@ import radianceAd from "../assets/aurelle-natural-radiance-beauty-ad.png";
 import collectionCover from "../assets/aurelle-collection-cover.png";
 import radianceCover from "../assets/aurelle-natural-radiance-cover.png";
 
+const oliviaAsset = (filename: string) => `${import.meta.env.BASE_URL}olivia/${filename}`;
+
+const campaigns = [
+  {
+    title: "OLIV-IA – Billboard Campaign",
+    category: "Outdoor Advertising",
+    cover: oliviaAsset("oliv-ia-billboard.png"),
+    image: oliviaAsset("oliv-ia-billboard.png"),
+  },
+  {
+    title: "OLIV-IA – LED Billboard",
+    category: "Digital Outdoor Advertising",
+    cover: oliviaAsset("olivia-led-billboard.png"),
+    image: oliviaAsset("olivia-led-billboard.png"),
+  },
+  {
+    title: "OLIV-IA – Roadside Campaign",
+    category: "Outdoor Advertising",
+    cover: oliviaAsset("oliv-ia-roadside-ad.png"),
+    image: oliviaAsset("oliv-ia-roadside-ad.png"),
+  },
+  {
+    title: "OLIV-IA – Magazine Advertisement",
+    category: "Print Advertising",
+    cover: oliviaAsset("oliv-ia-magazine-ad.png"),
+    image: oliviaAsset("oliv-ia-magazine-ad.png"),
+  },
+  {
+    title: "OLIV-IA – Harvest Campaign",
+    category: "Print Advertising",
+    cover: oliviaAsset("oliv-ia-magazine-harvest.png"),
+    image: oliviaAsset("oliv-ia-magazine-harvest.png"),
+  },
+  {
+    title: "OLIV-IA – Olive Oil Pouring",
+    category: "Product Advertising",
+    cover: oliviaAsset("olivia-pouring-ad.png"),
+    image: oliviaAsset("olivia-pouring-ad.png"),
+  },
 const campaigns = [
   {
     title: "Full Skincare Collection",
