@@ -251,7 +251,7 @@ export function Projects() {
           className="mb-14 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
-            06 / Logo Design
+            08 / LOGO DESIGN
           </p>
 
           {/* Bold italic title */}
@@ -267,8 +267,7 @@ export function Projects() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            Explore my creative work in logo design,
-            brand identity, and visual storytelling.
+            A selection of original logo designs created for businesses and personal brands, combining distinctive typography, memorable symbols, and thoughtful visual concepts.
           </p>
         </motion.div>
 
