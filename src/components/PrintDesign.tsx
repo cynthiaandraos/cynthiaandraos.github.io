@@ -19,15 +19,11 @@ import {
 import charityTicket from "../assets/5beans-charity-ticket.png";
 import giftVoucher from "../assets/5beans-gift-voucher.png";
 import loyaltyCard from "../assets/5beans-loyalty-card.png";
-import tuksiCard from "../assets/tuksi-business-card.png";
-import cynthiaCard from "../assets/cynthia-business-card.png";
 import myFitnessGiftCard from "../assets/my-fitness-gift-card.jpeg";
 import oMarketGiveaway from "../assets/o-market-giveaway.jpeg";
 import oMarketGiftVoucher from "../assets/o-market-gift-voucher.jpeg";
 
 // NEW PORTFOLIO COVERS
-import tuksiCover from "../assets/tuksi-services-business-card-cover.png";
-import designerCover from "../assets/graphic-designer-business-card-cover.png";
 import charityCover from "../assets/charity-event-ticket-cover.png";
 import voucherCover from "../assets/10-dollar-gift-voucher-cover.png";
 import loyaltyCover from "../assets/coffee-loyalty-card-cover.png";
@@ -49,26 +45,6 @@ const designs = [
     image: sophiaBirthdayInvitation,
     description:
       "A blush-pink first birthday invitation featuring a crowned teddy bear, satin bows, balloons, and elegant burgundy typography.",
-  },
-  {
-    id: 1,
-    title: "Tuksi Services",
-    category: "Business Card Design",
-    client: "Tuksi Services",
-    cover: tuksiCover,
-    image: tuksiCard,
-    description:
-      "A bold black-and-yellow business card featuring the Tuksi Services identity and contact information.",
-  },
-  {
-    id: 2,
-    title: "Cynthia Melki",
-    category: "Personal Business Card",
-    client: "Personal Branding",
-    cover: designerCover,
-    image: cynthiaCard,
-    description:
-      "A modern graphic designer business card featuring a geometric monogram and turquoise-and-charcoal color palette.",
   },
   {
     id: 3,
@@ -200,7 +176,7 @@ export function PrintDesign() {
           className="mb-10 text-center sm:mb-14"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
-            06 / PRINT & STATIONERY
+            07 / PRINT & STATIONERY DESIGN
           </p>
 
           {/* BOLD ITALIC TITLE */}
@@ -212,14 +188,11 @@ export function PrintDesign() {
               fontWeight: 700,
             }}
           >
-            Print Design &amp; Stationery
+            Print &amp; Stationery Design
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            A curated collection of print and stationery designs, from
-            business cards and invitations to gift vouchers and promotional
-            materials, combining thoughtful typography, creative layouts,
-            and distinctive visual identities.
+            A curated collection of invitations, tickets, loyalty cards, gift vouchers, and promotional print designs, combining thoughtful typography and creative layouts.
           </p>
 
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
