@@ -140,14 +140,14 @@ export function Reels() {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="mb-10 text-center"
         >
+          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
+            11 / Reels &amp; Video Editing
+          </p>
           <h2
-            className="text-4xl font-normal sm:text-5xl md:text-6xl"
-            style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
+            className="text-4xl italic text-[#850F25] sm:text-5xl md:text-7xl"
+            style={{ fontFamily: "'Bodoni Moda', Georgia, serif", fontWeight: 700 }}
           >
-            Reels{" "}
-            <span className="italic text-[#842E3D]">
-              & Motion Design
-            </span>
+            Reels &amp; Video Editing
           </h2>
 
           <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#765A59] sm:text-base">
