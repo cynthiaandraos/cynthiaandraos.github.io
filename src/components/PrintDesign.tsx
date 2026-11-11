@@ -212,13 +212,14 @@ export function PrintDesign() {
               fontWeight: 700,
             }}
           >
-            Print &amp; Stationery
+            Print Design &amp; Stationery
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            A selection of birthday invitations, business cards, gift
-            vouchers, event tickets, and loyalty cards designed for
-            different brands and celebrations.
+            A curated collection of print and stationery designs, from
+            business cards and invitations to gift vouchers and promotional
+            materials, combining thoughtful typography, creative layouts,
+            and distinctive visual identities.
           </p>
 
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
