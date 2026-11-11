@@ -68,7 +68,7 @@ const projects: SocialProject[] = [
       { src: oliviaAsset("oliv-ia-facebook-ad.png"), title: "Facebook Advertisement" },
     ],
   },
-const projects: SocialProject[] = [
+
   {
     id: 1,
     title: "Machewe Firas",
