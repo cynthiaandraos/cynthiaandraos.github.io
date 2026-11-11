@@ -9,7 +9,7 @@ import goldenMarkCarFront from "../assets/golden-mark-car-front.png";
 import myFitnessDoor from "../assets/my-fitness-door-branding.jpeg";
 import manymodaBag from "../assets/manymoda-shopping-bag.jpeg";
 
-const oliviaAsset = (filename: string) => `/olivia/${filename}`;
+const oliviaAsset = (filename: string) => `${import.meta.env.BASE_URL}olivia/${filename}`;
 
 type GalleryImage = { src: string; title: string };
 type BrandProject = {
