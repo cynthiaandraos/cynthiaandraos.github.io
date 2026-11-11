@@ -371,6 +371,10 @@ export function SocialMedia() {
           transition={{ duration: reduceMotion ? 0.01 : 0.7, ease: "easeOut" }}
           className="mb-14 text-center"
         >
+          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
+            05 / Social Media Design
+          </p>
+
           {/* Bold italic title */}
           <h2
             className="text-[clamp(2.35rem,9vw,3rem)] leading-tight italic text-[#850F25] md:text-7xl"
@@ -380,7 +384,7 @@ export function SocialMedia() {
               fontWeight: 700,
             }}
           >
-            Social Media &amp; Digital Campaigns
+            Social Media Design
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
