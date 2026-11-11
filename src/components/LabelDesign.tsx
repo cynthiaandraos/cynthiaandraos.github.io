@@ -54,6 +54,22 @@ import aurelleFaceCreamCover from "../assets/aurelle-face-cream-cover.png";
 import aurelleCleanserCover from "../assets/aurelle-cleanser-cover.png";
 import aurelleLuxuryShoppingBag from "../assets/aurelle-luxury-shopping-bag.png";
 
+const oliviaAsset = (filename: string) => `${import.meta.env.BASE_URL}olivia/${filename}`;
+
+const collections = [
+  {
+    id: 12,
+    title: "OLIV-IA – Olive Oil Labels",
+    category: "Product Label Design",
+    cover: oliviaAsset("olivia-front-back-labels.png"),
+    description: "Coordinated olive oil labels and hang tags designed for OLIV-IA.",
+    images: [
+      { src: oliviaAsset("olivia-front-back-labels.png"), label: "Front & Back Labels" },
+      { src: oliviaAsset("olivia-label-collection.png"), label: "Label Collection" },
+      { src: oliviaAsset("olivia-round-label.png"), label: "Round Label" },
+      { src: oliviaAsset("olivia-hang-tag.png"), label: "Hang Tag" },
+    ],
+  },
 const collections = [
   {
     id: 10,
