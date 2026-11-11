@@ -18,6 +18,7 @@ import myFitness from "../assets/my-fitness-transparent.png";
 import manymoda from "../assets/manymoda-transparent.png";
 import oMarket from "../assets/o-market-transparent.png";
 import aurelleLogo from "../assets/aurelle-logo-transparent.png";
+import oliviaLogo from "../assets/oliv-ia-logo-transparent.png";
 import snackElKhal from "../assets/snack-el-khal-logo.png";
 
 import littleBloomLogo from "../assets/little-bloom-logo-transparent-background.png";
@@ -39,12 +40,13 @@ const projects: Project[] = [
   { title: "MY Fitness by Myriam", category: "Logo Design", cover: myFitness, images: [{ src: myFitness, title: "MY Fitness by Myriam Logo" }] },
   { title: "House of Beauty", category: "Logo Design", cover: houseOfBeauty, images: [{ src: houseOfBeauty, title: "House of Beauty Logo" }] },
   { title: "Little Bloom – Baby Collection", category: "Logo Design", cover: littleBloomLogo, images: [{ src: littleBloomLogo, title: "Little Bloom Logo" }] },
-  { title: "AURELLE Skincare", category: "Logo Design", cover: aurelleLogo, images: [{ src: aurelleLogo, title: "AURELLE Skincare Logo" }] },
+  { title: "Aurelle Skincare", category: "Logo Design", cover: aurelleLogo, images: [{ src: aurelleLogo, title: "Aurelle Skincare Logo" }] },
   { title: "Snack الخال", category: "Logo Design", cover: snackElKhal, images: [{ src: snackElKhal, title: "Snack الخال Logo" }] },
   { title: "Domina Real Estate", category: "Logo Design", cover: domina, images: [{ src: domina, title: "Domina Real Estate Logo" }] },
   { title: "مونة إم جوي", category: "Logo Design", cover: jouy, images: [{ src: jouy, title: "مونة إم جوي Logo" }] },
   { title: "Manymoda", category: "Logo Design", cover: manymoda, images: [{ src: manymoda, title: "Manymoda Logo" }] },
   { title: "O-Market", category: "Logo Design", cover: oMarket, images: [{ src: oMarket, title: "O-Market Logo" }] },
+  { title: "OLIV-IA", category: "Logo Design", cover: oliviaLogo, images: [{ src: oliviaLogo, title: "OLIV-IA Logo" }] },
 ];
 
 // Cache image preloads to avoid duplicate requests.
