@@ -8,6 +8,7 @@ import { LabelDesign } from "./components/LabelDesign";
 import { AurelleAdvertising } from "./components/AurelleAdvertising";
 import { Flyers } from "./components/Flyers";
 import { SocialMedia } from "./components/SocialMedia";
+import { BusinessCards } from "./components/BusinessCards";
 import { PrintDesign } from "./components/PrintDesign";
 import { Reels } from "./components/Reels";
 import { Contact } from "./components/Contact";
@@ -24,6 +25,7 @@ export default function App() {
       <AurelleAdvertising />
       <Flyers />
       <SocialMedia />
+      <BusinessCards />
       <PrintDesign />
       <Projects />
       <Reels />
