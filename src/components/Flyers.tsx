@@ -156,12 +156,13 @@ export function Flyers() {
               fontWeight: 700,
             }}
           >
-            Flyer Design
+            Flyers &amp; Promotional Design
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            Promotional and marketing flyers created for
-            different brands. Explore each design in full detail.
+            A selection of promotional and marketing materials designed
+            to communicate brand messages through engaging visuals,
+            thoughtful layouts, and creative design.
           </p>
 
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
