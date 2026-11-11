@@ -71,7 +71,7 @@ const collections = [
       { src: oliviaAsset("olivia-hang-tag.png"), label: "Bottle Hang Tag" },
     ],
   },
-const collections = [
+
   {
     id: 10,
     title: "AURELLE – Luxury Shopping Bag",
