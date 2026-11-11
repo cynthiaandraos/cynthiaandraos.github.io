@@ -53,6 +53,21 @@ type SocialProject = {
   images: GalleryImage[];
 };
 
+const oliviaAsset = (filename: string) => `${import.meta.env.BASE_URL}olivia/${filename}`;
+
+const projects: SocialProject[] = [
+  {
+    id: 4,
+    title: "OLIV-IA",
+    subtitle: "Social Media Campaign",
+    category: "Food & Lifestyle",
+    cover: oliviaAsset("olivia-instagram-mockup.png"),
+    description: "OLIV-IA social media identity, Instagram presentation and Facebook advertising.",
+    images: [
+      { src: oliviaAsset("olivia-instagram-mockup.png"), title: "Instagram Mockup" },
+      { src: oliviaAsset("oliv-ia-facebook-ad.png"), title: "Facebook Advertisement" },
+    ],
+  },
 const projects: SocialProject[] = [
   {
     id: 1,
