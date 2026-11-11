@@ -380,14 +380,14 @@ export function SocialMedia() {
               fontWeight: 700,
             }}
           >
-            Social Media Design
+            Social Media &amp; Digital Campaigns
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            Creative social media campaigns,
-            promotional artwork, and visual storytelling
-            designed for brands, product launches,
-            and events.
+            A collection of creative social media designs and digital
+            campaigns, combining engaging visuals, brand storytelling,
+            and strategic promotional content for restaurants,
+            product launches, and events.
           </p>
 
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
