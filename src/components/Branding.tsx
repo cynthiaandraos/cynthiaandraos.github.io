@@ -142,9 +142,9 @@ export function Branding() {
             transition={{ duration: reduceMotion ? 0 : 0.65 }}
             className="mb-14 text-center"
           >
-            <p className="mb-4 text-sm tracking-wide text-[#A45D69]">07 / Brand Identity & Applications</p>
+            <p className="mb-4 text-sm tracking-wide text-[#A45D69]">09 / BRAND IDENTITY</p>
             <h2 className="text-4xl italic text-[#850F25] sm:text-5xl md:text-7xl" style={{ fontFamily: "'Bodoni Moda', Georgia, serif", fontWeight: 700 }}>
-              Brand Identity & Applications
+              Brand Identity
             </h2>
             <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
               Complete visual identities and creative brand applications across different platforms and materials.
@@ -252,4 +252,3 @@ export function Branding() {
     </>
   );
 }
-
