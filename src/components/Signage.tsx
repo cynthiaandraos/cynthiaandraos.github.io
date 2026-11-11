@@ -11,6 +11,8 @@ import houseOfBeautyStorefront from "../assets/house-of-beauty-storefront.png";
 import myFitnessDoor from "../assets/my-fitness-door-branding.jpeg";
 import snackSignage from "../assets/snack-el-khal-signage.jpeg";
 
+const oliviaAsset = (filename: string) => `${import.meta.env.BASE_URL}olivia/${filename}`;
+
 type SignageImage = { src: string; title: string };
 type SignageProject = { title: string; category: string; cover: string; images: SignageImage[] };
 
@@ -45,10 +47,10 @@ const projects: SignageProject[] = [
   {
     title: "OLIV-IA",
     category: "Storefront & Brand Signage",
-    cover: "/olivia/oliv-ia-storefront.png",
+    cover: oliviaAsset("oliv-ia-storefront.png"),
     images: [
-      { src: "/olivia/oliv-ia-storefront.png", title: "OLIV-IA Storefront Branding" },
-      { src: "/olivia/oliv-ia-signage.png", title: "OLIV-IA Brand Signage" },
+      { src: oliviaAsset("oliv-ia-storefront.png"), title: "OLIV-IA Storefront Branding" },
+      { src: oliviaAsset("oliv-ia-signage.png"), title: "OLIV-IA Brand Signage" },
     ],
   },
 ];
