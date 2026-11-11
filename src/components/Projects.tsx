@@ -48,7 +48,75 @@ type Project = {
   images: ProjectImage[];
 };
 
+const oliviaAsset = (filename: string) => `/olivia/${filename}`;
+
+const oliviaSections = [
+  {
+    id: "identity",
+    title: "Logo & Brand Identity",
+    description: "The visual language behind OLIV-IA.",
+    images: [
+      ["oliv-ia-logo.png", "OLIV-IA Logo"],
+      ["oliv-ia-brand-presentation.png", "Brand Presentation"],
+    ],
+  },
+  {
+    id: "packaging",
+    title: "Product Labels & Packaging",
+    description: "Bottle designs, labels, and finishing details.",
+    images: [
+      ["oliv-ia-product-mockup.png", "Product Mockup"],
+      ["olivia-large-bottle.png", "Large Olive Oil Bottle"],
+      ["olivia-front-back-labels.png", "Front & Back Labels"],
+      ["olivia-label-collection.png", "Label Collection"],
+      ["olivia-round-label.png", "Round Label"],
+      ["olivia-hang-tag.png", "Hang Tag"],
+    ],
+  },
+  {
+    id: "shopping",
+    title: "Shopping Bags & Gift Boxes",
+    description: "Branded packaging for gifting and shopping.",
+    images: [
+      ["oliv-ia-shopping-bag.png", "Shopping Bag"],
+      ["oliv-ia-gift-box.png", "Gift Box"],
+    ],
+  },
+  {
+    id: "advertising",
+    title: "Advertising & Campaigns",
+    description: "Print, outdoor, and product advertising.",
+    images: [
+      ["oliv-ia-billboard.png", "Billboard"],
+      ["olivia-led-billboard.png", "LED Billboard"],
+      ["oliv-ia-roadside-ad.png", "Roadside Advertisement"],
+      ["oliv-ia-magazine-ad.png", "Magazine Advertisement"],
+      ["oliv-ia-magazine-harvest.png", "Harvest Magazine Campaign"],
+      ["olivia-pouring-ad.png", "Olive Oil Pouring Advertisement"],
+      ["oliv-ia-signage.png", "Brand Signage"],
+      ["oliv-ia-storefront.png", "Storefront Branding"],
+    ],
+  },
+  {
+    id: "social",
+    title: "Instagram & Facebook",
+    description: "Social media identity and campaign designs.",
+    images: [
+      ["olivia-instagram-mockup.png", "Instagram Mockup"],
+      ["oliv-ia-facebook-ad.png", "Facebook Advertisement"],
+    ],
+  },
+] as const;
+
 const projects: Project[] = [
+  {
+    title: "OLIV-IA",
+    category: "Brand Identity & Packaging Design",
+    cover: oliviaAsset("oliv-ia-cover.png"),
+    images: oliviaSections.flatMap((section) =>
+      section.images.map(([filename, title]) => ({ src: oliviaAsset(filename), title }))
+    ),
+  },
   {
     title: "Golden Mark",
     category: "Logo Design & Brand Identity",
@@ -233,7 +301,7 @@ export function Projects() {
         : null;
 
     // Start downloading the first gallery image.
-    preloadImage(project.images[0].src);
+    if (project.title !== "OLIV-IA") preloadImage(project.images[0].src);
 
     touchStart.current = null;
     setActiveImage(0);
@@ -299,14 +367,14 @@ export function Projects() {
         setActiveImage(0);
       }
 
-      if (event.key === "ArrowRight") {
+      if (event.key === "ArrowRight" && selectedProject.title !== "OLIV-IA") {
         setActiveImage(
           (current) =>
             (current + 1) % selectedProject.images.length
         );
       }
 
-      if (event.key === "ArrowLeft") {
+      if (event.key === "ArrowLeft" && selectedProject.title !== "OLIV-IA") {
         setActiveImage(
           (current) =>
             (current -
@@ -559,6 +627,45 @@ export function Projects() {
                 <X size={22} />
               </button>
 
+              {selectedProject.title === "OLIV-IA" ? (
+                <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#FFF9F0]" id="olivia-gallery">
+                  <div className="mx-auto max-w-5xl px-4 pb-16 pt-14 sm:px-8 sm:pt-10">
+                    <div className="mb-10 text-center">
+                      <p className="text-xs uppercase tracking-[0.3em] text-[#7D8650]">A complete brand story</p>
+                      <h2 className="mt-3 text-5xl text-[#35452B] sm:text-7xl" style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}>OLIV-IA</h2>
+                      <p className="mt-2 text-sm tracking-wide text-[#626E4A]">Brand Identity &amp; Packaging Design</p>
+                      <img src={oliviaAsset("oliv-ia-cover.png")} alt="OLIV-IA project cover" className="mx-auto mt-8 max-h-[440px] w-full rounded-xl object-contain" />
+                    </div>
+                    <nav aria-label="OLIV-IA gallery sections" className="mb-12 flex flex-wrap justify-center gap-2">
+                      {oliviaSections.map((section) => (
+                        <a key={section.id} href={`#olivia-${section.id}`} className="rounded-full border border-[#C5C8AE] px-3 py-2 text-xs text-[#35452B] transition-colors hover:bg-[#E7E9D7]">
+                          {section.title}
+                        </a>
+                      ))}
+                    </nav>
+                    {oliviaSections.map((section, sectionIndex) => (
+                      <section key={section.id} id={`olivia-${section.id}`} className="mb-16 scroll-mt-5">
+                        <div className="mb-6 border-b border-[#D8DCC5] pb-5">
+                          <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[#7D8650]">0{sectionIndex + 1} / OLIV-IA</p>
+                          <h3 className="text-3xl text-[#35452B] sm:text-4xl" style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}>{section.title}</h3>
+                          <p className="mt-2 text-sm text-[#667154]">{section.description}</p>
+                        </div>
+                        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                          {section.images.map(([filename, title]) => (
+                            <figure key={filename} className="overflow-hidden rounded-xl border border-[#E3E3D4] bg-white shadow-sm">
+                              <div className="flex min-h-[240px] items-center justify-center bg-[#F7F5ED] p-3 sm:p-5">
+                                <img src={oliviaAsset(filename)} alt={title} loading="lazy" decoding="async" className="max-h-[480px] w-full object-contain" />
+                              </div>
+                              <figcaption className="px-4 py-3 text-center text-sm text-[#35452B]">{title}</figcaption>
+                            </figure>
+                          ))}
+                        </div>
+                      </section>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <>
               {/* Gallery image */}
               <div
                 onTouchStart={handleTouchStart}
@@ -687,6 +794,8 @@ export function Projects() {
                     )
                   )}
                 </div>
+              )}
+                </>
               )}
             </motion.div>
           </motion.div>
