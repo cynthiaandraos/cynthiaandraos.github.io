@@ -385,7 +385,7 @@ export function Packaging() {
           className="mb-10 text-center sm:mb-14"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
-            01 / PACKAGING & LABELS
+            01 / Packaging Design
           </p>
 
           {/* Bold italic section title */}
@@ -396,13 +396,11 @@ export function Packaging() {
               fontWeight: 700,
             }}
           >
-            Packaging & Labels
+            Packaging Design
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            Explore packaging and label design for Little Bloom, 5 Beans,
-            and AURELLE Skincare. Select a project to view the
-            original designs and finished products.
+            A collection of product packaging concepts, from skincare and gift boxes to shopping bags and branded takeaway cups.
           </p>
 
           <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
@@ -410,7 +408,7 @@ export function Packaging() {
 
         {/* Packaging cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
-          {collections.map((collection, index) => (
+          {collections.filter((collection) => [10,7,8,9,6,3].includes(collection.id)).map((collection, index) => (
             <motion.article
               key={collection.id}
               initial={reduceMotion ? false : { opacity: 0, y: 32, scale: 0.97 }}
