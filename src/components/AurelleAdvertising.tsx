@@ -213,6 +213,9 @@ export function AurelleAdvertising() {
           }}
           className="mb-10 text-center sm:mb-14"
         >
+          <p className="mb-4 text-xs tracking-[0.35em] text-[#A45D69]">
+            03 / Advertising Design
+          </p>
           <h2
             className="mb-5 text-[clamp(2.3rem,9vw,3rem)] leading-tight italic text-[#850F25] md:text-7xl"
             style={{
@@ -221,7 +224,7 @@ export function AurelleAdvertising() {
               fontWeight: 700,
             }}
           >
-            Advertising &amp; Campaign Design
+            Advertising Design
           </h2>
 
           <p className="mx-auto max-w-2xl text-sm leading-relaxed text-[#76565B] sm:text-base">
