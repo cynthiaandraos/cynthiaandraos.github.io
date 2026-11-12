@@ -3,6 +3,7 @@ import { Hero } from "./components/Hero";
 import { About } from "./components/About";
 import { Skills } from "./components/Skills";
 import { Projects } from "./components/Projects";
+import { OliviaProject } from "./components/OliviaProject";
 import { Packaging } from "./components/Packaging";
 import { LabelDesign } from "./components/LabelDesign";
 import { AurelleAdvertising } from "./components/AurelleAdvertising";
@@ -22,6 +23,11 @@ export default function App() {
       <Hero />
       <About />
       <Skills />
+
+      {/* New OLIV-IA project presentation */}
+      <OliviaProject />
+
+      {/* Existing sections — keep until the redesign is complete */}
       <Packaging />
       <LabelDesign />
       <AurelleAdvertising />
@@ -32,7 +38,10 @@ export default function App() {
       <Projects />
       <Branding />
       <Signage />
+
+      {/* Video portfolio */}
       <Reels />
+
       <Contact />
       <Footer />
     </div>
