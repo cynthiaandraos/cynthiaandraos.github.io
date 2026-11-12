@@ -1,15 +1,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { TouchEvent } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+} from "motion/react";
 import { createPortal } from "react-dom";
 import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   X,
-  ZoomIn,
-  ZoomOut,
 } from "lucide-react";
 
 // MACHEWE FIRAS - ORIGINAL CAMPAIGN
@@ -48,7 +50,6 @@ type SocialProject = {
   subtitle: string;
   category: string;
   cover: string;
-  coverZoom?: number;
   description: string;
   images: GalleryImage[];
 };
@@ -60,7 +61,6 @@ const projects: SocialProject[] = [
     subtitle: "Social Media Campaign",
     category: "Restaurant & Food",
     cover: firasCover,
-    coverZoom: 1.12,
     description:
       "A collection of promotional social media designs showcasing grilled specialties, restaurant offerings, and seasonal campaigns.",
     images: [
@@ -83,7 +83,6 @@ const projects: SocialProject[] = [
     subtitle: "New Menu Launch Campaign",
     category: "Product Launch & Promotion",
     cover: firasNewMenuCover,
-    coverZoom: 1.12,
     description:
       "A coordinated series of social media promotions introducing four new menu items, with bold typography, appetizing food imagery, and consistent brand styling.",
     images: [
@@ -146,7 +145,11 @@ const projects: SocialProject[] = [
   },
 ];
 
-// Cache preloaded images to avoid unnecessary duplicate work.
+const COPYRIGHT = "© Cynthia Andraos";
+
+const watermarkClass =
+  "pointer-events-none absolute bottom-2 right-2 z-10 rounded bg-[#210C12]/45 px-2 py-1 text-[10px] font-medium tracking-wide text-white/90 sm:bottom-3 sm:right-3";
+
 const preloadedImages = new Set<string>();
 
 function preloadImage(src: string) {
@@ -164,20 +167,23 @@ function preloadImage(src: string) {
 }
 
 export function SocialMedia() {
+  const reduceMotion = useReducedMotion();
+
   const [selectedProject, setSelectedProject] =
     useState<SocialProject | null>(null);
 
   const [activeImage, setActiveImage] = useState(0);
-  const [zoomed, setZoomed] = useState(false);
-  const reduceMotion = useReducedMotion();
 
   const touchStart = useRef<{
     x: number;
     y: number;
   } | null>(null);
 
-  const mobileCloseRef = useRef<HTMLButtonElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
+  const closeButtonRef =
+    useRef<HTMLButtonElement>(null);
+
+  const previousFocusRef =
+    useRef<HTMLElement | null>(null);
 
   const openProject = (project: SocialProject) => {
     previousFocusRef.current =
@@ -185,22 +191,18 @@ export function SocialMedia() {
         ? document.activeElement
         : null;
 
-    // Begin downloading the first image immediately.
+    setActiveImage(0);
+    setSelectedProject(project);
+
     if (project.images.length > 0) {
       preloadImage(project.images[0].src);
     }
-
-    touchStart.current = null;
-    setActiveImage(0);
-    setZoomed(false);
-    setSelectedProject(project);
   };
 
   const closeProject = () => {
-    touchStart.current = null;
     setSelectedProject(null);
     setActiveImage(0);
-    setZoomed(false);
+    touchStart.current = null;
 
     requestAnimationFrame(() => {
       previousFocusRef.current?.focus();
@@ -214,8 +216,6 @@ export function SocialMedia() {
       (current) =>
         (current + 1) % selectedProject.images.length
     );
-
-    setZoomed(false);
   };
 
   const previousImage = () => {
@@ -226,85 +226,18 @@ export function SocialMedia() {
         (current - 1 + selectedProject.images.length) %
         selectedProject.images.length
     );
-
-    setZoomed(false);
   };
 
-  const selectImage = (index: number) => {
-    setActiveImage(index);
-    setZoomed(false);
-  };
-
-  // Prepare the next gallery image for smoother swiping.
   useEffect(() => {
     if (!selectedProject) return;
 
-    const images = selectedProject.images;
-
-    if (images.length <= 1) return;
-
     const nextIndex =
-      (activeImage + 1) % images.length;
+      (activeImage + 1) % selectedProject.images.length;
 
-    preloadImage(images[nextIndex].src);
+    preloadImage(
+      selectedProject.images[nextIndex].src
+    );
   }, [selectedProject, activeImage]);
-
-  const handleTouchStart = (
-    event: TouchEvent<HTMLDivElement>
-  ) => {
-    // Swipe navigation is enabled on phones only.
-    if (window.matchMedia("(min-width: 640px)").matches) {
-      return;
-    }
-
-    const touch = event.touches[0];
-
-    if (!touch) return;
-
-    touchStart.current = {
-      x: touch.clientX,
-      y: touch.clientY,
-    };
-  };
-
-  const handleTouchEnd = (
-    event: TouchEvent<HTMLDivElement>
-  ) => {
-    if (zoomed) {
-      touchStart.current = null;
-      return;
-    }
-    if (!touchStart.current || !selectedProject) return;
-
-    const touch = event.changedTouches[0];
-
-    if (!touch) {
-      touchStart.current = null;
-      return;
-    }
-
-    const differenceX =
-      touch.clientX - touchStart.current.x;
-
-    const differenceY =
-      touch.clientY - touchStart.current.y;
-
-    touchStart.current = null;
-
-    if (selectedProject.images.length <= 1) return;
-
-    if (
-      Math.abs(differenceX) > 45 &&
-      Math.abs(differenceX) >
-        Math.abs(differenceY) * 1.2
-    ) {
-      if (differenceX < 0) {
-        nextImage();
-      } else {
-        previousImage();
-      }
-    }
-  };
 
   useEffect(() => {
     if (!selectedProject) return;
@@ -322,26 +255,29 @@ export function SocialMedia() {
       if (event.key === "ArrowRight") {
         setActiveImage(
           (current) =>
-            (current + 1) % selectedProject.images.length
+            (current + 1) %
+            selectedProject.images.length
         );
-        setZoomed(false);
       }
 
       if (event.key === "ArrowLeft") {
         setActiveImage(
           (current) =>
-            (current - 1 + selectedProject.images.length) %
+            (current - 1 +
+              selectedProject.images.length) %
             selectedProject.images.length
         );
-        setZoomed(false);
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
 
-    const focusTimer = window.setTimeout(() => {
-      mobileCloseRef.current?.focus();
-    }, 0);
+    const focusFrame = requestAnimationFrame(() => {
+      closeButtonRef.current?.focus();
+    });
 
     return () => {
       document.body.style.overflow =
@@ -352,372 +288,400 @@ export function SocialMedia() {
         handleKeyDown
       );
 
-      window.clearTimeout(focusTimer);
+      cancelAnimationFrame(focusFrame);
     };
   }, [selectedProject]);
 
+  const handleTouchStart = (
+    event: TouchEvent<HTMLDivElement>
+  ) => {
+    const touch = event.touches[0];
+
+    if (!touch) return;
+
+    touchStart.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+    };
+  };
+
+  const handleTouchEnd = (
+    event: TouchEvent<HTMLDivElement>
+  ) => {
+    if (!touchStart.current || !selectedProject) {
+      return;
+    }
+
+    const touch = event.changedTouches[0];
+
+    if (!touch) return;
+
+    const differenceX =
+      touch.clientX - touchStart.current.x;
+
+    const differenceY =
+      touch.clientY - touchStart.current.y;
+
+    touchStart.current = null;
+
+    if (
+      Math.abs(differenceX) > 45 &&
+      Math.abs(differenceX) >
+        Math.abs(differenceY) * 1.2
+    ) {
+      if (differenceX < 0) {
+        nextImage();
+      } else {
+        previousImage();
+      }
+    }
+  };
+
+  const currentImage =
+    selectedProject?.images[activeImage];
+
   return (
-    <section
-      id="social-media"
-      className="scroll-mt-24 overflow-hidden bg-[#FFF7F2] px-4 py-16 text-[#681523] sm:px-6 sm:py-24"
-    >
-      <div className="mx-auto max-w-7xl">
+    <>
+      <section
+        id="social-media"
+        className="scroll-mt-24 overflow-hidden bg-[#FFF7F2] px-4 py-16 text-[#681523] sm:px-6 sm:py-24"
+      >
+        <div className="mx-auto max-w-7xl">
 
-        {/* Section heading */}
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: reduceMotion ? 0.01 : 0.7, ease: "easeOut" }}
-          className="mb-14 text-center"
-        >
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
-            03 /
-          </p>
-
-          {/* Bold italic title */}
-          <h2
-            className="text-[clamp(2.35rem,9vw,3rem)] leading-tight italic text-[#850F25] md:text-7xl"
-            style={{
-              fontFamily:
-                "'Bodoni Moda', Georgia, serif",
-              fontWeight: 700,
-            }}
-          >
-            Social Media Design
-          </h2>
-
-          <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            A collection of creative social media designs and digital
-            campaigns, combining engaging visuals, brand storytelling,
-            and strategic promotional content for restaurants,
-            product launches, and events.
-          </p>
-
-          <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
-        </motion.div>
-
-        {/* Campaign cards */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
-          {projects.map((project, index) => (
-            <motion.article
-              key={project.id}
-              initial={reduceMotion ? false : { opacity: 0, y: 45, scale: 0.96 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.12 }}
-              transition={{
-                duration: reduceMotion ? 0.01 : 0.6,
-                delay: reduceMotion ? 0 : (index % 3) * 0.12,
-                ease: "easeOut",
-              }}
-              whileHover={reduceMotion ? undefined : { y: -7, scale: 1.015 }}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-[#F7EDE8] shadow-sm transition-shadow duration-300 hover:shadow-xl"
-            >
-              <motion.button
-                type="button"
-                whileTap={reduceMotion ? undefined : { scale: 0.985 }}
-                onClick={() => openProject(project)}
-                aria-label={`View ${project.title} - ${project.subtitle}`}
-                className="flex h-full w-full cursor-pointer flex-col overflow-hidden bg-transparent p-0 text-left"
-              >
-                {/* Covers */}
-                <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
-                  <img
-                    src={project.cover}
-                    alt={`${project.title} cover`}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 block h-full w-full object-cover object-center transition-transform duration-700"
-                    style={{
-                      transform: `scale(${project.coverZoom ?? 1})`,
-                    }}
-                  />
-
-                  <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-sm">
-                    <ArrowUpRight size={20} />
-                  </div>
-                </div>
-
-                {/* Card details */}
-                <div className="flex-1 p-5 sm:p-6">
-                  <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
-                    {project.category}
-                  </p>
-
-                  <h3
-                    className="text-2xl text-[#681523]"
-                    style={{
-                      fontFamily:
-                        "'Bodoni Moda', Georgia, serif",
-                    }}
-                  >
-                    {project.title}
-                  </h3>
-
-                  <p className="mt-2 text-sm font-medium text-[#A45D69]">
-                    {project.subtitle}
-                  </p>
-
-                  <p className="mt-4 text-sm leading-relaxed text-[#704B50]">
-                    {project.description}
-                  </p>
-
-                  <p className="mt-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#850F25]">
-                    View Campaign
-                    <ArrowUpRight size={16} />
-                  </p>
-                </div>
-              </motion.button>
-            </motion.article>
-          ))}
-        </div>
-      </div>
-
-      {/* Render the gallery outside the section stacking context. */}
-      {createPortal(
-      <AnimatePresence>
-        {selectedProject && (
+          {/* SECTION HEADING */}
           <motion.div
-            key="social-media-modal"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={closeProject}
-            className="fixed inset-0 z-[2147483647] flex items-center justify-center bg-[#210C12]/90 p-0 backdrop-blur-sm sm:p-5"
+            initial={
+              reduceMotion
+                ? false
+                : { opacity: 0, y: 35 }
+            }
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="mb-14 text-center"
           >
-            <motion.div
-              initial={reduceMotion ? false : {
-                opacity: 0,
-                y: 25,
-                scale: 0.93,
+            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
+              03 /
+            </p>
+
+            <h2
+              className="text-[clamp(2.35rem,9vw,3rem)] leading-tight italic text-[#850F25] md:text-7xl"
+              style={{
+                fontFamily:
+                  "'Bodoni Moda', Georgia, serif",
+                fontWeight: 700,
               }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                scale: 1,
-              }}
-              exit={{
-                opacity: 0,
-                y: reduceMotion ? 0 : 10,
-                scale: reduceMotion ? 1 : 0.96,
-              }}
-              transition={{ duration: reduceMotion ? 0.01 : 0.35, ease: "easeOut" }}
-              onClick={(event) =>
-                event.stopPropagation()
-              }
-              role="dialog"
-              aria-modal="true"
-              aria-label={`${selectedProject.title} gallery`}
-              className="relative flex h-[100dvh] max-h-[100dvh] w-full flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-[92dvh] sm:max-w-5xl sm:rounded-2xl"
             >
-              {/* Desktop gallery header */}
-              <div className="hidden shrink-0 items-center justify-between gap-3 border-b border-[#E8D2CF] px-6 py-4 sm:flex">
-                <div className="min-w-0">
-                  <p className="text-xs uppercase tracking-widest text-[#A45D69]">
-                    {selectedProject.subtitle}
-                  </p>
+              Social Media Design
+            </h2>
 
-                  <h3
-                    className="mt-1 text-2xl text-[#681523]"
-                    style={{
-                      fontFamily:
-                        "'Bodoni Moda', Georgia, serif",
-                    }}
-                  >
-                    {selectedProject.title}
-                  </h3>
-                </div>
+            <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
+              A collection of creative social media
+              designs and digital campaigns, combining
+              engaging visuals, brand storytelling,
+              and strategic promotional content for
+              restaurants, product launches, and events.
+            </p>
 
-                <div className="flex shrink-0 gap-2">
-
-                  {/* Desktop zoom */}
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setZoomed((current) => !current)
-                    }
-                    aria-label={
-                      zoomed
-                        ? "Fit image to screen"
-                        : "Zoom into image"
-                    }
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F0DFD9] text-[#681523] transition hover:bg-[#E7CCC5]"
-                  >
-                    {zoomed ? (
-                      <ZoomOut size={20} />
-                    ) : (
-                      <ZoomIn size={20} />
-                    )}
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={closeProject}
-                    aria-label="Close gallery"
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#681523] text-white transition hover:bg-[#850F25]"
-                  >
-                    <X size={20} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Mobile close button */}
-              <button
-                ref={mobileCloseRef}
-                type="button"
-                onClick={closeProject}
-                aria-label="Close gallery"
-                className="absolute right-4 top-[calc(env(safe-area-inset-top,0px)+16px)] z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white shadow-lg sm:hidden"
-              >
-                <X size={22} />
-              </button>
-
-              {/* Gallery image */}
-              <div
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-                onTouchCancel={() => {
-                  touchStart.current = null;
-                }}
-                className={`relative min-h-0 flex-1 bg-[#F7EDE8] ${
-                  zoomed
-                    ? "overflow-auto"
-                    : "overflow-hidden"
-                }`}
-                style={{
-                  touchAction: "pan-y",
-                }}
-              >
-                {zoomed ? (
-                  <div className="flex min-h-full min-w-full items-start justify-center p-3 sm:p-6">
-                    <img
-                      key={`${selectedProject.id}-${activeImage}-zoom`}
-                      src={selectedProject.images[activeImage].src}
-                      alt={selectedProject.images[activeImage].title}
-                      loading="eager"
-                      decoding="async"
-                      fetchPriority="high"
-                      draggable={false}
-                      className="block h-auto w-auto max-w-none"
-                      style={{
-                        minWidth: "min(100%, 600px)",
-                        maxWidth: "1200px",
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center px-3 pb-28 pt-20 sm:p-4">
-                    <AnimatePresence mode="wait" initial={false}>
-                      <motion.img
-                        key={`${selectedProject.id}-${activeImage}`}
-                        src={selectedProject.images[activeImage].src}
-                        alt={selectedProject.images[activeImage].title}
-                        loading="eager"
-                        decoding="async"
-                        fetchPriority="high"
-                        draggable={false}
-                        initial={reduceMotion ? false : { opacity: 0, x: 18 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: reduceMotion ? 0 : -18 }}
-                        transition={{ duration: reduceMotion ? 0.01 : 0.24, ease: "easeOut" }}
-                        className="block h-full w-full select-none object-contain"
-                      />
-                    </AnimatePresence>
-                  </div>
-                )}
-
-                {/* Desktop navigation arrows */}
-                {selectedProject.images.length > 1 && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={previousImage}
-                      aria-label="Previous design"
-                      className="absolute left-4 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-md hover:bg-white sm:flex"
-                    >
-                      <ArrowLeft size={20} />
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={nextImage}
-                      aria-label="Next design"
-                      className="absolute right-4 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-md hover:bg-white sm:flex"
-                    >
-                      <ArrowRight size={20} />
-                    </button>
-                  </>
-                )}
-
-                {/* Mobile gallery information */}
-                <div className="pointer-events-none absolute inset-x-4 bottom-[calc(env(safe-area-inset-bottom,0px)+16px)] z-20 text-center sm:hidden">
-                  <p
-                    className="mb-2 text-lg text-[#681523]"
-                    style={{
-                      fontFamily:
-                        "'Bodoni Moda', Georgia, serif",
-                    }}
-                  >
-                    {selectedProject.title}
-                  </p>
-
-                  <p className="text-xs text-[#A45D69]">
-                    {activeImage + 1} /{" "}
-                    {selectedProject.images.length}
-                  </p>
-
-                  {selectedProject.images.length > 1 && (
-                    <p className="mt-2 text-[11px] uppercase tracking-widest text-[#A45D69]">
-                      Swipe to explore
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* Desktop image title and counter */}
-              <div className="hidden shrink-0 border-t border-[#E8D2CF] px-4 py-2 text-center sm:block">
-                <p className="text-sm font-medium text-[#681523]">
-                  {selectedProject.images[activeImage].title}
-                </p>
-
-                <p className="mt-1 text-xs text-[#A45D69]">
-                  {activeImage + 1} /{" "}
-                  {selectedProject.images.length}
-                </p>
-              </div>
-
-              {/* Desktop thumbnails */}
-              <div className="hidden shrink-0 gap-2 overflow-x-auto border-t border-[#E8D2CF] bg-[#FFF7F2] p-3 sm:flex">
-                {selectedProject.images.map((image, index) => (
-                  <button
-                    key={`${selectedProject.id}-${index}`}
-                    type="button"
-                    onClick={() => selectImage(index)}
-                    aria-label={`View ${image.title}`}
-                    aria-pressed={activeImage === index}
-                    className={`h-14 w-14 shrink-0 overflow-hidden rounded-lg border-2 transition md:h-20 md:w-20 ${
-                      activeImage === index
-                        ? "border-[#850F25]"
-                        : "border-transparent opacity-60 hover:opacity-100"
-                    }`}
-                  >
-                    <img
-                      src={image.src}
-                      alt={image.title}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-contain"
-                    />
-                  </button>
-                ))}
-              </div>
-            </motion.div>
+            <div className="mx-auto mt-8 h-px w-28 bg-[#850F25]/40" />
           </motion.div>
+
+          {/* CAMPAIGN CARDS */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
+            {projects.map((project, index) => (
+              <motion.article
+                key={project.id}
+                initial={
+                  reduceMotion
+                    ? false
+                    : {
+                        opacity: 0,
+                        y: 35,
+                      }
+                }
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.6,
+                  delay: (index % 3) * 0.1,
+                }}
+                className="group flex flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-[#F7EDE8] shadow-sm transition-shadow duration-300 hover:shadow-xl"
+              >
+                <button
+                  type="button"
+                  onClick={() =>
+                    openProject(project)
+                  }
+                  className="flex h-full w-full flex-col text-left"
+                  aria-label={`View ${project.title} campaign`}
+                >
+
+                  {/* COVER: NO EXTRA SCALING */}
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7EDE8]">
+                    <img
+                      src={project.cover}
+                      alt={`${project.title} cover`}
+                      loading="lazy"
+                      draggable={false}
+                      className="absolute inset-0 h-full w-full select-none object-contain object-center transition-transform duration-500 ease-out group-hover:scale-[1.025]"
+                    />
+
+                    <span
+                      data-portfolio-watermark="true"
+                      aria-hidden="true"
+                      className={watermarkClass}
+                    >
+                      {COPYRIGHT}
+                    </span>
+
+                    <span className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-[#681523] shadow-sm">
+                      <ArrowUpRight size={20} />
+                    </span>
+                  </div>
+
+                  {/* CAMPAIGN INFORMATION */}
+                  <div className="flex-1 p-5 sm:p-6">
+                    <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
+                      {project.category}
+                    </p>
+
+                    <h3
+                      className="text-2xl text-[#681523]"
+                      style={{
+                        fontFamily:
+                          "'Bodoni Moda', Georgia, serif",
+                      }}
+                    >
+                      {project.title}
+                    </h3>
+
+                    <p className="mt-2 text-sm font-medium text-[#A45D69]">
+                      {project.subtitle}
+                    </p>
+
+                    <p className="mt-4 text-sm leading-relaxed text-[#704B50]">
+                      {project.description}
+                    </p>
+
+                    <p className="mt-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#850F25]">
+                      View Campaign
+                      <ArrowUpRight size={16} />
+                    </p>
+                  </div>
+                </button>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FULLSCREEN CAMPAIGN GALLERY */}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {selectedProject && currentImage && (
+              <motion.div
+                key="social-gallery"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={closeProject}
+                className="fixed inset-0 z-[2147483647] flex items-center justify-center bg-[#210C12]/90 p-0 backdrop-blur-sm sm:p-5"
+              >
+                <motion.div
+                  initial={
+                    reduceMotion
+                      ? false
+                      : {
+                          opacity: 0,
+                          y: 20,
+                        }
+                  }
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  onClick={(event) =>
+                    event.stopPropagation()
+                  }
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label={`${selectedProject.title} gallery`}
+                  className="relative flex h-[100dvh] w-full max-w-5xl flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-[92dvh] sm:rounded-2xl"
+                >
+
+                  {/* GALLERY HEADER */}
+                  <div className="flex shrink-0 items-center justify-between gap-3 border-b border-[#E8D2CF] px-4 py-3 sm:px-6 sm:py-4">
+                    <div className="min-w-0">
+                      <p className="text-[10px] uppercase tracking-widest text-[#A45D69] sm:text-xs">
+                        {selectedProject.subtitle}
+                      </p>
+
+                      <h3
+                        className="mt-1 truncate text-lg text-[#681523] sm:text-2xl"
+                        style={{
+                          fontFamily:
+                            "'Bodoni Moda', Georgia, serif",
+                        }}
+                      >
+                        {selectedProject.title}
+                      </h3>
+                    </div>
+
+                    <button
+                      ref={closeButtonRef}
+                      type="button"
+                      onClick={closeProject}
+                      aria-label="Close gallery"
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#681523] text-white"
+                    >
+                      <X size={20} />
+                    </button>
+                  </div>
+
+                  {/* IMAGE VIEWER */}
+                  <div
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                    onTouchCancel={() => {
+                      touchStart.current = null;
+                    }}
+                    className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-[#F7EDE8] px-3 py-4 sm:px-16 sm:py-6"
+                    style={{
+                      touchAction: "pan-y",
+                    }}
+                  >
+                    <AnimatePresence
+                      mode="wait"
+                      initial={false}
+                    >
+                      <motion.div
+                        key={`${selectedProject.id}-${activeImage}`}
+                        initial={
+                          reduceMotion
+                            ? false
+                            : {
+                                opacity: 0,
+                                x: 15,
+                              }
+                        }
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                        }}
+                        exit={{
+                          opacity: 0,
+                          x: -15,
+                        }}
+                        transition={{
+                          duration: 0.2,
+                        }}
+                        className="flex h-full w-full items-center justify-center"
+                      >
+                        <div className="relative flex h-full w-full items-center justify-center">
+                          <img
+                            src={currentImage.src}
+                            alt={currentImage.title}
+                            loading="eager"
+                            draggable={false}
+                            className="block h-full w-full select-none object-contain object-center"
+                          />
+
+                          <span
+                            data-portfolio-watermark="true"
+                            aria-hidden="true"
+                            className={watermarkClass}
+                          >
+                            {COPYRIGHT}
+                          </span>
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+
+                    {/* DESKTOP NAVIGATION */}
+                    {selectedProject.images.length > 1 && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={previousImage}
+                          aria-label="Previous design"
+                          className="absolute left-2 top-1/2 z-20 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#681523] shadow-md sm:flex"
+                        >
+                          <ArrowLeft size={20} />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={nextImage}
+                          aria-label="Next design"
+                          className="absolute right-2 top-1/2 z-20 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#681523] shadow-md sm:flex"
+                        >
+                          <ArrowRight size={20} />
+                        </button>
+                      </>
+                    )}
+                  </div>
+
+                  {/* IMAGE COUNTER - NO CAPTIONS */}
+                  <div className="shrink-0 border-t border-[#E8D2CF] bg-[#FFF7F2] px-4 py-3 text-center">
+                    <p className="text-xs font-medium tracking-widest text-[#A45D69]">
+                      {activeImage + 1} /{" "}
+                      {selectedProject.images.length}
+                    </p>
+
+                    <p className="mt-1 text-[10px] text-[#A45D69] sm:hidden">
+                      Swipe left or right to explore
+                    </p>
+                  </div>
+
+                  {/* DESKTOP THUMBNAILS */}
+                  {selectedProject.images.length > 1 && (
+                    <div className="hidden shrink-0 justify-center gap-2 overflow-x-auto border-t border-[#E8D2CF] bg-[#FFF7F2] p-3 sm:flex">
+                      {selectedProject.images.map(
+                        (image, index) => (
+                          <button
+                            key={`${selectedProject.id}-${index}`}
+                            type="button"
+                            onClick={() =>
+                              setActiveImage(index)
+                            }
+                            aria-label={`View ${image.title}`}
+                            aria-pressed={
+                              activeImage === index
+                            }
+                            className={`h-14 w-14 shrink-0 overflow-hidden rounded-lg border-2 bg-white transition md:h-16 md:w-16 ${
+                              activeImage === index
+                                ? "border-[#850F25]"
+                                : "border-transparent opacity-60 hover:opacity-100"
+                            }`}
+                          >
+                            <img
+                              src={image.src}
+                              alt={image.title}
+                              loading="lazy"
+                              draggable={false}
+                              className="h-full w-full object-contain"
+                            />
+                          </button>
+                        )
+                      )}
+                    </div>
+                  )}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>,
-      document.body
-      )}
-    </section>
+    </>
   );
 }
