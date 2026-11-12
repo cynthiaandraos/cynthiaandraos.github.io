@@ -16,4 +16,3 @@ const categories: FeaturedCategory[] = [
 export function HouseOfBeautyProject() {
   return <FeaturedProject number={6} id="house-of-beauty-project" name="House of Beauty" description={'A beauty brand identity brought into a real-world storefront application.'} cover={asset('house-of-beauty-storefront.png')} subtitle={'Logo · Storefront Branding'} categories={categories} accentColor="#681523" accentMuted="#A45D69" />;
 }
-
