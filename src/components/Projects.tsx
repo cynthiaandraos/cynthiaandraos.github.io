@@ -253,7 +253,7 @@ export function Projects() {
           className="mb-14 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
-            08 / LOGO DESIGN
+            06 /
           </p>
 
           {/* Bold italic title */}
