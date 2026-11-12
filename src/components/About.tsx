@@ -14,6 +14,12 @@ export function About() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7 }}
         >
+          {/* SECTION NUMBER */}
+          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
+            01 /
+          </p>
+
+          {/* ABOUT ME TITLE */}
           <h2
             className="mb-10 text-5xl italic text-[#850F25] sm:text-6xl"
             style={{
@@ -21,20 +27,22 @@ export function About() {
               fontWeight: 400,
             }}
           >
-            About Me
+            A Little About Me
           </h2>
 
+          {/* INTRODUCTION */}
           <p className="mx-auto max-w-4xl text-xl leading-relaxed text-[#850F25] sm:text-2xl">
             I'm Cynthia Andraos, a graphic designer with 5+ years
             of experience creating distinctive and meaningful
             visual experiences.
           </p>
 
+          {/* DESCRIPTION */}
           <p className="mx-auto mt-7 max-w-4xl text-base leading-8 text-[#850F25]/85">
-            I specialize in brand identity, packaging, social
-            media design, and visual storytelling. My approach
-            combines creativity, attention to detail, and clear
-            communication to bring every idea to life.
+            I specialize in brand identity, packaging, social media
+            design, and visual storytelling. My approach combines
+            creativity, attention to detail, and clear communication
+            to bring every idea to life.
           </p>
         </motion.div>
       </div>
