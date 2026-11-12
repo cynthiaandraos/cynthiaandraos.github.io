@@ -17,12 +17,12 @@ const categories: FeaturedCategory[] = [
     description: "The logo and core visual identity.",
     works: [
       w(
-        "oliv-ia-logo.png",
-        "oliv-ia Logo"
+        "Oliv-ia-logo.png",
+        "Oliv-ia Logo"
       ),
       w(
-        "oliv-ia-brand-presentation.png",
-        "oliv-ia Brand Presentation"
+        "Oliv-ia-brand-presentation.png",
+        "Oliv-ia Brand Presentation"
       ),
     ],
   },
@@ -33,20 +33,20 @@ const categories: FeaturedCategory[] = [
       "Bottles, shopping bags and gift packaging.",
     works: [
       w(
-        "oliv-ia-product-mockup.png",
-        "oliv-ia Product Mockup"
+        "Oliv-ia-product-mockup.png",
+        "Oliv-ia Product Mockup"
       ),
       w(
         "olivia-large-bottle.png",
-        "oliv-ia Large Bottle"
+        "Oliv-ia Large Bottle"
       ),
       w(
-        "oliv-ia-shopping-bag.png",
-        "oliv-ia Shopping Bag"
+        "Oliv-ia-shopping-bag.png",
+        "Oliv-ia Shopping Bag"
       ),
       w(
-        "oliv-ia-gift-box.png",
-        "oliv-ia Gift Box"
+        "Oliv-ia-gift-box.png",
+        "Oliv-ia Gift Box"
       ),
     ],
   },
@@ -58,19 +58,19 @@ const categories: FeaturedCategory[] = [
     works: [
       w(
         "olivia-front-back-labels.png",
-        "oliv-ia Front & Back Labels"
+        "Oliv-ia Front & Back Labels"
       ),
       w(
         "olivia-label-collection.png",
-        "oliv-ia Label Collection"
+        "Oliv-ia Label Collection"
       ),
       w(
         "olivia-round-label.png",
-        "oliv-ia Round Label"
+        "Oliv-ia Round Label"
       ),
       w(
         "olivia-hang-tag.png",
-        "oliv-ia Hang Tag"
+        "Oliv-ia Hang Tag"
       ),
     ],
   },
@@ -81,28 +81,28 @@ const categories: FeaturedCategory[] = [
       "Outdoor, print and product campaigns.",
     works: [
       w(
-        "oliv-ia-billboard.png",
-        "oliv-ia Billboard"
+        "Oliv-ia-billboard.png",
+        "Oliv-ia Billboard"
       ),
       w(
         "olivia-led-billboard.png",
-        "oliv-ia LED Billboard"
+        "Oliv-ia LED Billboard"
       ),
       w(
-        "oliv-ia-roadside-ad.png",
-        "oliv-ia Roadside Ad"
+        "Oliv-ia-roadside-ad.png",
+        "Oliv-ia Roadside Ad"
       ),
       w(
-        "oliv-ia-magazine-ad.png",
-        "oliv-ia Magazine Ad"
+        "Oliv-ia-magazine-ad.png",
+        "Oliv-ia Magazine Ad"
       ),
       w(
-        "oliv-ia-magazine-harvest.png",
-        "oliv-ia Magazine Harvest"
+        "Oliv-ia-magazine-harvest.png",
+        "Oliv-ia Magazine Harvest"
       ),
       w(
         "olivia-pouring-ad.png",
-        "oliv-ia Pouring Ad"
+        "Oliv-ia Pouring Ad"
       ),
     ],
   },
@@ -114,11 +114,11 @@ const categories: FeaturedCategory[] = [
     works: [
       w(
         "olivia-instagram-mockup.png",
-        "oliv-ia Instagram Mockup"
+        "Oliv-ia Instagram Mockup"
       ),
       w(
-        "oliv-ia-facebook-ad.png",
-        "oliv-ia Facebook Ad"
+        "Oliv-ia-facebook-ad.png",
+        "Oliv-ia Facebook Ad"
       ),
     ],
   },
@@ -129,12 +129,12 @@ const categories: FeaturedCategory[] = [
       "Bringing the brand into physical spaces.",
     works: [
       w(
-        "oliv-ia-signage.png",
-        "oliv-ia Signage"
+        "Oliv-ia-signage.png",
+        "Oliv-ia Signage"
       ),
       w(
-        "oliv-ia-storefront.png",
-        "oliv-ia Storefront"
+        "Oliv-ia-storefront.png",
+        "Oliv-ia Storefront"
       ),
     ],
   },
@@ -145,9 +145,9 @@ export function OliviaProject() {
     <FeaturedProject
       number={1}
       id="olivia-project"
-      name="oliv-ia"
+      name="Oliv-ia"
       description="An olive oil brand brought to life through identity, packaging, campaigns and visual applications."
-      cover={asset("oliv-ia-cover.png")}
+      cover={asset("Oliv-ia-cover.png")}
       subtitle="Identity · Packaging · Advertising · Digital"
       categories={categories}
       accentColor="#35452B"
