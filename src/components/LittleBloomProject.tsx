@@ -22,4 +22,3 @@ const categories: FeaturedCategory[] = [
 export function LittleBloomProject() {
   return <FeaturedProject number={5} id="little-bloom-project" name="Little Bloom" description={'A playful gift brand expressed through identity, shopping bags, gift boxes and a birthday invitation.'} cover={asset('little-bloom-packaging-cover.png')} subtitle={'Identity · Gift Packaging · Invitation'} categories={categories} accentColor="#681523" accentMuted="#A45D69" />;
 }
-
