@@ -34,9 +34,11 @@ export function Hero() {
 
   useEffect(() => {
     const media = window.matchMedia("(min-width: 1024px)");
+
     const handleDesktop = () => {
       if (media.matches) setMenuOpen(false);
     };
+
     media.addEventListener("change", handleDesktop);
     return () => media.removeEventListener("change", handleDesktop);
   }, []);
@@ -50,8 +52,10 @@ export function Hero() {
         menuButtonRef.current?.focus();
       }
     };
+
     const handleOutsideClick = (event: PointerEvent) => {
       const target = event.target as Node;
+
       if (
         !mobileNavRef.current?.contains(target) &&
         !menuButtonRef.current?.contains(target)
@@ -59,8 +63,10 @@ export function Hero() {
         setMenuOpen(false);
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
     document.addEventListener("pointerdown", handleOutsideClick);
+
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("pointerdown", handleOutsideClick);
@@ -153,6 +159,7 @@ export function Hero() {
                 </a>
               ))}
             </div>
+
             <a
               href="#contact"
               onClick={closeMenu}
@@ -169,9 +176,26 @@ export function Hero() {
 
   return (
     <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;700&display=swap');
-        html { scroll-padding-top: calc(90px + env(safe-area-inset-top, 0px)); }
-        @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;700&display=swap');
+
+        @font-face {
+          font-family: 'Amsterdam Signature';
+          src: url('${import.meta.env.BASE_URL}fonts/amsterdam-signature-italic.woff2') format('woff2');
+          font-style: italic;
+          font-weight: 400;
+          font-display: swap;
+        }
+
+        html {
+          scroll-padding-top: calc(90px + env(safe-area-inset-top, 0px));
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+          html {
+            scroll-behavior: smooth;
+          }
+        }
       `}</style>
 
       {createPortal(header, document.body)}
@@ -202,14 +226,16 @@ export function Hero() {
               <span className="block">Andraos</span>
             </h1>
 
-            <p className="mt-7 text-sm font-medium uppercase tracking-[0.16em] min-[360px]:text-base min-[360px]:tracking-[0.2em] sm:text-xl sm:tracking-[0.35em] md:text-2xl">
+            <p
+              style={{
+                fontFamily: "'Amsterdam Signature', cursive",
+                fontWeight: 400,
+                fontStyle: "italic",
+                letterSpacing: "0.01em",
+              }}
+              className="mt-5 text-[clamp(2.6rem,8vw,4.5rem)] leading-[1.5] text-[#850F25] md:mt-7 md:text-[clamp(3.5rem,5vw,5.5rem)]"
+            >
               Graphic Designer
-            </p>
-
-            <p className="mt-6 max-w-sm text-base leading-relaxed text-[#633A3E] sm:mt-8">
-              I create thoughtful visual identities,
-              memorable branding, and creative designs
-              that bring ideas to life.
             </p>
           </motion.div>
 
