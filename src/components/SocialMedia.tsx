@@ -26,8 +26,8 @@ import firasChristmas36 from "../assets/firas-christmas-36.png";
 import firasNewMenuCover from "../assets/firas-new-menu-cover.png";
 import chickenRollSub from "../assets/firas-chicken-roll-sub.jpeg";
 import kababDjej from "../assets/firas-kabab-djej.jpeg";
-import hawaiiBurger from "../assets/firas-hawaii-burger.jpeg";
-import steakSub from "../assets/firas-steak-sub.jpeg";
+import hawaiiBurger from "../assets/hawaii-burger.jpeg";
+import steakSub from "../assets/steak-sub.jpeg";
 
 // ST. ABDA - JAJ EVENT CAMPAIGN
 import stAbdaCover from "../assets/st-abda-event-cover.png";
@@ -249,7 +249,8 @@ export function SocialMedia() {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        closeProject();
+        setSelectedProject(null);
+        setActiveImage(0);
       }
 
       if (event.key === "ArrowRight") {
@@ -422,14 +423,18 @@ export function SocialMedia() {
                   aria-label={`View ${project.title} campaign`}
                 >
 
-                  {/* COVER: NO EXTRA SCALING */}
+                  {/* COVER IMAGE */}
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7EDE8]">
                     <img
                       src={project.cover}
                       alt={`${project.title} cover`}
                       loading="lazy"
                       draggable={false}
-                      className="absolute inset-0 h-full w-full select-none object-contain object-center transition-transform duration-500 ease-out group-hover:scale-[1.025]"
+                      className={
+                        project.id === 1
+                          ? "absolute inset-0 h-full w-full select-none object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
+                          : "absolute inset-0 h-full w-full select-none object-contain object-center transition-transform duration-500 ease-out group-hover:scale-[1.025]"
+                      }
                     />
 
                     <span
@@ -631,7 +636,7 @@ export function SocialMedia() {
                     )}
                   </div>
 
-                  {/* IMAGE COUNTER - NO CAPTIONS */}
+                  {/* IMAGE COUNTER */}
                   <div className="shrink-0 border-t border-[#E8D2CF] bg-[#FFF7F2] px-4 py-3 text-center">
                     <p className="text-xs font-medium tracking-widest text-[#A45D69]">
                       {activeImage + 1} /{" "}
