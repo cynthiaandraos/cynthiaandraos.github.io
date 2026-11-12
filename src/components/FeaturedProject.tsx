@@ -127,8 +127,9 @@ export function FeaturedProject({
             }}
             className="mb-10 text-center"
           >
+            {/* PROJECT NUMBER ONLY - NO REPEATED TITLE */}
             <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
-              {numberLabel} / FEATURED PROJECT
+              {numberLabel}
             </p>
 
             <h2
@@ -147,6 +148,7 @@ export function FeaturedProject({
             </p>
           </motion.div>
 
+          {/* PROJECT COVER */}
           <motion.button
             type="button"
             onClick={openProject}
