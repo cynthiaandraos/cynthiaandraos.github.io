@@ -1,6 +1,7 @@
 
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
+import { Skills } from "./components/Skills";
 
 import { OliviaProject } from "./components/OliviaProject";
 import { FiveBeansProject } from "./components/FiveBeansProject";
@@ -18,14 +19,12 @@ import { Reels } from "./components/Reels";
 
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
-
 import { PortfolioProtection } from "./components/PortfolioProtection";
 
 export default function App() {
   return (
     <div className="min-h-screen bg-[#FFF7F2] text-[#2B1717]">
-
-      {/* PORTFOLIO IMAGE PROTECTION */}
+      {/* IMAGE PROTECTION */}
       <PortfolioProtection />
 
       {/* HOME */}
@@ -33,6 +32,9 @@ export default function App() {
 
       {/* ABOUT ME */}
       <About />
+
+      {/* MY SKILLS */}
+      <Skills />
 
       {/* FEATURED PROJECTS */}
       <section
@@ -62,40 +64,28 @@ export default function App() {
         </div>
       </section>
 
-      {/* FEATURED PROJECT 01 - OLIV-IA */}
+      {/* FEATURED PROJECTS */}
       <OliviaProject />
-
-      {/* FEATURED PROJECT 02 - 5 BEANS */}
       <FiveBeansProject />
-
-      {/* FEATURED PROJECT 03 - GOLDEN MARK */}
       <GoldenMarkProject />
-
-      {/* FEATURED PROJECT 04 - AURELLE */}
       <AurelleProject />
-
-      {/* FEATURED PROJECT 05 - LITTLE BLOOM */}
       <LittleBloomProject />
-
-      {/* FEATURED PROJECT 06 - HOUSE OF BEAUTY */}
       <HouseOfBeautyProject />
-
-      {/* FEATURED PROJECT 07 - MY FITNESS */}
       <MyFitnessProject />
 
       {/* SOCIAL MEDIA DESIGN */}
       <SocialMedia />
 
-      {/* BUSINESS CARDS DESIGN */}
+      {/* BUSINESS CARDS */}
       <BusinessCards />
 
-      {/* PRINT & STATIONERY DESIGN */}
+      {/* PRINT DESIGN */}
       <PrintDesign />
 
       {/* LOGO DESIGN */}
       <Projects />
 
-      {/* REELS & VIDEO EDITING */}
+      {/* REELS */}
       <Reels />
 
       {/* CONTACT */}
@@ -103,7 +93,6 @@ export default function App() {
 
       {/* FOOTER */}
       <Footer />
-
     </div>
   );
 }
