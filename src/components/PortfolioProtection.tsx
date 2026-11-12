@@ -20,160 +20,235 @@ const PORTFOLIO_SELECTORS = [
   '[role="dialog"][aria-modal="true"]',
 ].join(", ");
 
-function isPortfolioImage(
+const OVERLAY_ATTRIBUTE =
+  "data-portfolio-copyright-overlay";
+
+function isProtectedImage(
   target: EventTarget | null
 ): target is HTMLImageElement {
   return (
     target instanceof HTMLImageElement &&
-    Boolean(target.closest(PORTFOLIO_SELECTORS))
+    Boolean(
+      target.closest(PORTFOLIO_SELECTORS)
+    )
   );
 }
 
 export function PortfolioProtection() {
   useEffect(() => {
-    const protectedImages = new WeakSet<
-      HTMLImageElement
+    const overlays = new Map<
+      HTMLImageElement,
+      HTMLSpanElement
     >();
 
-    const protectImage = (
+    let animationFrame = 0;
+
+    const createOverlay = (
       image: HTMLImageElement
     ) => {
-      if (!image.closest(PORTFOLIO_SELECTORS)) {
-        return;
-      }
+      if (overlays.has(image)) return;
 
-      if (protectedImages.has(image)) {
-        return;
-      }
+      const overlay =
+        document.createElement("span");
 
-      protectedImages.add(image);
-
-      image.draggable = false;
-      image.setAttribute("draggable", "false");
-
-      image.style.userSelect = "none";
-      image.style.webkitUserSelect = "none";
-      image.style.webkitUserDrag = "none";
-
-      const parent = image.parentElement;
-
-      if (!parent) return;
-
-      // Do not duplicate watermarks.
-      if (
-        parent.querySelector(
-          ':scope > [data-portfolio-watermark]'
-        )
-      ) {
-        return;
-      }
-
-      // A wrapper allows the watermark to sit over
-      // the image without changing the image source.
-      const wrapper = document.createElement("span");
-
-      wrapper.setAttribute(
-        "data-protected-image",
+      overlay.setAttribute(
+        OVERLAY_ATTRIBUTE,
         "true"
       );
 
-      const computed = window.getComputedStyle(image);
-
-      const isAbsolute =
-        computed.position === "absolute";
-
-      if (isAbsolute) {
-        // For cover images positioned absolutely,
-        // use their existing image container.
-        if (
-          window.getComputedStyle(parent).position ===
-          "static"
-        ) {
-          parent.style.position = "relative";
-        }
-
-        addWatermark(parent);
-        return;
-      }
-
-      wrapper.style.position = "relative";
-      wrapper.style.display =
-        computed.display === "block"
-          ? "block"
-          : "inline-block";
-
-      wrapper.style.width =
-        computed.width === "auto"
-          ? "auto"
-          : "100%";
-
-      wrapper.style.maxWidth = "100%";
-      wrapper.style.verticalAlign = "middle";
-
-      parent.insertBefore(wrapper, image);
-      wrapper.appendChild(image);
-
-      addWatermark(wrapper);
-    };
-
-    const addWatermark = (
-      container: HTMLElement
-    ) => {
-      if (
-        container.querySelector(
-          ':scope > [data-portfolio-watermark]'
-        )
-      ) {
-        return;
-      }
-
-      const mark = document.createElement("span");
-
-      mark.setAttribute(
-        "data-portfolio-watermark",
+      overlay.setAttribute(
+        "aria-hidden",
         "true"
       );
 
-      mark.setAttribute("aria-hidden", "true");
+      overlay.textContent = COPYRIGHT;
 
-      mark.textContent = COPYRIGHT;
-
-      Object.assign(mark.style, {
-        position: "absolute",
-        bottom: "12px",
-        right: "12px",
-        zIndex: "15",
+      Object.assign(overlay.style, {
+        position: "fixed",
+        zIndex: "10050",
+        display: "none",
         padding: "5px 9px",
         borderRadius: "5px",
-        background: "rgba(33, 12, 18, 0.42)",
-        color: "rgba(255, 255, 255, 0.88)",
+        background:
+          "rgba(33, 12, 18, 0.48)",
+        color:
+          "rgba(255, 255, 255, 0.92)",
         fontSize: "10px",
+        fontFamily:
+          "Arial, sans-serif",
         fontWeight: "500",
-        letterSpacing: "0.06em",
-        lineHeight: "1.5",
+        letterSpacing: "0.04em",
+        lineHeight: "1.4",
         pointerEvents: "none",
         userSelect: "none",
         whiteSpace: "nowrap",
-        maxWidth: "85%",
+        boxSizing: "border-box",
       } as Partial<CSSStyleDeclaration>);
 
-      container.appendChild(mark);
+      document.body.appendChild(overlay);
+
+      overlays.set(image, overlay);
+
+      image.draggable = false;
+
+      image.setAttribute(
+        "draggable",
+        "false"
+      );
+
+      image.style.userSelect = "none";
+
+      image.style.webkitUserSelect = "none";
+
+      image.style.webkitUserDrag = "none";
     };
 
-    const scan = () => {
+    const scanImages = () => {
       document
         .querySelectorAll<HTMLImageElement>(
-          `${PORTFOLIO_SELECTORS.split(", ")
-            .map((selector) => `${selector} img`)
-            .join(", ")}`
+          "img"
         )
-        .forEach(protectImage);
+        .forEach((image) => {
+          if (
+            image.closest(
+              PORTFOLIO_SELECTORS
+            )
+          ) {
+            createOverlay(image);
+          }
+        });
+
+      overlays.forEach(
+        (overlay, image) => {
+          if (
+            !image.isConnected ||
+            !image.closest(
+              PORTFOLIO_SELECTORS
+            )
+          ) {
+            overlay.remove();
+            overlays.delete(image);
+          }
+        }
+      );
     };
+
+    const updateOverlays = () => {
+      overlays.forEach(
+        (overlay, image) => {
+          const rect =
+            image.getBoundingClientRect();
+
+          const style =
+            window.getComputedStyle(image);
+
+          const hidden =
+            rect.width < 30 ||
+            rect.height < 30 ||
+            style.display === "none" ||
+            style.visibility === "hidden" ||
+            style.opacity === "0";
+
+          if (hidden) {
+            overlay.style.display =
+              "none";
+            return;
+          }
+
+          // Position watermark relative to
+          // the actual displayed image.
+          const padding = 10;
+
+          const overlayWidth = 125;
+          const overlayHeight = 25;
+
+          const right =
+            rect.right - padding;
+
+          const bottom =
+            rect.bottom - padding;
+
+          // Hide when the image is outside
+          // the visible viewport.
+          if (
+            rect.bottom <= 0 ||
+            rect.top >=
+              window.innerHeight ||
+            rect.right <= 0 ||
+            rect.left >=
+              window.innerWidth
+          ) {
+            overlay.style.display =
+              "none";
+            return;
+          }
+
+          const left = Math.max(
+            rect.left + 5,
+            right - overlayWidth
+          );
+
+          const top = Math.max(
+            rect.top + 5,
+            bottom - overlayHeight
+          );
+
+          overlay.style.left =
+            `${left}px`;
+
+          overlay.style.top =
+            `${top}px`;
+
+          overlay.style.display =
+            "block";
+        }
+      );
+    };
+
+    const refresh = () => {
+      scanImages();
+      updateOverlays();
+    };
+
+    const scheduleRefresh = () => {
+      cancelAnimationFrame(
+        animationFrame
+      );
+
+      animationFrame =
+        requestAnimationFrame(
+          refresh
+        );
+    };
+
+    const observer =
+      new MutationObserver(
+        scheduleRefresh
+      );
+
+    observer.observe(
+      document.body,
+      {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: [
+          "class",
+          "style",
+          "src",
+          "hidden",
+        ],
+      }
+    );
 
     const handleContextMenu = (
       event: MouseEvent
     ) => {
-      if (isPortfolioImage(event.target)) {
+      if (
+        isProtectedImage(
+          event.target
+        )
+      ) {
         event.preventDefault();
       }
     };
@@ -181,7 +256,11 @@ export function PortfolioProtection() {
     const handleDragStart = (
       event: DragEvent
     ) => {
-      if (isPortfolioImage(event.target)) {
+      if (
+        isProtectedImage(
+          event.target
+        )
+      ) {
         event.preventDefault();
       }
     };
@@ -189,9 +268,11 @@ export function PortfolioProtection() {
     const handleCopy = (
       event: ClipboardEvent
     ) => {
-      const selection = window.getSelection();
+      const selection =
+        window.getSelection();
 
-      const node = selection?.anchorNode;
+      const node =
+        selection?.anchorNode;
 
       const element =
         node instanceof Element
@@ -199,67 +280,28 @@ export function PortfolioProtection() {
           : node?.parentElement;
 
       if (
-        element?.closest(PORTFOLIO_SELECTORS)
-      ) {
-        event.preventDefault();
-      }
-    };
-
-    const handleKeyDown = (
-      event: KeyboardEvent
-    ) => {
-      const key = event.key.toLowerCase();
-
-      const modifier =
-        event.ctrlKey || event.metaKey;
-
-      if (!modifier) return;
-
-      const isCopyShortcut =
-        key === "c" || key === "s";
-
-      if (!isCopyShortcut) return;
-
-      const active = document.activeElement;
-
-      // Never interfere with form inputs.
-      if (
-        active instanceof HTMLInputElement ||
-        active instanceof HTMLTextAreaElement ||
-        active instanceof HTMLSelectElement ||
-        active?.getAttribute("contenteditable") ===
-          "true"
-      ) {
-        return;
-      }
-
-      const selection = window.getSelection();
-
-      const selectedElement =
-        selection?.anchorNode instanceof Element
-          ? selection.anchorNode
-          : selection?.anchorNode?.parentElement;
-
-      if (
-        selectedElement?.closest(
+        element?.closest(
           PORTFOLIO_SELECTORS
-        ) ||
-        active?.closest(PORTFOLIO_SELECTORS)
+        )
       ) {
         event.preventDefault();
       }
     };
 
-    scan();
+    refresh();
 
-    const observer = new MutationObserver(() => {
-      scan();
-    });
+    window.addEventListener(
+      "resize",
+      scheduleRefresh
+    );
 
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
+    // Capture scrolling inside project
+    // modals and gallery containers.
+    document.addEventListener(
+      "scroll",
+      scheduleRefresh,
+      true
+    );
 
     document.addEventListener(
       "contextmenu",
@@ -279,14 +321,23 @@ export function PortfolioProtection() {
       true
     );
 
-    document.addEventListener(
-      "keydown",
-      handleKeyDown,
-      true
-    );
-
     return () => {
       observer.disconnect();
+
+      cancelAnimationFrame(
+        animationFrame
+      );
+
+      window.removeEventListener(
+        "resize",
+        scheduleRefresh
+      );
+
+      document.removeEventListener(
+        "scroll",
+        scheduleRefresh,
+        true
+      );
 
       document.removeEventListener(
         "contextmenu",
@@ -306,14 +357,14 @@ export function PortfolioProtection() {
         true
       );
 
-      document.removeEventListener(
-        "keydown",
-        handleKeyDown,
-        true
+      overlays.forEach(
+        (overlay) =>
+          overlay.remove()
       );
+
+      overlays.clear();
     };
   }, []);
 
   return null;
 }
-
