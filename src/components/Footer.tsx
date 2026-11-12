@@ -13,7 +13,6 @@ export function Footer() {
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
     { label: "Skills", href: "#skills" },
-    { label: "Services", href: "#services" },
     { label: "Projects", href: "#portfolio" },
     { label: "Reels", href: "#reels" },
     { label: "Contact", href: "#contact" },
@@ -30,7 +29,7 @@ export function Footer() {
       <div className="mx-auto w-full max-w-7xl px-5 pb-8 pt-12 sm:px-6 sm:pb-10 sm:pt-16">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-10">
 
-          {/* LOGO AND NAME */}
+          {/* CA LOGO ONLY */}
           <div className="min-w-0">
             <a
               href="#home"
@@ -43,20 +42,6 @@ export function Footer() {
                 className="mb-5 h-16 w-auto max-w-full object-contain sm:h-20"
               />
             </a>
-
-            <h3
-              className="text-2xl text-[#751728] sm:text-3xl"
-              style={{
-                fontFamily: "'Bodoni Moda', Georgia, serif",
-                fontWeight: 400,
-              }}
-            >
-              Cynthia Andraos
-            </h3>
-
-            <p className="mt-2 text-sm text-[#765A59]">
-              Graphic Designer
-            </p>
           </div>
 
           {/* EXPLORE NAVIGATION */}
@@ -128,7 +113,7 @@ export function Footer() {
                 </a>
               </div>
 
-              {/* ICONS CENTERED UNDER EMAILS */}
+              {/* SOCIAL ICONS */}
               <div className="mt-7 flex items-center justify-center gap-3">
                 <a
                   href="https://www.instagram.com/rcd.esign/"
