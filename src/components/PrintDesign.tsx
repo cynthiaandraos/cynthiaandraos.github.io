@@ -178,7 +178,7 @@ export function PrintDesign() {
           className="mb-10 text-center sm:mb-14"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
-            07 / PRINT & STATIONERY DESIGN
+            05 /
           </p>
 
           {/* BOLD ITALIC TITLE */}
