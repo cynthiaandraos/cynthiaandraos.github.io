@@ -86,6 +86,7 @@ export function Projects() {
   return (
     <section
       id="logo-design"
+      data-local-watermarks="true"
       className="scroll-mt-24 bg-[#FFF7F2] px-4 py-16 sm:px-6 sm:py-24"
     >
       <div className="mx-auto max-w-7xl">
@@ -185,7 +186,7 @@ export function Projects() {
                   />
                 </div>
 
-                {/* CONSISTENT WATERMARK */}
+                {/* ONE COPYRIGHT LABEL PER LOGO */}
                 <span
                   data-portfolio-watermark="true"
                   aria-hidden="true"
