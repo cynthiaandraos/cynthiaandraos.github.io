@@ -160,7 +160,7 @@ export function Hero() {
             aria-label="Mobile navigation"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 1, y: -10 }}
             transition={{ duration: 0.2 }}
             className="mx-3 mb-3 max-h-[calc(100dvh-110px-env(safe-area-inset-top,0px))] overflow-y-auto overscroll-contain rounded-2xl border border-[#E8D2CF] bg-[#FFF7F2] p-3 shadow-xl sm:mx-4 sm:mb-4 sm:p-4 lg:hidden"
           >
@@ -231,7 +231,6 @@ export function Hero() {
       >
         {/* Background decoration */}
         <div className="pointer-events-none absolute -left-32 top-40 h-96 w-96 rounded-full bg-[#F4C9C9]/40 blur-3xl" />
-
         <div className="pointer-events-none absolute -right-24 top-20 h-96 w-96 rounded-full bg-[#F2B9BC]/40 blur-3xl" />
 
         <div className="relative mx-auto flex min-h-[min(600px,calc(100svh-96px))] max-w-7xl flex-col justify-center px-5 pb-12 pt-8 sm:min-h-[600px] sm:px-6 sm:pb-20 md:min-h-[730px] md:pb-24 md:pt-12">
@@ -272,7 +271,7 @@ export function Hero() {
                   Andraos
                 </span>
 
-                {/* Signature overlapping Andraos */}
+                {/* Large overlapping signature */}
                 <span
                   style={{
                     fontFamily:
@@ -281,7 +280,7 @@ export function Hero() {
                     fontStyle: "italic",
                     letterSpacing: "-0.025em",
                   }}
-                  className="absolute left-[5%] top-[64%] z-20 whitespace-nowrap text-[clamp(2.5rem,8vw,5rem)] leading-none text-[#2D020B]"
+                  className="absolute left-[2%] top-[47%] z-20 whitespace-nowrap text-[clamp(4rem,13vw,8rem)] leading-none text-[#2D020B] md:top-[49%]"
                 >
                   Graphic Designer
                 </span>
