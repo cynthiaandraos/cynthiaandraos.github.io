@@ -17,11 +17,11 @@ const categories: FeaturedCategory[] = [
     description: "The logo and core visual identity.",
     works: [
       w(
-        "Oliv-ia-logo.png",
+        "olivia-logo.png",
         "Oliv-ia Logo"
       ),
       w(
-        "Oliv-ia-brand-presentation.png",
+        "olivia-brand-presentation.png",
         "Oliv-ia Brand Presentation"
       ),
     ],
@@ -33,7 +33,7 @@ const categories: FeaturedCategory[] = [
       "Bottles, shopping bags and gift packaging.",
     works: [
       w(
-        "Oliv-ia-product-mockup.png",
+        "olivia-product-mockup.png",
         "Oliv-ia Product Mockup"
       ),
       w(
@@ -41,11 +41,11 @@ const categories: FeaturedCategory[] = [
         "Oliv-ia Large Bottle"
       ),
       w(
-        "Oliv-ia-shopping-bag.png",
+        "olivia-shopping-bag.png",
         "Oliv-ia Shopping Bag"
       ),
       w(
-        "Oliv-ia-gift-box.png",
+        "olivia-gift-box.png",
         "Oliv-ia Gift Box"
       ),
     ],
@@ -81,7 +81,7 @@ const categories: FeaturedCategory[] = [
       "Outdoor, print and product campaigns.",
     works: [
       w(
-        "Oliv-ia-billboard.png",
+        "olivia-billboard.png",
         "Oliv-ia Billboard"
       ),
       w(
@@ -89,15 +89,15 @@ const categories: FeaturedCategory[] = [
         "Oliv-ia LED Billboard"
       ),
       w(
-        "Oliv-ia-roadside-ad.png",
+        "olivia-roadside-ad.png",
         "Oliv-ia Roadside Ad"
       ),
       w(
-        "Oliv-ia-magazine-ad.png",
+        "olivia-magazine-ad.png",
         "Oliv-ia Magazine Ad"
       ),
       w(
-        "Oliv-ia-magazine-harvest.png",
+        "olivia-magazine-harvest.png",
         "Oliv-ia Magazine Harvest"
       ),
       w(
@@ -117,7 +117,7 @@ const categories: FeaturedCategory[] = [
         "Oliv-ia Instagram Mockup"
       ),
       w(
-        "Oliv-ia-facebook-ad.png",
+        "olivia-facebook-ad.png",
         "Oliv-ia Facebook Ad"
       ),
     ],
@@ -129,11 +129,11 @@ const categories: FeaturedCategory[] = [
       "Bringing the brand into physical spaces.",
     works: [
       w(
-        "Oliv-ia-signage.png",
+        "olivia-signage.png",
         "Oliv-ia Signage"
       ),
       w(
-        "Oliv-ia-storefront.png",
+        "olivia-storefront.png",
         "Oliv-ia Storefront"
       ),
     ],
@@ -147,7 +147,7 @@ export function OliviaProject() {
       id="olivia-project"
       name="Oliv-ia"
       description="An olive oil brand brought to life through identity, packaging, campaigns and visual applications."
-      cover={asset("Oliv-ia-cover.png")}
+      cover={asset("olivia-cover.png")}
       subtitle="Identity · Packaging · Advertising · Digital"
       categories={categories}
       accentColor="#35452B"
