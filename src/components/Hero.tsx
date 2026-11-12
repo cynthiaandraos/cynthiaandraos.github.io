@@ -11,7 +11,6 @@ const navigation = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
-  { label: "Services", href: "#services" },
   { label: "Projects", href: "#portfolio" },
   { label: "Reels", href: "#reels" },
   { label: "Contact", href: "#contact" },
@@ -160,7 +159,7 @@ export function Hero() {
             aria-label="Mobile navigation"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 1, y: -10 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
             className="mx-3 mb-3 max-h-[calc(100dvh-110px-env(safe-area-inset-top,0px))] overflow-y-auto overscroll-contain rounded-2xl border border-[#E8D2CF] bg-[#FFF7F2] p-3 shadow-xl sm:mx-4 sm:mb-4 sm:p-4 lg:hidden"
           >
@@ -234,7 +233,6 @@ export function Hero() {
         <div className="pointer-events-none absolute -right-24 top-20 h-96 w-96 rounded-full bg-[#F2B9BC]/40 blur-3xl" />
 
         <div className="relative mx-auto flex min-h-[min(600px,calc(100svh-96px))] max-w-7xl flex-col justify-center px-5 pb-12 pt-8 sm:min-h-[600px] sm:px-6 sm:pb-20 md:min-h-[730px] md:pb-24 md:pt-12">
-
           {/* Name and signature */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -244,7 +242,6 @@ export function Hero() {
           >
             <div className="relative w-full max-w-[650px]">
               <div className="relative h-[255px] min-[400px]:h-[310px] sm:h-[390px] md:h-[420px]">
-
                 {/* First line: Cynthia */}
                 <h1
                   style={{
@@ -271,11 +268,10 @@ export function Hero() {
                   Andraos
                 </span>
 
-                {/* Large overlapping signature */}
+                {/* Graphic Designer signature */}
                 <span
                   style={{
-                    fontFamily:
-                      "'Amsterdam Signature', cursive",
+                    fontFamily: "'Amsterdam Signature', cursive",
                     fontWeight: 400,
                     fontStyle: "italic",
                     letterSpacing: "-0.025em",
@@ -284,7 +280,6 @@ export function Hero() {
                 >
                   Graphic Designer
                 </span>
-
               </div>
             </div>
           </motion.div>
