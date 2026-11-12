@@ -98,31 +98,57 @@ const categories = [
   "Video & Motion",
 ];
 
+const COPYRIGHT = "© Cynthia Andraos";
+
+const watermarkClass =
+  "pointer-events-none absolute bottom-3 right-3 z-20 rounded-md bg-[#210C12]/55 px-2.5 py-1 text-[10px] font-medium tracking-wide text-white/90";
+
 export function Reels() {
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [selected, setSelected] = useState<Reel | null>(null);
+  const [activeCategory, setActiveCategory] =
+    useState("All");
+
+  const [selected, setSelected] =
+    useState<Reel | null>(null);
+
   const reduceMotion = useReducedMotion();
 
   const filtered =
     activeCategory === "All"
       ? reels
-      : reels.filter((reel) => reel.category === activeCategory);
+      : reels.filter(
+          (reel) =>
+            reel.category === activeCategory
+        );
 
   useEffect(() => {
     if (!selected) return;
 
-    const previousOverflow = document.body.style.overflow;
+    const previousOverflow =
+      document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
 
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelected(null);
+    const closeOnEscape = (
+      event: KeyboardEvent
+    ) => {
+      if (event.key === "Escape") {
+        setSelected(null);
+      }
     };
 
-    window.addEventListener("keydown", closeOnEscape);
+    window.addEventListener(
+      "keydown",
+      closeOnEscape
+    );
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", closeOnEscape);
+      document.body.style.overflow =
+        previousOverflow;
+
+      window.removeEventListener(
+        "keydown",
+        closeOnEscape
+      );
     };
   }, [selected]);
 
@@ -132,49 +158,88 @@ export function Reels() {
       className="scroll-mt-24 overflow-hidden bg-[#FFF7F2] px-4 py-16 text-[#2B1717] sm:px-6 sm:py-24"
     >
       <div className="mx-auto max-w-7xl">
-        {/* Animated heading */}
+        {/* SECTION HEADING */}
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          initial={
+            reduceMotion
+              ? false
+              : { opacity: 0, y: 35 }
+          }
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            duration: 0.7,
+            ease: "easeOut",
+          }}
           className="mb-10 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
             07 /
           </p>
+
           <h2
             className="text-4xl italic text-[#850F25] sm:text-5xl md:text-7xl"
-            style={{ fontFamily: "'Bodoni Moda', Georgia, serif", fontWeight: 700 }}
+            style={{
+              fontFamily:
+                "'Bodoni Moda', Georgia, serif",
+              fontWeight: 700,
+            }}
           >
             Reels &amp; Video Editing
           </h2>
 
           <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#765A59] sm:text-base">
-            Creative storytelling through video, motion, branding,
-            and social media content.
+            Creative storytelling through video,
+            motion, branding, and social media content.
           </p>
         </motion.div>
 
-        {/* Animated category filters */}
+        {/* CATEGORY FILTERS */}
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={
+            reduceMotion
+              ? false
+              : { opacity: 0, y: 20 }
+          }
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 }}
+          transition={{
+            duration: 0.5,
+            delay: 0.15,
+          }}
           className="mb-10 flex flex-wrap justify-center gap-2"
         >
           {categories.map((category) => {
-            const isActive = activeCategory === category;
+            const isActive =
+              activeCategory === category;
 
             return (
               <motion.button
                 key={category}
                 type="button"
-                onClick={() => setActiveCategory(category)}
+                onClick={() =>
+                  setActiveCategory(category)
+                }
                 aria-pressed={isActive}
-                whileHover={reduceMotion ? undefined : { y: -2 }}
-                whileTap={reduceMotion ? undefined : { scale: 0.96 }}
+                whileHover={
+                  reduceMotion
+                    ? undefined
+                    : { y: -2 }
+                }
+                whileTap={
+                  reduceMotion
+                    ? undefined
+                    : { scale: 0.96 }
+                }
                 className={`relative min-h-10 overflow-hidden rounded-full border px-4 py-2 text-xs transition-colors sm:text-sm ${
                   isActive
                     ? "border-[#681523] text-white"
@@ -193,18 +258,23 @@ export function Reels() {
                   />
                 )}
 
-                <span className="relative z-10">{category}</span>
+                <span className="relative z-10">
+                  {category}
+                </span>
               </motion.button>
             );
           })}
         </motion.div>
 
-        {/* Animated reel grid */}
+        {/* REELS GRID */}
         <motion.div
           layout
           className="grid grid-cols-2 gap-x-3 gap-y-7 sm:gap-x-6 sm:gap-y-9 md:grid-cols-3 lg:grid-cols-4"
         >
-          <AnimatePresence mode="popLayout" initial={false}>
+          <AnimatePresence
+            mode="popLayout"
+            initial={false}
+          >
             {filtered.map((reel, index) => (
               <motion.div
                 key={reel.id}
@@ -212,35 +282,57 @@ export function Reels() {
                 initial={
                   reduceMotion
                     ? false
-                    : { opacity: 0, y: 45, scale: 0.94 }
+                    : {
+                        opacity: 0,
+                        y: 45,
+                        scale: 0.94,
+                      }
                 }
                 whileInView={{
                   opacity: 1,
                   y: 0,
                   scale: 1,
                 }}
-                viewport={{ once: true, amount: 0.1 }}
+                viewport={{
+                  once: true,
+                  amount: 0.1,
+                }}
                 exit={
                   reduceMotion
                     ? { opacity: 0 }
-                    : { opacity: 0, y: -15, scale: 0.95 }
+                    : {
+                        opacity: 0,
+                        y: -15,
+                        scale: 0.95,
+                      }
                 }
                 transition={{
-                  duration: reduceMotion ? 0.01 : 0.55,
-                  delay: reduceMotion ? 0 : Math.min(index % 4, 3) * 0.08,
+                  duration: reduceMotion
+                    ? 0.01
+                    : 0.55,
+                  delay: reduceMotion
+                    ? 0
+                    : Math.min(index % 4, 3) * 0.08,
                   ease: "easeOut",
-                  layout: { duration: 0.35 },
+                  layout: {
+                    duration: 0.35,
+                  },
                 }}
                 className="min-w-0"
               >
                 <motion.button
                   type="button"
-                  onClick={() => setSelected(reel)}
+                  onClick={() =>
+                    setSelected(reel)
+                  }
                   aria-label={`Play ${reel.title}`}
                   whileHover={
                     reduceMotion
                       ? undefined
-                      : { y: -7, scale: 1.025 }
+                      : {
+                          y: -7,
+                          scale: 1.025,
+                        }
                   }
                   whileTap={
                     reduceMotion
@@ -254,19 +346,20 @@ export function Reels() {
                   }}
                   className="group relative block aspect-[9/16] w-full overflow-hidden rounded-2xl bg-[#EAD9D5] shadow-md transition-shadow duration-300 hover:shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#842E3D]"
                 >
-                  {/* Cover image */}
+                  {/* COVER IMAGE */}
                   <img
                     src={reel.coverSrc}
                     alt={`${reel.title} cover`}
                     loading="lazy"
                     decoding="async"
+                    draggable={false}
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-110"
                   />
 
-                  {/* Gradient overlay */}
+                  {/* GRADIENT OVERLAY */}
                   <span className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/5 transition-colors duration-300 group-hover:from-black/50" />
 
-                  {/* Animated play button */}
+                  {/* PLAY BUTTON */}
                   <span className="absolute inset-0 flex items-center justify-center">
                     <span className="relative flex items-center justify-center">
                       <motion.span
@@ -275,8 +368,16 @@ export function Reels() {
                           reduceMotion
                             ? undefined
                             : {
-                                scale: [1, 1.45, 1.75],
-                                opacity: [0.6, 0.25, 0],
+                                scale: [
+                                  1,
+                                  1.45,
+                                  1.75,
+                                ],
+                                opacity: [
+                                  0.6,
+                                  0.25,
+                                  0,
+                                ],
                               }
                         }
                         transition={{
@@ -295,6 +396,15 @@ export function Reels() {
                       </span>
                     </span>
                   </span>
+
+                  {/* ONE COPYRIGHT WATERMARK */}
+                  <span
+                    data-portfolio-watermark="true"
+                    aria-hidden="true"
+                    className={watermarkClass}
+                  >
+                    {COPYRIGHT}
+                  </span>
                 </motion.button>
 
                 <h3 className="mt-3 text-sm font-medium leading-snug sm:text-base">
@@ -309,11 +419,23 @@ export function Reels() {
           </AnimatePresence>
         </motion.div>
 
+        {/* SECTION CLOSING LINE */}
         <motion.p
-          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={
+            reduceMotion
+              ? false
+              : { opacity: 0, y: 20 }
+          }
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
           viewport={{ once: true }}
-          transition={{ duration: reduceMotion ? 0 : 0.6 }}
+          transition={{
+            duration: reduceMotion
+              ? 0
+              : 0.6,
+          }}
           className="mt-12 text-center text-xl italic text-[#850F25] sm:mt-16 sm:text-2xl"
           style={{
             fontFamily:
@@ -324,7 +446,7 @@ export function Reels() {
         </motion.p>
       </div>
 
-      {/* Animated video popup */}
+      {/* VIDEO PLAYER MODAL */}
       {typeof document !== "undefined" &&
         createPortal(
           <AnimatePresence>
@@ -334,11 +456,16 @@ export function Reels() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
+                transition={{
+                  duration: 0.25,
+                }}
                 className="fixed inset-0 z-[11000] flex items-center justify-center bg-black/95 p-4"
                 role="presentation"
                 onMouseDown={(event) => {
-                  if (event.target === event.currentTarget) {
+                  if (
+                    event.target ===
+                    event.currentTarget
+                  ) {
                     setSelected(null);
                   }
                 }}
@@ -350,36 +477,69 @@ export function Reels() {
                   initial={
                     reduceMotion
                       ? false
-                      : { opacity: 0, scale: 0.88, y: 30 }
+                      : {
+                          opacity: 0,
+                          scale: 0.88,
+                          y: 30,
+                        }
                   }
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.94, y: 15 }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.94,
+                    y: 15,
+                  }}
                   transition={{
-                    duration: reduceMotion ? 0.01 : 0.35,
+                    duration: reduceMotion
+                      ? 0.01
+                      : 0.35,
                     ease: "easeOut",
                   }}
                   className="relative flex max-h-[95dvh] w-full max-w-5xl flex-col items-center justify-center"
                 >
                   <button
                     type="button"
-                    onClick={() => setSelected(null)}
+                    onClick={() =>
+                      setSelected(null)
+                    }
                     className="absolute right-0 -top-12 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white transition hover:bg-white/30"
                     aria-label="Close video"
                   >
                     <X size={24} />
                   </button>
 
-                  <video
-                    key={selected.id}
-                    src={selected.videoSrc}
-                    controls
-                    autoPlay
-                    playsInline
-                    preload="metadata"
-                    className="max-h-[80dvh] w-full rounded-xl bg-black object-contain"
-                  >
-                    Your browser does not support video playback.
-                  </video>
+                  {/* VIDEO WITH COPYRIGHT OVERLAY */}
+                  <div className="relative w-full overflow-hidden rounded-xl bg-black">
+                    <video
+                      key={selected.id}
+                      src={selected.videoSrc}
+                      controls
+                      autoPlay
+                      playsInline
+                      preload="metadata"
+                      controlsList="nodownload"
+                      disablePictureInPicture
+                      onContextMenu={(event) =>
+                        event.preventDefault()
+                      }
+                      className="block max-h-[80dvh] w-full object-contain"
+                    >
+                      Your browser does not support
+                      video playback.
+                    </video>
+
+                    <span
+                      data-portfolio-watermark="true"
+                      aria-hidden="true"
+                      className={watermarkClass}
+                    >
+                      {COPYRIGHT}
+                    </span>
+                  </div>
 
                   <p className="mt-4 text-center text-sm text-white">
                     {selected.title}
