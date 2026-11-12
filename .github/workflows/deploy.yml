@@ -17,12 +17,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
+    name: Build Portfolio
     runs-on: ubuntu-latest
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout repository
@@ -49,6 +46,16 @@ jobs:
         with:
           path: ./dist
 
+  deploy:
+    name: Deploy Website
+    runs-on: ubuntu-latest
+    needs: build
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy website
         id: deployment
         uses: actions/deploy-pages@v4
