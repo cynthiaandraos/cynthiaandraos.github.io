@@ -21,4 +21,3 @@ const categories: FeaturedCategory[] = [
 export function GoldenMarkProject() {
   return <FeaturedProject number={3} id="golden-mark-project" name="Golden Mark" description={'A real estate identity applied across vehicle branding, office signage and storefront design.'} cover={asset('golden-mark-glass-storefront.png')} subtitle={'Logo · Vehicle Branding · Signage'} categories={categories} accentColor="#681523" accentMuted="#A45D69" />;
 }
-
