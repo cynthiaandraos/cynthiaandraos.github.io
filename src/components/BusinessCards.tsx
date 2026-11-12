@@ -116,7 +116,7 @@ export function BusinessCards() {
           className="mb-10 text-center sm:mb-14"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#A45D69]">
-            06 / BUSINESS CARDS DESIGN
+            04 /
           </p>
 
           {/* BOLD ITALIC TITLE */}
