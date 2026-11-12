@@ -55,6 +55,8 @@ export function FeaturedProject({
     categories.find((item) => item.id === active) ??
     categories[0];
 
+  const numberLabel = String(number).padStart(2, "0");
+
   const openProject = () => {
     previousFocus.current =
       document.activeElement instanceof HTMLElement
@@ -103,11 +105,9 @@ export function FeaturedProject({
     };
   }, [open, zoomed]);
 
-  const numberLabel = String(number).padStart(2, "0");
-
   return (
     <>
-      {/* FEATURED PROJECT ON HOMEPAGE */}
+      {/* HOMEPAGE FEATURED PROJECT */}
       <section
         id={id}
         className="scroll-mt-28 bg-[#FFF7F2] px-4 py-16 sm:px-6 sm:py-24"
@@ -127,11 +127,12 @@ export function FeaturedProject({
             }}
             className="mb-10 text-center"
           >
-            {/* PROJECT NUMBER ONLY - NO REPEATED TITLE */}
+            {/* PROJECT NUMBER */}
             <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
               {numberLabel}
             </p>
 
+            {/* BRAND NAME */}
             <h2
               className="text-5xl italic text-[#850F25] sm:text-7xl"
               style={{
@@ -143,12 +144,13 @@ export function FeaturedProject({
               {name}
             </h2>
 
+            {/* DESCRIPTION */}
             <p className="mx-auto mt-5 max-w-xl text-[#704B50]">
               {description}
             </p>
           </motion.div>
 
-          {/* PROJECT COVER */}
+          {/* COVER IMAGE - OUTSIDE ONLY */}
           <motion.button
             type="button"
             onClick={openProject}
@@ -204,7 +206,7 @@ export function FeaturedProject({
         </div>
       </section>
 
-      {/* FULL-SCREEN BRAND PRESENTATION */}
+      {/* FULL-SCREEN PROJECT GALLERY */}
       {typeof document !== "undefined" &&
         open &&
         createPortal(
@@ -222,6 +224,7 @@ export function FeaturedProject({
               aria-label={`${name} project`}
               className="relative flex h-[100dvh] w-full max-w-6xl flex-col overflow-hidden bg-[#FFF9F0] sm:h-[94dvh] sm:rounded-2xl"
             >
+              {/* CLOSE BUTTON */}
               <button
                 ref={closeRef}
                 type="button"
@@ -233,7 +236,7 @@ export function FeaturedProject({
               </button>
 
               <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-12 pt-16 sm:px-10">
-                {/* BRAND HEADER */}
+                {/* BRAND HEADER - NO COVER IMAGE */}
                 <header className="mx-auto mb-10 max-w-4xl text-center">
                   <p
                     className="text-xs uppercase tracking-[0.3em]"
@@ -259,15 +262,9 @@ export function FeaturedProject({
                   >
                     {subtitle}
                   </p>
-
-                  <img
-                    src={cover}
-                    alt={`${name} cover`}
-                    className="mx-auto mt-7 max-h-[330px] w-full object-contain"
-                  />
                 </header>
 
-                {/* CATEGORY TABS */}
+                {/* CATEGORY BUTTONS */}
                 {categories.length > 0 && (
                   <nav
                     aria-label={`${name} project categories`}
@@ -300,7 +297,7 @@ export function FeaturedProject({
                   </nav>
                 )}
 
-                {/* ACTIVE CATEGORY GALLERY */}
+                {/* PROJECT ARTWORK */}
                 {category && (
                   <div className="mx-auto max-w-5xl">
                     <div className="mb-7 border-b border-[#D8DCC5] pb-5">
@@ -324,32 +321,38 @@ export function FeaturedProject({
                     </div>
 
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                      {category.works.map((work, index) => (
-                        <button
-                          key={`${work.src}-${index}`}
-                          type="button"
-                          onClick={() => setZoomed(work)}
-                          aria-label={`Enlarge ${work.title}`}
-                          className="overflow-hidden rounded-xl border border-[#E3E3D4] bg-white text-left shadow-sm transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#850F25]"
-                        >
-                          <div className="flex h-[250px] items-center justify-center bg-[#F7F5ED] p-3 sm:h-[330px] sm:p-5">
-                            <img
-                              src={work.src}
-                              alt={work.title}
-                              loading="lazy"
-                              decoding="async"
-                              className="h-full w-full object-contain"
-                            />
-                          </div>
-
-                          <p
-                            className="px-4 py-3 text-center text-sm"
-                            style={{ color: accentColor }}
+                      {category.works
+                        .filter(
+                          (work) =>
+                            work.src &&
+                            work.src !== cover
+                        )
+                        .map((work, index) => (
+                          <button
+                            key={`${work.src}-${index}`}
+                            type="button"
+                            onClick={() => setZoomed(work)}
+                            aria-label={`Enlarge ${work.title}`}
+                            className="overflow-hidden rounded-xl border border-[#E3E3D4] bg-white text-left shadow-sm transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#850F25]"
                           >
-                            {work.title}
-                          </p>
-                        </button>
-                      ))}
+                            <div className="flex h-[250px] items-center justify-center bg-[#F7F5ED] p-3 sm:h-[330px] sm:p-5">
+                              <img
+                                src={work.src}
+                                alt={work.title}
+                                loading="lazy"
+                                decoding="async"
+                                className="h-full w-full object-contain"
+                              />
+                            </div>
+
+                            <p
+                              className="px-4 py-3 text-center text-sm"
+                              style={{ color: accentColor }}
+                            >
+                              {work.title}
+                            </p>
+                          </button>
+                        ))}
                     </div>
                   </div>
                 )}
