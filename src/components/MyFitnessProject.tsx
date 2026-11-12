@@ -22,4 +22,3 @@ const categories: FeaturedCategory[] = [
 export function MyFitnessProject() {
   return <FeaturedProject number={7} id="my-fitness-project" name="MY Fitness by Myriam" description={'A fitness brand showcased through identity, door branding, promotional design and a gift card.'} cover={asset('my-fitness-flyer-cover.png')} subtitle={'Logo · Signage · Promotional · Print'} categories={categories} accentColor="#681523" accentMuted="#A45D69" />;
 }
-
