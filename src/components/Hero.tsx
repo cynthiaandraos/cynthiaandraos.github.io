@@ -98,46 +98,21 @@ export function Hero() {
         paddingTop: "env(safe-area-inset-top, 0px)",
       }}
     >
-      <div className="mx-auto flex min-h-[96px] max-w-7xl items-center justify-between gap-3 px-5 py-3 md:px-6">
-        {/* CENTERED BRANDING */}
+      <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-3 px-5 py-3 md:px-6">
+        {/* CA LOGO ONLY */}
         <a
           href="#home"
           aria-label="Cynthia Andraos home"
           onClick={closeMenu}
-          className="flex min-w-0 shrink-0 flex-col items-center justify-center text-center"
+          className="flex min-w-0 shrink-0 items-center"
         >
-          {/* CA LOGO */}
           <img
             src={caLogo}
             alt="Cynthia Andraos CA Logo"
             loading="eager"
             decoding="async"
-            className="block w-24 max-w-full object-contain sm:w-28 md:w-32"
+            className="block w-24 max-w-full object-contain sm:w-28 md:w-36"
           />
-
-          {/* CYNTHIA ANDRAOS */}
-          <span
-            className="mt-2 block whitespace-nowrap text-[22px] leading-none text-[#850F25] sm:text-[26px]"
-            style={{
-              fontFamily:
-                "'Gabriola Portfolio', Gabriola, Georgia, serif",
-              fontWeight: 400,
-            }}
-          >
-            Cynthia Andraos
-          </span>
-
-          {/* GRAPHIC DESIGNER */}
-          <span
-            className="mt-1 block whitespace-nowrap text-[16px] leading-none text-[#2D020B] sm:text-[18px]"
-            style={{
-              fontFamily: "'Amsterdam Signature', cursive",
-              fontStyle: "italic",
-              fontWeight: 400,
-            }}
-          >
-            Graphic Designer
-          </span>
         </a>
 
         {/* DESKTOP NAVIGATION */}
@@ -191,7 +166,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="mx-3 mb-3 max-h-[calc(100dvh-150px-env(safe-area-inset-top,0px))] overflow-y-auto overscroll-contain rounded-2xl border border-[#E8D2CF] bg-[#FFF7F2] p-3 shadow-xl sm:mx-4 sm:mb-4 sm:p-4 lg:hidden"
+            className="mx-3 mb-3 max-h-[calc(100dvh-110px-env(safe-area-inset-top,0px))] overflow-y-auto overscroll-contain rounded-2xl border border-[#E8D2CF] bg-[#FFF7F2] p-3 shadow-xl sm:mx-4 sm:mb-4 sm:p-4 lg:hidden"
           >
             <div className="flex flex-col gap-1">
               {navigation.map((item) => (
@@ -242,7 +217,7 @@ export function Hero() {
 
         html {
           scroll-padding-top: calc(
-            150px + env(safe-area-inset-top, 0px)
+            90px + env(safe-area-inset-top, 0px)
           );
         }
 
@@ -258,13 +233,13 @@ export function Hero() {
       {/* MAIN HERO SECTION */}
       <section
         id="home"
-        className="relative min-h-screen overflow-hidden bg-[#FFF7F2] pt-[calc(160px+env(safe-area-inset-top,0px))] text-[#681523] md:pt-[calc(180px+env(safe-area-inset-top,0px))]"
+        className="relative min-h-screen overflow-hidden bg-[#FFF7F2] pt-[calc(96px+env(safe-area-inset-top,0px))] text-[#681523] md:pt-[calc(112px+env(safe-area-inset-top,0px))]"
       >
         {/* BACKGROUND DECORATION */}
         <div className="pointer-events-none absolute -left-32 top-40 h-96 w-96 rounded-full bg-[#F4C9C9]/40 blur-3xl" />
         <div className="pointer-events-none absolute -right-24 top-20 h-96 w-96 rounded-full bg-[#F2B9BC]/40 blur-3xl" />
 
-        <div className="relative mx-auto flex min-h-[min(600px,calc(100svh-160px))] max-w-7xl flex-col justify-center px-5 pb-12 pt-8 sm:min-h-[600px] sm:px-6 sm:pb-20 md:min-h-[730px] md:pb-24 md:pt-12">
+        <div className="relative mx-auto flex min-h-[min(600px,calc(100svh-96px))] max-w-7xl flex-col justify-center px-5 pb-12 pt-8 sm:min-h-[600px] sm:px-6 sm:pb-20 md:min-h-[730px] md:pb-24 md:pt-12">
           {/* MAIN NAME AND SIGNATURE */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -300,7 +275,7 @@ export function Hero() {
                   Andraos
                 </span>
 
-                {/* GRAPHIC DESIGNER */}
+                {/* GRAPHIC DESIGNER SIGNATURE */}
                 <span
                   style={{
                     fontFamily: "'Amsterdam Signature', cursive",
