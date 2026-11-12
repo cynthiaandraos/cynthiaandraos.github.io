@@ -141,7 +141,7 @@ export function Reels() {
           className="mb-10 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
-            11 / Reels &amp; Video Editing
+            07 /
           </p>
           <h2
             className="text-4xl italic text-[#850F25] sm:text-5xl md:text-7xl"
