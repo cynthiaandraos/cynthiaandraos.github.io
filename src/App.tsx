@@ -4,6 +4,7 @@ import { About } from "./components/About";
 import { Skills } from "./components/Skills";
 import { Projects } from "./components/Projects";
 import { OliviaProject } from "./components/OliviaProject";
+import { FiveBeansProject } from "./components/FiveBeansProject";
 import { Packaging } from "./components/Packaging";
 import { LabelDesign } from "./components/LabelDesign";
 import { AurelleAdvertising } from "./components/AurelleAdvertising";
@@ -22,12 +23,15 @@ export default function App() {
     <div className="min-h-screen bg-[#FFF7F2] text-[#2B1717]">
       <Hero />
       <About />
+
+      {/* My Skills and My Services */}
       <Skills />
 
-      {/* New OLIV-IA project presentation */}
+      {/* Featured Brand Projects */}
       <OliviaProject />
+      <FiveBeansProject />
 
-      {/* Existing sections — keep until the redesign is complete */}
+      {/* Existing sections - temporary */}
       <Packaging />
       <LabelDesign />
       <AurelleAdvertising />
@@ -39,9 +43,10 @@ export default function App() {
       <Branding />
       <Signage />
 
-      {/* Video portfolio */}
+      {/* Reels and Video Editing */}
       <Reels />
 
+      {/* Contact and Footer */}
       <Contact />
       <Footer />
     </div>
