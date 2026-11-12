@@ -270,7 +270,7 @@ export function Contact() {
                 Find me on social media
               </p>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center justify-center gap-4">
                 <motion.a
                   href="https://www.instagram.com/rcd.esign/"
                   target="_blank"
