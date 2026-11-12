@@ -29,7 +29,6 @@ export type FeaturedProjectProps = {
 };
 
 export function FeaturedProject({
-  number,
   id,
   name,
   description,
@@ -42,9 +41,11 @@ export function FeaturedProject({
   const reduceMotion = useReducedMotion();
 
   const [open, setOpen] = useState(false);
+
   const [active, setActive] = useState(
     categories[0]?.id ?? ""
   );
+
   const [zoomed, setZoomed] =
     useState<FeaturedWork | null>(null);
 
@@ -55,7 +56,10 @@ export function FeaturedProject({
     categories.find((item) => item.id === active) ??
     categories[0];
 
-  const numberLabel = String(number).padStart(2, "0");
+  // Do not repeat the cover inside the gallery.
+  const galleryWorks = category?.works.filter(
+    (work) => work.src && work.src !== cover
+  ) ?? [];
 
   const openProject = () => {
     previousFocus.current =
@@ -80,7 +84,9 @@ export function FeaturedProject({
   useEffect(() => {
     if (!open) return;
 
-    const previousOverflow = document.body.style.overflow;
+    const previousOverflow =
+      document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
 
     closeRef.current?.focus();
@@ -97,42 +103,52 @@ export function FeaturedProject({
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow =
+        previousOverflow;
+
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
     };
   }, [open, zoomed]);
 
   return (
     <>
-      {/* HOMEPAGE FEATURED PROJECT */}
+      {/* HOMEPAGE BRAND SECTION */}
       <section
         id={id}
         className="scroll-mt-28 bg-[#FFF7F2] px-4 py-16 sm:px-6 sm:py-24"
       >
         <div className="mx-auto max-w-7xl">
+
+          {/* BRAND NAME AND DESCRIPTION */}
           <motion.div
             initial={
               reduceMotion
                 ? false
                 : { opacity: 0, y: 30 }
             }
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.15,
+            }}
             transition={{
               duration: reduceMotion ? 0 : 0.65,
               ease: "easeOut",
             }}
             className="mb-10 text-center"
           >
-            {/* PROJECT NUMBER */}
-            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
-              {numberLabel}
-            </p>
-
-            {/* BRAND NAME */}
             <h2
               className="text-5xl italic text-[#850F25] sm:text-7xl"
               style={{
@@ -144,7 +160,6 @@ export function FeaturedProject({
               {name}
             </h2>
 
-            {/* DESCRIPTION */}
             <p className="mx-auto mt-5 max-w-xl text-[#704B50]">
               {description}
             </p>
@@ -159,7 +174,10 @@ export function FeaturedProject({
                 ? false
                 : { opacity: 0, y: 30 }
             }
-            whileInView={{ opacity: 1, y: 0 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
             viewport={{ once: true }}
             transition={{
               duration: reduceMotion ? 0 : 0.65,
@@ -213,7 +231,9 @@ export function FeaturedProject({
           <div
             className="fixed inset-0 z-[10020] flex items-center justify-center bg-[#210C12]/90 p-0 sm:p-5"
             onMouseDown={(event) => {
-              if (event.target === event.currentTarget) {
+              if (
+                event.target === event.currentTarget
+              ) {
                 closeProject();
               }
             }}
@@ -224,7 +244,7 @@ export function FeaturedProject({
               aria-label={`${name} project`}
               className="relative flex h-[100dvh] w-full max-w-6xl flex-col overflow-hidden bg-[#FFF9F0] sm:h-[94dvh] sm:rounded-2xl"
             >
-              {/* CLOSE BUTTON */}
+              {/* CLOSE PROJECT */}
               <button
                 ref={closeRef}
                 type="button"
@@ -236,13 +256,16 @@ export function FeaturedProject({
               </button>
 
               <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-12 pt-16 sm:px-10">
-                {/* BRAND HEADER - NO COVER IMAGE */}
+
+                {/* BRAND TITLE - NO COVER */}
                 <header className="mx-auto mb-10 max-w-4xl text-center">
                   <p
                     className="text-xs uppercase tracking-[0.3em]"
-                    style={{ color: accentMuted }}
+                    style={{
+                      color: accentMuted,
+                    }}
                   >
-                    Complete Brand Presentation
+                    Brand Presentation
                   </p>
 
                   <h2
@@ -258,33 +281,40 @@ export function FeaturedProject({
 
                   <p
                     className="mt-3 text-sm"
-                    style={{ color: accentMuted }}
+                    style={{
+                      color: accentMuted,
+                    }}
                   >
                     {subtitle}
                   </p>
                 </header>
 
-                {/* CATEGORY BUTTONS */}
+                {/* CATEGORY TABS */}
                 {categories.length > 0 && (
                   <nav
                     aria-label={`${name} project categories`}
                     className="mb-10 flex flex-wrap justify-center gap-2"
                   >
                     {categories.map((item) => {
-                      const isActive = active === item.id;
+                      const isActive =
+                        active === item.id;
 
                       return (
                         <button
                           key={item.id}
                           type="button"
-                          onClick={() => setActive(item.id)}
+                          onClick={() =>
+                            setActive(item.id)
+                          }
                           aria-pressed={isActive}
                           className="rounded-full border px-4 py-2 text-xs transition-colors"
                           style={{
-                            borderColor: accentColor,
-                            backgroundColor: isActive
-                              ? accentColor
-                              : "transparent",
+                            borderColor:
+                              accentColor,
+                            backgroundColor:
+                              isActive
+                                ? accentColor
+                                : "transparent",
                             color: isActive
                               ? "#FFFFFF"
                               : accentColor,
@@ -297,7 +327,7 @@ export function FeaturedProject({
                   </nav>
                 )}
 
-                {/* PROJECT ARTWORK */}
+                {/* ARTWORK GALLERY */}
                 {category && (
                   <div className="mx-auto max-w-5xl">
                     <div className="mb-7 border-b border-[#D8DCC5] pb-5">
@@ -314,24 +344,23 @@ export function FeaturedProject({
 
                       <p
                         className="mt-2 text-sm"
-                        style={{ color: accentMuted }}
+                        style={{
+                          color: accentMuted,
+                        }}
                       >
                         {category.description}
                       </p>
                     </div>
 
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                      {category.works
-                        .filter(
-                          (work) =>
-                            work.src &&
-                            work.src !== cover
-                        )
-                        .map((work, index) => (
+                      {galleryWorks.map(
+                        (work, index) => (
                           <button
                             key={`${work.src}-${index}`}
                             type="button"
-                            onClick={() => setZoomed(work)}
+                            onClick={() =>
+                              setZoomed(work)
+                            }
                             aria-label={`Enlarge ${work.title}`}
                             className="overflow-hidden rounded-xl border border-[#E3E3D4] bg-white text-left shadow-sm transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#850F25]"
                           >
@@ -347,31 +376,39 @@ export function FeaturedProject({
 
                             <p
                               className="px-4 py-3 text-center text-sm"
-                              style={{ color: accentColor }}
+                              style={{
+                                color:
+                                  accentColor,
+                              }}
                             >
                               {work.title}
                             </p>
                           </button>
-                        ))}
+                        )
+                      )}
                     </div>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* IMAGE ZOOM */}
+            {/* ENLARGED IMAGE */}
             {zoomed && (
               <div
                 role="dialog"
                 aria-modal="true"
                 aria-label={zoomed.title}
                 className="absolute inset-0 z-40 flex items-center justify-center bg-[#210C12]/95 p-5"
-                onClick={() => setZoomed(null)}
+                onClick={() =>
+                  setZoomed(null)
+                }
               >
                 <button
                   type="button"
+                  onClick={() =>
+                    setZoomed(null)
+                  }
                   aria-label="Close image"
-                  onClick={() => setZoomed(null)}
                   className="absolute right-5 top-5 rounded-full bg-white p-3 text-[#681523]"
                 >
                   <X size={20} />
