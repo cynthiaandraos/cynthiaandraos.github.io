@@ -28,8 +28,13 @@ export function Hero() {
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
+    return () =>
+      window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -40,7 +45,9 @@ export function Hero() {
     };
 
     media.addEventListener("change", handleDesktop);
-    return () => media.removeEventListener("change", handleDesktop);
+
+    return () =>
+      media.removeEventListener("change", handleDesktop);
   }, []);
 
   useEffect(() => {
@@ -80,7 +87,9 @@ export function Hero() {
           ? "border-[#850F25]/15 bg-[#FFF7F2]/95 shadow-md backdrop-blur-xl"
           : "border-transparent bg-[#FFF7F2]/95 backdrop-blur-md"
       }`}
-      style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
+      style={{
+        paddingTop: "env(safe-area-inset-top, 0px)",
+      }}
     >
       <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-3 px-5 py-3 md:px-6">
         <a
@@ -177,13 +186,19 @@ export function Hero() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;700&display=swap');
+        @font-face {
+          font-family: "Gabriola Portfolio";
+          src: url("${import.meta.env.BASE_URL}fonts/Gabriola.ttf") format("truetype");
+          font-weight: 400;
+          font-style: normal;
+          font-display: swap;
+        }
 
         @font-face {
-          font-family: 'Amsterdam Signature';
-          src: url('${import.meta.env.BASE_URL}fonts/amsterdam-signature-italic.woff2') format('woff2');
-          font-style: italic;
+          font-family: "Amsterdam Signature";
+          src: url("${import.meta.env.BASE_URL}fonts/amsterdam-signature-italic.woff2") format("woff2");
           font-weight: 400;
+          font-style: italic;
           font-display: swap;
         }
 
@@ -214,29 +229,32 @@ export function Hero() {
             transition={{ duration: 0.8 }}
             className="relative z-20 w-full md:w-[65%]"
           >
-            <h1
-              style={{
-                fontFamily: "'Bodoni Moda', Georgia, serif",
-                fontWeight: 400,
-                letterSpacing: "-0.045em",
-              }}
-              className="text-[clamp(2.5rem,11vw,5rem)] leading-[1.02] text-[#850F25] md:text-[clamp(3.2rem,7vw,7.5rem)] md:leading-[0.98]"
-            >
-              Cynthia
-              <span className="block">Andraos</span>
-            </h1>
+            {/* Name and signature composition */}
+            <div className="relative w-full max-w-[650px] pb-12 sm:pb-16 md:pb-20">
+              <h1
+                style={{
+                  fontFamily: "'Gabriola Portfolio', Gabriola, Georgia, serif",
+                  fontWeight: 400,
+                  letterSpacing: "-0.035em",
+                }}
+                className="text-[clamp(4.6rem,17vw,7.5rem)] leading-[0.73] text-[#850F25] md:text-[clamp(7rem,10.5vw,11rem)]"
+              >
+                <span className="block">Cynthia</span>
+                <span className="block">Andraos</span>
+              </h1>
 
-            <p
-              style={{
-                fontFamily: "'Amsterdam Signature', cursive",
-                fontWeight: 400,
-                fontStyle: "italic",
-                letterSpacing: "0.01em",
-              }}
-              className="mt-5 text-[clamp(2.6rem,8vw,4.5rem)] leading-[1.5] text-[#850F25] md:mt-7 md:text-[clamp(3.5rem,5vw,5.5rem)]"
-            >
-              Graphic Designer
-            </p>
+              <p
+                style={{
+                  fontFamily: "'Amsterdam Signature', cursive",
+                  fontWeight: 400,
+                  fontStyle: "italic",
+                  letterSpacing: "-0.025em",
+                }}
+                className="relative z-20 -mt-1 ml-[4%] whitespace-nowrap text-[clamp(2.2rem,8vw,4rem)] leading-[1.15] text-[#2D020B] sm:-mt-2 sm:ml-[6%] md:-mt-3 md:ml-[7%] md:text-[clamp(3rem,5.4vw,5.2rem)]"
+              >
+                Graphic Designer
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
