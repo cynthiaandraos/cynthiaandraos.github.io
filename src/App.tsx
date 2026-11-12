@@ -1,7 +1,6 @@
 
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
-import { Skills } from "./components/Skills";
 
 import { OliviaProject } from "./components/OliviaProject";
 import { FiveBeansProject } from "./components/FiveBeansProject";
@@ -35,10 +34,7 @@ export default function App() {
       {/* ABOUT ME */}
       <About />
 
-      {/* SKILLS & SERVICES */}
-      <Skills />
-
-      {/* 02 / FEATURED PROJECTS */}
+      {/* FEATURED PROJECTS */}
       <section
         id="portfolio"
         className="scroll-mt-24 bg-[#FFF7F2] px-5 pb-2 pt-20 text-center sm:pt-24"
@@ -51,8 +47,7 @@ export default function App() {
           <h2
             className="text-5xl italic text-[#850F25] sm:text-6xl"
             style={{
-              fontFamily:
-                "'Bodoni Moda', Georgia, serif",
+              fontFamily: "'Bodoni Moda', Georgia, serif",
               fontWeight: 700,
             }}
           >
@@ -88,19 +83,19 @@ export default function App() {
       {/* FEATURED PROJECT 07 - MY FITNESS */}
       <MyFitnessProject />
 
-      {/* 03 / SOCIAL MEDIA DESIGN */}
+      {/* SOCIAL MEDIA DESIGN */}
       <SocialMedia />
 
-      {/* 04 / BUSINESS CARDS DESIGN */}
+      {/* BUSINESS CARDS DESIGN */}
       <BusinessCards />
 
-      {/* 05 / PRINT & STATIONERY DESIGN */}
+      {/* PRINT & STATIONERY DESIGN */}
       <PrintDesign />
 
-      {/* 06 / LOGO DESIGN */}
+      {/* LOGO DESIGN */}
       <Projects />
 
-      {/* 07 / REELS & VIDEO EDITING */}
+      {/* REELS & VIDEO EDITING */}
       <Reels />
 
       {/* CONTACT */}
