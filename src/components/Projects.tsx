@@ -11,17 +11,11 @@ import {
 } from "lucide-react";
 
 import domina from "../assets/domina-transparent.png";
-import goldenMark from "../assets/golden-mark-transparent.png";
-import houseOfBeauty from "../assets/house-of-beauty-transparent.png";
 import jouy from "../assets/jouy-transparent.png";
-import myFitness from "../assets/my-fitness-transparent.png";
 import manymoda from "../assets/manymoda-transparent.png";
 import oMarket from "../assets/o-market-transparent.png";
-import aurelleLogo from "../assets/aurelle-logo-transparent.png";
-import oliviaLogo from "../assets/oliv-ia-logo-transparent.png";
 import snackElKhal from "../assets/snack-el-khal-logo.png";
 
-import littleBloomLogo from "../assets/little-bloom-logo-transparent-background.png";
 
 type ProjectImage = {
   src: string;
@@ -36,17 +30,11 @@ type Project = {
 };
 
 const projects: Project[] = [
-  { title: "Golden Mark", category: "Logo Design", cover: goldenMark, images: [{ src: goldenMark, title: "Golden Mark Logo" }] },
-  { title: "MY Fitness by Myriam", category: "Logo Design", cover: myFitness, images: [{ src: myFitness, title: "MY Fitness by Myriam Logo" }] },
-  { title: "House of Beauty", category: "Logo Design", cover: houseOfBeauty, images: [{ src: houseOfBeauty, title: "House of Beauty Logo" }] },
-  { title: "Little Bloom – Baby Collection", category: "Logo Design", cover: littleBloomLogo, images: [{ src: littleBloomLogo, title: "Little Bloom Logo" }] },
-  { title: "Aurelle Skincare", category: "Logo Design", cover: aurelleLogo, images: [{ src: aurelleLogo, title: "Aurelle Skincare Logo" }] },
   { title: "Snack الخال", category: "Logo Design", cover: snackElKhal, images: [{ src: snackElKhal, title: "Snack الخال Logo" }] },
-  { title: "Domina Real Estate", category: "Logo Design", cover: domina, images: [{ src: domina, title: "Domina Real Estate Logo" }] },
-  { title: "مونة إم جوي", category: "Logo Design", cover: jouy, images: [{ src: jouy, title: "مونة إم جوي Logo" }] },
   { title: "Manymoda", category: "Logo Design", cover: manymoda, images: [{ src: manymoda, title: "Manymoda Logo" }] },
+  { title: "مونة إم جوي", category: "Logo Design", cover: jouy, images: [{ src: jouy, title: "مونة إم جوي Logo" }] },
+  { title: "Domina Real Estate", category: "Logo Design", cover: domina, images: [{ src: domina, title: "Domina Real Estate Logo" }] },
   { title: "O-Market", category: "Logo Design", cover: oMarket, images: [{ src: oMarket, title: "O-Market Logo" }] },
-  { title: "OLIV-IA", category: "Logo Design", cover: oliviaLogo, images: [{ src: oliviaLogo, title: "OLIV-IA Logo" }] },
 ];
 
 // Cache image preloads to avoid duplicate requests.
@@ -253,7 +241,7 @@ export function Projects() {
           className="mb-14 text-center"
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
-            08 / LOGO DESIGN
+            LOGO DESIGN
           </p>
 
           {/* Bold italic title */}
@@ -269,7 +257,7 @@ export function Projects() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
-            A selection of original logo designs created for businesses and personal brands, combining distinctive typography, memorable symbols, and thoughtful visual concepts.
+            A collection of distinctive logos and visual concepts for independent brands and businesses.
           </p>
         </motion.div>
 
