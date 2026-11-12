@@ -1,12 +1,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { TouchEvent } from "react";
+import { createPortal } from "react-dom";
 import {
   motion,
   AnimatePresence,
   useReducedMotion,
 } from "motion/react";
-import { createPortal } from "react-dom";
 import {
   ArrowLeft,
   ArrowRight,
@@ -26,8 +26,8 @@ import firasChristmas36 from "../assets/firas-christmas-36.png";
 import firasNewMenuCover from "../assets/firas-new-menu-cover.png";
 import chickenRollSub from "../assets/firas-chicken-roll-sub.jpeg";
 import kababDjej from "../assets/firas-kabab-djej.jpeg";
-import hawaiiBurger from "../assets/hawaii-burger.jpeg";
-import steakSub from "../assets/steak-sub.jpeg";
+import hawaiiBurger from "../assets/firas-hawaii-burger.jpeg";
+import steakSub from "../assets/firas-steak-sub.jpeg";
 
 // ST. ABDA - JAJ EVENT CAMPAIGN
 import stAbdaCover from "../assets/st-abda-event-cover.png";
@@ -348,7 +348,6 @@ export function SocialMedia() {
         className="scroll-mt-24 overflow-hidden bg-[#FFF7F2] px-4 py-16 text-[#681523] sm:px-6 sm:py-24"
       >
         <div className="mx-auto max-w-7xl">
-
           {/* SECTION HEADING */}
           <motion.div
             initial={
@@ -422,7 +421,6 @@ export function SocialMedia() {
                   className="flex h-full w-full flex-col text-left"
                   aria-label={`View ${project.title} campaign`}
                 >
-
                   {/* COVER IMAGE */}
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7EDE8]">
                     <img
@@ -523,7 +521,6 @@ export function SocialMedia() {
                   aria-label={`${selectedProject.title} gallery`}
                   className="relative flex h-[100dvh] w-full max-w-5xl flex-col overflow-hidden bg-[#FFF7F2] shadow-2xl sm:h-[92dvh] sm:rounded-2xl"
                 >
-
                   {/* GALLERY HEADER */}
                   <div className="flex shrink-0 items-center justify-between gap-3 border-b border-[#E8D2CF] px-4 py-3 sm:px-6 sm:py-4">
                     <div className="min-w-0">
