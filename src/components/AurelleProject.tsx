@@ -27,4 +27,3 @@ const categories: FeaturedCategory[] = [
 export function AurelleProject() {
   return <FeaturedProject number={4} id="aurelle-project" name="Aurelle" description={'A skincare brand explored through identity, luxury packaging and beauty campaigns.'} cover={asset('aurelle-collection-cover.png')} subtitle={'Identity · Skincare Packaging · Advertising'} categories={categories} accentColor="#681523" accentMuted="#A45D69" />;
 }
-
