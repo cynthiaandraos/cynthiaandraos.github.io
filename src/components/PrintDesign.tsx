@@ -35,7 +35,7 @@ import christmasCover from "../assets/omarket-christmas-voucher-cover.png";
 import sophiaBirthdayInvitation from "../assets/sophia-first-birthday-invitation.png";
 import birthdayInvitationCover from "../assets/birthday-invitation-card-cover.png";
 
-const designs = [
+const allDesigns = [
   {
     id: 9,
     title: "Sophia’s 1st Birthday Invitation",
@@ -109,6 +109,8 @@ const designs = [
 ];
 
 type PrintProject = (typeof designs)[number];
+
+const designs = allDesigns.filter((design) => design.client === "O-Market");
 
 export function PrintDesign() {
   const [selected, setSelected] =
