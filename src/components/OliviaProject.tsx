@@ -16,12 +16,9 @@ const categories: FeaturedCategory[] = [
     title: "Logo & Brand Identity",
     description: "The logo and core visual identity.",
     works: [
+      w("oliv-ia-logo.png", "Oliv-ia Logo"),
       w(
-        "olivia-logo.png",
-        "Oliv-ia Logo"
-      ),
-      w(
-        "olivia-brand-presentation.png",
+        "oliv-ia-brand-presentation.png",
         "Oliv-ia Brand Presentation"
       ),
     ],
@@ -29,11 +26,10 @@ const categories: FeaturedCategory[] = [
   {
     id: "packaging",
     title: "Packaging Design",
-    description:
-      "Bottles, shopping bags and gift packaging.",
+    description: "Bottles, shopping bags and gift packaging.",
     works: [
       w(
-        "olivia-product-mockup.png",
+        "oliv-ia-product-mockup.png",
         "Oliv-ia Product Mockup"
       ),
       w(
@@ -41,11 +37,11 @@ const categories: FeaturedCategory[] = [
         "Oliv-ia Large Bottle"
       ),
       w(
-        "olivia-shopping-bag.png",
+        "oliv-ia-shopping-bag.png",
         "Oliv-ia Shopping Bag"
       ),
       w(
-        "olivia-gift-box.png",
+        "oliv-ia-gift-box.png",
         "Oliv-ia Gift Box"
       ),
     ],
@@ -53,8 +49,7 @@ const categories: FeaturedCategory[] = [
   {
     id: "labels",
     title: "Label Design",
-    description:
-      "Product labels and finishing details.",
+    description: "Product labels and finishing details.",
     works: [
       w(
         "olivia-front-back-labels.png",
@@ -77,11 +72,10 @@ const categories: FeaturedCategory[] = [
   {
     id: "advertising",
     title: "Advertising & Campaigns",
-    description:
-      "Outdoor, print and product campaigns.",
+    description: "Outdoor, print and product campaigns.",
     works: [
       w(
-        "olivia-billboard.png",
+        "oliv-ia-billboard.png",
         "Oliv-ia Billboard"
       ),
       w(
@@ -89,15 +83,15 @@ const categories: FeaturedCategory[] = [
         "Oliv-ia LED Billboard"
       ),
       w(
-        "olivia-roadside-ad.png",
+        "oliv-ia-roadside-ad.png",
         "Oliv-ia Roadside Ad"
       ),
       w(
-        "olivia-magazine-ad.png",
+        "oliv-ia-magazine-ad.png",
         "Oliv-ia Magazine Ad"
       ),
       w(
-        "olivia-magazine-harvest.png",
+        "oliv-ia-magazine-harvest.png",
         "Oliv-ia Magazine Harvest"
       ),
       w(
@@ -109,15 +103,14 @@ const categories: FeaturedCategory[] = [
   {
     id: "social",
     title: "Social Media Design",
-    description:
-      "Instagram and Facebook campaign artwork.",
+    description: "Instagram and Facebook campaign artwork.",
     works: [
       w(
         "olivia-instagram-mockup.png",
         "Oliv-ia Instagram Mockup"
       ),
       w(
-        "olivia-facebook-ad.png",
+        "oliv-ia-facebook-ad.png",
         "Oliv-ia Facebook Ad"
       ),
     ],
@@ -125,15 +118,14 @@ const categories: FeaturedCategory[] = [
   {
     id: "signage",
     title: "Signage & Storefront",
-    description:
-      "Bringing the brand into physical spaces.",
+    description: "Bringing the brand into physical spaces.",
     works: [
       w(
-        "olivia-signage.png",
+        "oliv-ia-signage.png",
         "Oliv-ia Signage"
       ),
       w(
-        "olivia-storefront.png",
+        "oliv-ia-storefront.png",
         "Oliv-ia Storefront"
       ),
     ],
@@ -147,7 +139,7 @@ export function OliviaProject() {
       id="olivia-project"
       name="Oliv-ia"
       description="An olive oil brand brought to life through identity, packaging, campaigns and visual applications."
-      cover={asset("olivia-cover.png")}
+      cover={asset("oliv-ia-cover.png")}
       subtitle="Identity · Packaging · Advertising · Digital"
       categories={categories}
       accentColor="#35452B"
