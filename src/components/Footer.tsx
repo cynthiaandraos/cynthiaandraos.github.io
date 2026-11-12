@@ -29,17 +29,17 @@ export function Footer() {
       <div className="mx-auto w-full max-w-7xl px-5 pb-8 pt-12 sm:px-6 sm:pb-10 sm:pt-16">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-10">
 
-          {/* CA LOGO ONLY */}
-          <div className="min-w-0">
+          {/* BIGGER CA LOGO - VERTICALLY CENTERED */}
+          <div className="flex min-w-0 items-center justify-center py-8 md:justify-start md:py-0">
             <a
               href="#home"
               aria-label="Back to home"
-              className="inline-block rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#751728]"
+              className="inline-flex items-center justify-center rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#751728]"
             >
               <img
                 src={caLogo}
                 alt="CA Graphic Designer Logo"
-                className="mb-5 h-16 w-auto max-w-full object-contain sm:h-20"
+                className="block h-auto w-52 max-w-full object-contain sm:w-64 lg:w-72"
               />
             </a>
           </div>
