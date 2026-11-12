@@ -20,74 +20,105 @@ const PROTECTED_SECTIONS = [
 
 export function PortfolioProtection() {
   useEffect(() => {
-    // Remove old automatically generated watermark
-    // elements if any remain in the page.
-    const removeOldWatermarks = () => {
-      document
-        .querySelectorAll(
-          '[data-auto-portfolio-watermark="true"]'
-        )
-        .forEach((element) => {
-          element.remove();
-        });
+    const style = document.createElement("style");
+
+    style.setAttribute(
+      "data-portfolio-protection",
+      "true"
+    );
+
+    style.textContent = `
+      ${PROTECTED_SECTIONS} img,
+      ${PROTECTED_SECTIONS} video {
+        -webkit-user-select: none !important;
+        user-select: none !important;
+        -webkit-user-drag: none !important;
+        -webkit-touch-callout: none !important;
+      }
+    `;
+
+    document.head.appendChild(style);
+
+    const isProtectedMedia = (
+      target: EventTarget | null
+    ) => {
+      return (
+        target instanceof HTMLImageElement ||
+        target instanceof HTMLVideoElement
+      ) &&
+        Boolean(target.closest(PROTECTED_SECTIONS));
     };
 
-    // Disable image dragging within portfolio sections.
-    const handleDragStart = (
-      event: DragEvent
+    const preventMediaAction = (
+      event: Event
+    ) => {
+      if (isProtectedMedia(event.target)) {
+        event.preventDefault();
+      }
+    };
+
+    const handleKeyDown = (
+      event: KeyboardEvent
     ) => {
       const target = event.target;
 
+      const isEditing =
+        target instanceof HTMLElement &&
+        Boolean(
+          target.closest(
+            "input, textarea, [contenteditable]"
+          )
+        );
+
+      if (isEditing) return;
+
+      // Discourage common browser save actions.
+      // This does not block screenshots or
+      // browser developer tools.
       if (
-        target instanceof HTMLImageElement &&
-        target.closest(PROTECTED_SECTIONS)
+        (event.ctrlKey || event.metaKey) &&
+        event.key.toLowerCase() === "s"
       ) {
         event.preventDefault();
       }
     };
 
-    // Disable the browser's default right-click
-    // menu on portfolio images and videos.
-    const handleContextMenu = (
-      event: MouseEvent
-    ) => {
-      const target = event.target;
-
-      if (
-        (target instanceof HTMLImageElement ||
-          target instanceof HTMLVideoElement) &&
-        target.closest(PROTECTED_SECTIONS)
-      ) {
-        event.preventDefault();
-      }
-    };
-
-    // Remove any old watermark overlays.
-    removeOldWatermarks();
-
-    // Keep the protection limited to the media.
     document.addEventListener(
-      "dragstart",
-      handleDragStart,
+      "contextmenu",
+      preventMediaAction,
       true
     );
 
     document.addEventListener(
-      "contextmenu",
-      handleContextMenu,
+      "dragstart",
+      preventMediaAction,
+      true
+    );
+
+    document.addEventListener(
+      "keydown",
+      handleKeyDown,
       true
     );
 
     return () => {
+      style.remove();
+
       document.removeEventListener(
-        "dragstart",
-        handleDragStart,
+        "contextmenu",
+        preventMediaAction,
         true
       );
 
       document.removeEventListener(
-        "contextmenu",
-        handleContextMenu,
+        "dragstart",
+        preventMediaAction,
+        true
+      );
+
+      document.removeEventListener(
+        "keydown",
+        handleKeyDown,
         true
       );
     };
