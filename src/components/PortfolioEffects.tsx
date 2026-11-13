@@ -35,11 +35,9 @@ export function PortfolioEffects() {
     restDelta: 0.001,
   });
 
-  // MOUSE-FOLLOWING BURGUNDY LENS
+  // DESKTOP MOUSE-FOLLOWING LENS
   useEffect(() => {
-    if (reduceMotion) {
-      return;
-    }
+    if (reduceMotion) return;
 
     const canHover = window.matchMedia(
       "(hover: hover) and (pointer: fine)"
@@ -53,21 +51,10 @@ export function PortfolioEffects() {
 
       mouseX.set(event.clientX - 110);
       mouseY.set(event.clientY - 110);
-
       setShowLens(true);
     };
 
-    const handlePointerLeave = () => {
-      setShowLens(false);
-    };
-
-    const handleWindowBlur = () => {
-      setShowLens(false);
-    };
-
-    const handlePointerCancel = () => {
-      setShowLens(false);
-    };
+    const hideLens = () => setShowLens(false);
 
     window.addEventListener(
       "pointermove",
@@ -75,41 +62,18 @@ export function PortfolioEffects() {
       { passive: true }
     );
 
-    window.addEventListener(
-      "pointercancel",
-      handlePointerCancel
-    );
-
-    document.addEventListener(
-      "pointerleave",
-      handlePointerLeave
-    );
-
-    window.addEventListener(
-      "blur",
-      handleWindowBlur
-    );
+    window.addEventListener("pointercancel", hideLens);
+    window.addEventListener("blur", hideLens);
+    document.addEventListener("pointerleave", hideLens);
 
     return () => {
       window.removeEventListener(
         "pointermove",
         handlePointerMove
       );
-
-      window.removeEventListener(
-        "pointercancel",
-        handlePointerCancel
-      );
-
-      document.removeEventListener(
-        "pointerleave",
-        handlePointerLeave
-      );
-
-      window.removeEventListener(
-        "blur",
-        handleWindowBlur
-      );
+      window.removeEventListener("pointercancel", hideLens);
+      window.removeEventListener("blur", hideLens);
+      document.removeEventListener("pointerleave", hideLens);
     };
   }, [reduceMotion, mouseX, mouseY]);
 
@@ -120,7 +84,7 @@ export function PortfolioEffects() {
           overflow-x: clip;
         }
 
-        /* Preserve the existing image hover styling */
+        /* DESKTOP IMAGE HOVER */
         .portfolio-page img {
           transition:
             filter 450ms ease,
@@ -133,25 +97,46 @@ export function PortfolioEffects() {
           }
         }
 
+        /* MOBILE TOUCH FEEDBACK */
+        @media (hover: none) and (pointer: coarse) {
+          .portfolio-page button,
+          .portfolio-page a {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+          }
+
+          .portfolio-page button:active,
+          .portfolio-page a:active {
+            opacity: 0.88;
+          }
+        }
+
+        /* RESPECT REDUCED MOTION */
         @media (prefers-reduced-motion: reduce) {
           .portfolio-page img {
+            transition: none !important;
+          }
+
+          .portfolio-page button,
+          .portfolio-page a {
+            animation: none !important;
             transition: none !important;
           }
         }
       `}</style>
 
-      {/* VERTICAL BURGUNDY SCROLL PROGRESS */}
+      {/* BURGUNDY SCROLL PROGRESS */}
       {!reduceMotion && (
         <motion.div
           aria-hidden="true"
-          className="pointer-events-none fixed bottom-0 right-0 top-0 z-[9998] w-[3px] origin-top bg-[#850F25] sm:w-[4px]"
+          className="pointer-events-none fixed bottom-0 right-0 top-0 z-[9998] w-[2px] origin-top bg-[#850F25] sm:w-[4px]"
           style={{
             scaleY: smoothProgress,
           }}
         />
       )}
 
-      {/* MOUSE-FOLLOWING BURGUNDY LENS */}
+      {/* DESKTOP BURGUNDY LENS */}
       {!reduceMotion && (
         <motion.div
           aria-hidden="true"
