@@ -1,5 +1,10 @@
 
-import { motion, AnimatePresence } from "motion/react";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+} from "motion/react";
+
 import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -16,9 +21,19 @@ const navigation = [
   { label: "Contact", href: "#contact" },
 ];
 
+const specialties = [
+  "Branding",
+  "Packaging",
+  "Social Media",
+  "Print Design",
+  "Visual Identity",
+];
+
 export function Hero() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const reduceMotion = useReducedMotion();
 
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileNavRef = useRef<HTMLElement>(null);
@@ -79,11 +94,21 @@ export function Hero() {
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("pointerdown", handleOutsideClick);
+    document.addEventListener(
+      "pointerdown",
+      handleOutsideClick
+    );
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("pointerdown", handleOutsideClick);
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+
+      document.removeEventListener(
+        "pointerdown",
+        handleOutsideClick
+      );
     };
   }, [menuOpen]);
 
@@ -99,6 +124,7 @@ export function Hero() {
       }}
     >
       <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-3 px-5 py-3 md:px-6">
+
         {/* CA LOGO ONLY */}
         <a
           href="#home"
@@ -145,13 +171,21 @@ export function Hero() {
         <button
           ref={menuButtonRef}
           type="button"
-          onClick={() => setMenuOpen((current) => !current)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          onClick={() =>
+            setMenuOpen((current) => !current)
+          }
+          aria-label={
+            menuOpen ? "Close menu" : "Open menu"
+          }
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#850F25]/30 bg-[#FFF7F2] text-[#850F25] transition hover:bg-[#F3D9D9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#850F25] lg:hidden"
         >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          {menuOpen ? (
+            <X size={24} />
+          ) : (
+            <Menu size={24} />
+          )}
         </button>
       </div>
 
@@ -240,17 +274,28 @@ export function Hero() {
         <div className="pointer-events-none absolute -right-24 top-20 h-96 w-96 rounded-full bg-[#F2B9BC]/40 blur-3xl" />
 
         <div className="relative mx-auto flex min-h-[min(600px,calc(100svh-96px))] max-w-7xl flex-col justify-center px-5 pb-12 pt-8 sm:min-h-[600px] sm:px-6 sm:pb-20 md:min-h-[730px] md:pb-24 md:pt-12">
+
           {/* MAIN NAME AND SIGNATURE */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative z-20 w-full md:w-[65%]"
-          >
+          <div className="relative z-20 w-full md:w-[65%]">
             <div className="relative w-full max-w-[650px]">
               <div className="relative h-[255px] min-[400px]:h-[310px] sm:h-[390px] md:h-[420px]">
-                {/* CYNTHIA */}
-                <h1
+
+                {/* CYNTHIA - SLIDES IN FROM LEFT */}
+                <motion.h1
+                  initial={
+                    reduceMotion
+                      ? false
+                      : { opacity: 0, x: -65 }
+                  }
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                  }}
+                  transition={{
+                    duration: 1,
+                    delay: 0.15,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                   style={{
                     fontFamily:
                       "'Gabriola Portfolio', Gabriola, Georgia, serif",
@@ -260,10 +305,24 @@ export function Hero() {
                   className="absolute left-0 top-0 z-10 whitespace-nowrap text-[clamp(5.5rem,17vw,11rem)] leading-none text-[#850F25]"
                 >
                   Cynthia
-                </h1>
+                </motion.h1>
 
-                {/* ANDRAOS */}
-                <span
+                {/* ANDRAOS - FOLLOWS CYNTHIA */}
+                <motion.span
+                  initial={
+                    reduceMotion
+                      ? false
+                      : { opacity: 0, x: -65 }
+                  }
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                  }}
+                  transition={{
+                    duration: 1.1,
+                    delay: 0.4,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                   style={{
                     fontFamily:
                       "'Gabriola Portfolio', Gabriola, Georgia, serif",
@@ -273,12 +332,27 @@ export function Hero() {
                   className="absolute left-0 top-[26%] z-10 whitespace-nowrap text-[clamp(5.5rem,17vw,11rem)] leading-none text-[#850F25]"
                 >
                   Andraos
-                </span>
+                </motion.span>
 
                 {/* GRAPHIC DESIGNER SIGNATURE */}
-                <span
+                <motion.span
+                  initial={
+                    reduceMotion
+                      ? false
+                      : { opacity: 0, y: 35 }
+                  }
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: 1.2,
+                    delay: 0.8,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                   style={{
-                    fontFamily: "'Amsterdam Signature', cursive",
+                    fontFamily:
+                      "'Amsterdam Signature', cursive",
                     fontWeight: 400,
                     fontStyle: "italic",
                     letterSpacing: "-0.025em",
@@ -286,16 +360,28 @@ export function Hero() {
                   className="absolute left-[2%] top-[47%] z-20 whitespace-nowrap text-[clamp(4rem,13vw,8rem)] leading-none text-[#2D020B] md:top-[49%]"
                 >
                   Graphic Designer
-                </span>
+                </motion.span>
+
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          {/* PROFILE PHOTO */}
+          {/* PROFILE PHOTO - SLIDES FROM RIGHT */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
+            initial={
+              reduceMotion
+                ? false
+                : { opacity: 0, x: 65 }
+            }
+            animate={{
+              opacity: 1,
+              x: 0,
+            }}
+            transition={{
+              duration: 1.2,
+              delay: 0.5,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="relative z-10 mt-10 w-full sm:mt-12 md:absolute md:bottom-0 md:right-6 md:mt-0 md:w-[46%]"
           >
             <div className="pointer-events-none absolute inset-8 rounded-full bg-[#E9B7B7]/50 blur-3xl" />
@@ -309,16 +395,33 @@ export function Hero() {
               className="relative mx-auto h-[min(320px,85vw)] w-full max-w-[340px] rounded-t-full object-cover object-top shadow-2xl sm:h-[380px] sm:max-w-md md:h-[550px]"
             />
           </motion.div>
+
         </div>
 
-        {/* DESIGN SPECIALTIES */}
+        {/* DESIGN SPECIALTIES - STAGGERED ANIMATION */}
         <div className="relative z-20 border-t border-[#850F25]/15 bg-[#FFF7F2]/95">
           <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-5 gap-y-4 px-5 py-7 text-sm font-medium sm:justify-between sm:px-6 md:text-base">
-            <span>✦ Branding</span>
-            <span>✦ Packaging</span>
-            <span>✦ Social Media</span>
-            <span>✦ Print Design</span>
-            <span>✦ Visual Identity</span>
+            {specialties.map((specialty, index) => (
+              <motion.span
+                key={specialty}
+                initial={
+                  reduceMotion
+                    ? false
+                    : { opacity: 0, y: 20 }
+                }
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.65,
+                  delay: 1.05 + index * 0.13,
+                  ease: "easeOut",
+                }}
+              >
+                ✦ {specialty}
+              </motion.span>
+            ))}
           </div>
         </div>
       </section>
