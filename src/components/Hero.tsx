@@ -44,16 +44,13 @@ export function Hero() {
 
   const closeMenu = () => setMenuOpen(false);
 
-  // DETECT MOBILE SCREEN SIZE
+  // Detect phone screens for gentler animations.
   useEffect(() => {
     const media = window.matchMedia("(max-width: 767px)");
 
-    const updateMobile = () => {
-      setIsMobile(media.matches);
-    };
+    const updateMobile = () => setIsMobile(media.matches);
 
     updateMobile();
-
     media.addEventListener("change", updateMobile);
 
     return () => {
@@ -61,7 +58,7 @@ export function Hero() {
     };
   }, []);
 
-  // HEADER SCROLL EFFECT
+  // Header shadow when scrolling.
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -78,18 +75,15 @@ export function Hero() {
     };
   }, []);
 
-  // CLOSE MOBILE MENU WHEN SWITCHING TO DESKTOP
+  // Close mobile navigation on desktop.
   useEffect(() => {
     const media = window.matchMedia("(min-width: 1024px)");
 
     const handleDesktop = () => {
-      if (media.matches) {
-        setMenuOpen(false);
-      }
+      if (media.matches) setMenuOpen(false);
     };
 
     handleDesktop();
-
     media.addEventListener("change", handleDesktop);
 
     return () => {
@@ -97,7 +91,7 @@ export function Hero() {
     };
   }, []);
 
-  // MOBILE MENU ACCESSIBILITY
+  // Keyboard and outside-click support.
   useEffect(() => {
     if (!menuOpen) return;
 
@@ -134,8 +128,7 @@ export function Hero() {
     };
   }, [menuOpen]);
 
-  // KEEP DESKTOP ANIMATIONS AS BEFORE
-  // USE SMALLER, SMOOTHER MOVEMENT ON PHONES
+  // Desktop movement is unchanged.
   const nameDistance = isMobile ? -24 : -65;
   const photoDistance = isMobile ? 0 : 65;
   const signatureDistance = isMobile ? 16 : 35;
@@ -168,7 +161,7 @@ export function Hero() {
           />
         </a>
 
-        {/* DESKTOP NAVIGATION - UNCHANGED */}
+        {/* DESKTOP NAVIGATION */}
         <nav
           aria-label="Main navigation"
           className="hidden items-center justify-center gap-4 text-sm font-medium text-[#681523] lg:flex xl:gap-7"
@@ -214,11 +207,7 @@ export function Hero() {
                   ? false
                   : { opacity: 0, rotate: -45, scale: 0.8 }
               }
-              animate={{
-                opacity: 1,
-                rotate: 0,
-                scale: 1,
-              }}
+              animate={{ opacity: 1, rotate: 0, scale: 1 }}
               exit={
                 reduceMotion
                   ? undefined
@@ -245,11 +234,7 @@ export function Hero() {
                 ? false
                 : { opacity: 0, y: -12, scale: 0.98 }
             }
-            animate={{
-              opacity: 1,
-              y: 0,
-              scale: 1,
-            }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={
               reduceMotion
                 ? undefined
@@ -272,10 +257,7 @@ export function Hero() {
                       ? false
                       : { opacity: 0, x: -10 }
                   }
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                  }}
+                  animate={{ opacity: 1, x: 0 }}
                   transition={{
                     duration: reduceMotion ? 0 : 0.25,
                     delay: reduceMotion ? 0 : index * 0.035,
@@ -309,7 +291,7 @@ export function Hero() {
 
   return (
     <>
-      {/* ORIGINAL CUSTOM FONTS */}
+      {/* ORIGINAL FONTS AND MOBILE-ONLY FIXES */}
       <style>{`
         @font-face {
           font-family: "Gabriola Portfolio";
@@ -339,25 +321,48 @@ export function Hero() {
           }
         }
 
-        /* MOBILE-ONLY TYPOGRAPHY ADJUSTMENTS */
-        @media (max-width: 767px) {
+        /*
+          PHONE ONLY:
+          Keep two name lines and bring the photo closer.
+          All desktop styles remain untouched.
+        */
+        @media (max-width: 639px) {
+          .hero-mobile-layout {
+            min-height: 0;
+            padding-top: 12px;
+            padding-bottom: 22px;
+            justify-content: flex-start;
+          }
+
+          .hero-mobile-text-area {
+            height: clamp(205px, 54vw, 255px);
+          }
+
           .hero-mobile-name {
-            font-size: clamp(4.8rem, 16.5vw, 8rem);
+            font-size: clamp(5rem, 17vw, 7rem);
           }
 
           .hero-mobile-signature {
-            font-size: clamp(2.45rem, 9vw, 5rem);
+            font-size: clamp(3rem, 11vw, 4.7rem);
             max-width: 100%;
+          }
+
+          .hero-mobile-portrait {
+            margin-top: 0;
           }
         }
 
         @media (max-width: 359px) {
           .hero-mobile-name {
-            font-size: 15vw;
+            font-size: 16vw;
           }
 
           .hero-mobile-signature {
-            font-size: 8.5vw;
+            font-size: 10vw;
+          }
+
+          .hero-mobile-text-area {
+            height: 195px;
           }
         }
       `}</style>
@@ -369,15 +374,15 @@ export function Hero() {
         id="home"
         className="relative min-h-screen overflow-hidden bg-[#FFF7F2] pt-[calc(96px+env(safe-area-inset-top,0px))] text-[#681523] md:pt-[calc(112px+env(safe-area-inset-top,0px))]"
       >
-        {/* BACKGROUND DECORATION - UNCHANGED */}
+        {/* BACKGROUND DECORATION */}
         <div className="pointer-events-none absolute -left-32 top-40 h-96 w-96 rounded-full bg-[#F4C9C9]/40 blur-3xl" />
         <div className="pointer-events-none absolute -right-24 top-20 h-96 w-96 rounded-full bg-[#F2B9BC]/40 blur-3xl" />
 
-        <div className="relative mx-auto flex min-h-[min(600px,calc(100svh-96px))] max-w-7xl flex-col justify-center px-5 pb-12 pt-8 sm:min-h-[600px] sm:px-6 sm:pb-20 md:min-h-[730px] md:pb-24 md:pt-12">
+        <div className="hero-mobile-layout relative mx-auto flex min-h-[min(600px,calc(100svh-96px))] max-w-7xl flex-col justify-center px-5 pb-12 pt-8 sm:min-h-[600px] sm:px-6 sm:pb-20 md:min-h-[730px] md:pb-24 md:pt-12">
           {/* NAME AND SIGNATURE */}
           <div className="relative z-20 w-full md:w-[65%]">
             <div className="relative w-full max-w-[650px]">
-              <div className="relative h-[210px] min-[400px]:h-[255px] sm:h-[390px] md:h-[420px]">
+              <div className="hero-mobile-text-area relative h-[255px] min-[400px]:h-[310px] sm:h-[390px] md:h-[420px]">
                 {/* CYNTHIA */}
                 <motion.h1
                   initial={
@@ -426,7 +431,7 @@ export function Hero() {
                   Andraos
                 </motion.span>
 
-                {/* GRAPHIC DESIGNER SIGNATURE */}
+                {/* GRAPHIC DESIGNER */}
                 <motion.span
                   initial={
                     reduceMotion
@@ -457,7 +462,7 @@ export function Hero() {
             </div>
           </div>
 
-          {/* PORTRAIT */}
+          {/* ORIGINAL PORTRAIT - CLOSER ON PHONES */}
           <motion.div
             initial={
               reduceMotion
@@ -478,7 +483,7 @@ export function Hero() {
               delay: isMobile ? 0.6 : 0.5,
               ease: easeOut,
             }}
-            className="relative z-10 mt-5 w-full min-[400px]:mt-7 sm:mt-12 md:absolute md:bottom-0 md:right-6 md:mt-0 md:w-[46%]"
+            className="hero-mobile-portrait relative z-10 mt-10 w-full sm:mt-12 md:absolute md:bottom-0 md:right-6 md:mt-0 md:w-[46%]"
           >
             <div className="pointer-events-none absolute inset-8 rounded-full bg-[#E9B7B7]/50 blur-3xl" />
 
@@ -493,7 +498,7 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* DESIGN SPECIALTIES */}
+        {/* SPECIALTIES - ORIGINAL DESIGN */}
         <div className="relative z-20 border-t border-[#850F25]/15 bg-[#FFF7F2]/95">
           <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-5 gap-y-4 px-5 py-7 text-sm font-medium sm:justify-between sm:px-6 md:text-base">
             {specialties.map((specialty, index) => (
@@ -504,10 +509,7 @@ export function Hero() {
                     ? false
                     : { opacity: 0, y: isMobile ? 12 : 20 }
                 }
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: isMobile ? 0.5 : 0.65,
                   delay: isMobile
