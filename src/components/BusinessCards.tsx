@@ -194,11 +194,9 @@ export function BusinessCards() {
                   amount: 0.1,
                 }}
                 transition={{
-                  duration: reduceMotion ? 0 : 0.6,
-                  delay: reduceMotion
-                    ? 0
-                    : (index % 3) * 0.1,
-                  ease: "easeOut",
+                  duration: reduceMotion ? 0 : 0.75,
+                  delay: reduceMotion ? 0 : index * 0.14,
+                  ease: [0.22, 1, 0.36, 1],
                 }}
                 whileHover={
                   reduceMotion
@@ -217,7 +215,11 @@ export function BusinessCards() {
                 >
                   {/* ORIGINAL COVER */}
                   <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
-                    <img
+                    <motion.img
+                      initial={reduceMotion ? false : { opacity: 0, scale: 1.08 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true, amount: 0.15 }}
+                      transition={{ duration: 0.9, delay: index * 0.14, ease: "easeOut" }}
                       src={design.cover}
                       alt={`${design.title} portfolio cover`}
                       loading="lazy"
@@ -241,7 +243,13 @@ export function BusinessCards() {
                   </div>
 
                   {/* PROJECT INFORMATION */}
-                  <div className="flex w-full flex-1 flex-col bg-white p-5 sm:p-6">
+                  <motion.div
+                    initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.65, delay: 0.15 + index * 0.14, ease: "easeOut" }}
+                    className="flex w-full flex-1 flex-col bg-white p-5 sm:p-6"
+                  >
                     <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                       {design.category}
                     </p>
@@ -269,7 +277,7 @@ export function BusinessCards() {
                       View Full Design
                       <ArrowUpRight size={16} />
                     </p>
-                  </div>
+                  </motion.div>
                 </button>
               </motion.article>
             ))}
@@ -349,7 +357,13 @@ export function BusinessCards() {
 
                   {/* ORIGINAL DESIGN - FULLY VISIBLE */}
                   <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-[#F7EDE8] p-4 sm:p-8">
-                    <div className="relative flex h-full w-full items-center justify-center">
+                    <motion.div
+                      key={selected.id}
+                      initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: reduceMotion ? 0 : 0.6, ease: "easeOut" }}
+                      className="relative flex h-full w-full items-center justify-center"
+                    >
                       <img
                         src={selected.image}
                         alt={`${selected.title} original business card`}
@@ -364,7 +378,7 @@ export function BusinessCards() {
                       >
                         {COPYRIGHT}
                       </span>
-                    </div>
+                    </motion.div>
                   </div>
 
                   {/* VIEWER FOOTER */}
