@@ -215,7 +215,7 @@ export function Reels() {
             opacity: 1,
             y: 0,
           }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{
             duration: reduceMotion ? 0 : 0.6,
             delay: reduceMotion ? 0 : 0.1,
@@ -317,7 +317,7 @@ export function Reels() {
                     : 0.6,
                   delay: reduceMotion
                     ? 0
-                    : Math.min(index % 2, 1) * 0.08,
+                    : (index % 4) * 0.1,
                   ease: smoothEase,
                   layout: {
                     duration: 0.35,
@@ -352,31 +352,14 @@ export function Reels() {
                   }}
                   className="group relative block aspect-[9/16] w-full overflow-hidden rounded-2xl bg-[#EAD9D5] shadow-md transition-shadow duration-300 hover:shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#842E3D]"
                 >
-                  {/* COVER IMAGE */}
-                  <motion.img
+                  {/* COVER IMAGE - zoom stays inside the original card */}
+                  <img
                     src={reel.coverSrc}
                     alt={`${reel.title} cover`}
                     loading="lazy"
                     decoding="async"
                     draggable={false}
-                    initial={
-                      reduceMotion
-                        ? false
-                        : { opacity: 0, scale: 1.05 }
-                    }
-                    whileInView={{
-                      opacity: 1,
-                      scale: 1,
-                    }}
-                    viewport={{
-                      once: true,
-                      amount: 0.15,
-                    }}
-                    transition={{
-                      duration: reduceMotion ? 0 : 0.7,
-                      ease: smoothEase,
-                    }}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-110"
+                    className="absolute inset-0 h-full w-full select-none object-cover object-center scale-[1.08] transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.18]"
                   />
 
                   {/* GRADIENT OVERLAY */}
@@ -467,7 +450,7 @@ export function Reels() {
             opacity: 1,
             y: 0,
           }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{
             duration: reduceMotion ? 0 : 0.6,
           }}
