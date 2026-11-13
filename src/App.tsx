@@ -1,4 +1,5 @@
 
+import type { ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
 
 import { Hero } from "./components/Hero";
@@ -27,6 +28,43 @@ import { PortfolioEffects } from "./components/PortfolioEffects";
 
 const smoothEase = [0.22, 1, 0.36, 1] as const;
 
+// SCROLL REVEAL ANIMATION
+function ScrollReveal({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      initial={
+        reduceMotion
+          ? false
+          : {
+              opacity: 0,
+              y: 55,
+            }
+      }
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      viewport={{
+        once: true,
+        amount: 0.05,
+        margin: "0px 0px -40px 0px",
+      }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.85,
+        ease: smoothEase,
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export default function App() {
   const reduceMotion = useReducedMotion();
 
@@ -43,12 +81,16 @@ export default function App() {
       <Hero />
 
       {/* ABOUT ME */}
-      <About />
+      <ScrollReveal>
+        <About />
+      </ScrollReveal>
 
       {/* MY SKILLS */}
-      <Skills />
+      <ScrollReveal>
+        <Skills />
+      </ScrollReveal>
 
-      {/* FEATURED PROJECTS */}
+      {/* FEATURED PROJECTS HEADING */}
       <section
         id="portfolio"
         className="scroll-mt-24 bg-[#FFF7F2] px-5 pb-2 pt-20 text-center sm:pt-24"
@@ -57,7 +99,10 @@ export default function App() {
           initial={
             reduceMotion
               ? false
-              : { opacity: 0, y: 35 }
+              : {
+                  opacity: 0,
+                  y: 35,
+                }
           }
           whileInView={{
             opacity: 1,
@@ -80,8 +125,7 @@ export default function App() {
           <h2
             className="text-5xl italic text-[#850F25] sm:text-6xl"
             style={{
-              fontFamily:
-                "'Bodoni Moda', Georgia, serif",
+              fontFamily: "'Bodoni Moda', Georgia, serif",
               fontWeight: 700,
             }}
           >
@@ -97,43 +141,69 @@ export default function App() {
       </section>
 
       {/* FEATURED PROJECT 01 - OLIV-IA */}
-      <OliviaProject />
+      <ScrollReveal>
+        <OliviaProject />
+      </ScrollReveal>
 
       {/* FEATURED PROJECT 02 - 5 BEANS */}
-      <FiveBeansProject />
+      <ScrollReveal>
+        <FiveBeansProject />
+      </ScrollReveal>
 
       {/* FEATURED PROJECT 03 - GOLDEN MARK */}
-      <GoldenMarkProject />
+      <ScrollReveal>
+        <GoldenMarkProject />
+      </ScrollReveal>
 
       {/* FEATURED PROJECT 04 - AURELLE */}
-      <AurelleProject />
+      <ScrollReveal>
+        <AurelleProject />
+      </ScrollReveal>
 
       {/* FEATURED PROJECT 05 - LITTLE BLOOM */}
-      <LittleBloomProject />
+      <ScrollReveal>
+        <LittleBloomProject />
+      </ScrollReveal>
 
       {/* FEATURED PROJECT 06 - HOUSE OF BEAUTY */}
-      <HouseOfBeautyProject />
+      <ScrollReveal>
+        <HouseOfBeautyProject />
+      </ScrollReveal>
 
       {/* FEATURED PROJECT 07 - MY FITNESS */}
-      <MyFitnessProject />
+      <ScrollReveal>
+        <MyFitnessProject />
+      </ScrollReveal>
 
       {/* SOCIAL MEDIA DESIGN */}
-      <SocialMedia />
+      <ScrollReveal>
+        <SocialMedia />
+      </ScrollReveal>
 
       {/* BUSINESS CARDS DESIGN */}
-      <BusinessCards />
+      <ScrollReveal>
+        <BusinessCards />
+      </ScrollReveal>
 
       {/* PRINT & STATIONERY DESIGN */}
-      <PrintDesign />
+      <ScrollReveal>
+        <PrintDesign />
+      </ScrollReveal>
 
       {/* LOGO DESIGN */}
-      <Projects />
+      <ScrollReveal>
+        <Projects />
+      </ScrollReveal>
 
       {/* REELS & VIDEO EDITING */}
-      <Reels />
+      <ScrollReveal>
+        <Reels />
+      </ScrollReveal>
 
       {/* CONTACT */}
-      <Contact />
+      <ScrollReveal>
+        <Contact />
+      </ScrollReveal>
 
       {/* FOOTER */}
       <Footer />
