@@ -66,7 +66,7 @@ export function Contact() {
   const reveal = {
     hidden: {
       opacity: reduceMotion ? 1 : 0,
-      y: reduceMotion ? 0 : 22,
+      y: reduceMotion ? 0 : 36,
     },
     visible: {
       opacity: 1,
@@ -88,11 +88,11 @@ export function Contact() {
         {/* SECTION HEADING */}
         <motion.div
           variants={reveal}
-          initial="hidden"
+          initial={reduceMotion ? false : "hidden"}
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{
-            duration: reduceMotion ? 0 : 0.7,
+            duration: reduceMotion ? 0 : 0.85,
             ease: smoothEase,
           }}
           className="mb-9 text-center sm:mb-16"
@@ -108,7 +108,7 @@ export function Contact() {
                 : { opacity: 0, y: 18 }
             }
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{
               duration: reduceMotion ? 0 : 0.65,
               delay: reduceMotion ? 0 : 0.1,
@@ -134,7 +134,7 @@ export function Contact() {
                 : { opacity: 0, y: 14 }
             }
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{
               duration: reduceMotion ? 0 : 0.6,
               delay: reduceMotion ? 0 : 0.18,
@@ -155,7 +155,7 @@ export function Contact() {
           <motion.div
             initial={{
               opacity: reduceMotion ? 1 : 0,
-              x: reduceMotion ? 0 : -22,
+              x: reduceMotion ? 0 : -38,
             }}
             whileInView={{
               opacity: 1,
@@ -166,7 +166,7 @@ export function Contact() {
               amount: 0.15,
             }}
             transition={{
-              duration: reduceMotion ? 0 : 0.7,
+              duration: reduceMotion ? 0 : 0.85,
               ease: smoothEase,
             }}
           >
@@ -192,9 +192,9 @@ export function Contact() {
               {/* DESIGN EMAIL */}
               <motion.div
                 variants={reveal}
-                initial="hidden"
+                initial={reduceMotion ? false : "hidden"}
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{
                   duration: reduceMotion ? 0 : 0.55,
                 }}
@@ -224,9 +224,9 @@ export function Contact() {
               {/* PERSONAL EMAIL */}
               <motion.div
                 variants={reveal}
-                initial="hidden"
+                initial={reduceMotion ? false : "hidden"}
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{
                   duration: reduceMotion ? 0 : 0.55,
                   delay: reduceMotion ? 0 : 0.08,
@@ -257,9 +257,9 @@ export function Contact() {
               {/* PHONE */}
               <motion.div
                 variants={reveal}
-                initial="hidden"
+                initial={reduceMotion ? false : "hidden"}
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{
                   duration: reduceMotion ? 0 : 0.55,
                   delay: reduceMotion ? 0 : 0.12,
@@ -290,9 +290,9 @@ export function Contact() {
               {/* LOCATION */}
               <motion.div
                 variants={reveal}
-                initial="hidden"
+                initial={reduceMotion ? false : "hidden"}
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{
                   duration: reduceMotion ? 0 : 0.55,
                   delay: reduceMotion ? 0 : 0.16,
@@ -321,9 +321,9 @@ export function Contact() {
             {/* SOCIAL MEDIA */}
             <motion.div
               variants={reveal}
-              initial="hidden"
+              initial={reduceMotion ? false : "hidden"}
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{
                 duration: reduceMotion ? 0 : 0.6,
               }}
@@ -379,9 +379,9 @@ export function Contact() {
             {/* EMAIL BUTTON */}
             <motion.div
               variants={reveal}
-              initial="hidden"
+              initial={reduceMotion ? false : "hidden"}
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{
                 duration: reduceMotion ? 0 : 0.6,
               }}
@@ -411,7 +411,7 @@ export function Contact() {
           <motion.div
             initial={{
               opacity: reduceMotion ? 1 : 0,
-              x: reduceMotion ? 0 : 22,
+              x: reduceMotion ? 0 : 38,
             }}
             whileInView={{
               opacity: 1,
@@ -422,7 +422,7 @@ export function Contact() {
               amount: 0.15,
             }}
             transition={{
-              duration: reduceMotion ? 0 : 0.7,
+              duration: reduceMotion ? 0 : 0.85,
               delay: reduceMotion ? 0 : 0.1,
               ease: smoothEase,
             }}
@@ -447,12 +447,12 @@ export function Contact() {
               <motion.div
                 initial={{
                   opacity: reduceMotion ? 1 : 0,
-                  y: reduceMotion ? 0 : 12,
+                  y: reduceMotion ? 0 : 22,
                 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{
-                  duration: reduceMotion ? 0 : 0.45,
+                  duration: reduceMotion ? 0 : 0.65,
                   delay: reduceMotion ? 0 : 0.08,
                   ease: smoothEase,
                 }}
@@ -474,12 +474,12 @@ export function Contact() {
               <motion.div
                 initial={{
                   opacity: reduceMotion ? 1 : 0,
-                  y: reduceMotion ? 0 : 12,
+                  y: reduceMotion ? 0 : 22,
                 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{
-                  duration: reduceMotion ? 0 : 0.45,
+                  duration: reduceMotion ? 0 : 0.65,
                   delay: reduceMotion ? 0 : 0.14,
                   ease: smoothEase,
                 }}
@@ -501,12 +501,12 @@ export function Contact() {
               <motion.div
                 initial={{
                   opacity: reduceMotion ? 1 : 0,
-                  y: reduceMotion ? 0 : 12,
+                  y: reduceMotion ? 0 : 22,
                 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{
-                  duration: reduceMotion ? 0 : 0.45,
+                  duration: reduceMotion ? 0 : 0.65,
                   delay: reduceMotion ? 0 : 0.2,
                   ease: smoothEase,
                 }}
@@ -527,12 +527,12 @@ export function Contact() {
               <motion.div
                 initial={{
                   opacity: reduceMotion ? 1 : 0,
-                  y: reduceMotion ? 0 : 12,
+                  y: reduceMotion ? 0 : 22,
                 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{
-                  duration: reduceMotion ? 0 : 0.45,
+                  duration: reduceMotion ? 0 : 0.65,
                   delay: reduceMotion ? 0 : 0.26,
                   ease: smoothEase,
                 }}
@@ -606,11 +606,11 @@ export function Contact() {
         {/* BOTTOM STATEMENT */}
         <motion.div
           variants={reveal}
-          initial="hidden"
+          initial={reduceMotion ? false : "hidden"}
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
           transition={{
-            duration: reduceMotion ? 0 : 0.7,
+            duration: reduceMotion ? 0 : 0.85,
             ease: smoothEase,
           }}
           className="mt-12 border-t border-white/20 pt-8 text-center sm:mt-20 sm:pt-10"
