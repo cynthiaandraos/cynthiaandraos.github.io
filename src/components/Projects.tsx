@@ -83,6 +83,8 @@ const COPYRIGHT = "© Cynthia Andraos";
 export function Projects() {
   const reduceMotion = useReducedMotion();
 
+  const smoothEase = [0.22, 1, 0.36, 1] as const;
+
   return (
     <section
       id="logo-design"
@@ -90,24 +92,22 @@ export function Projects() {
       className="scroll-mt-24 bg-[#FFF7F2] px-4 py-16 sm:px-6 sm:py-24"
     >
       <div className="mx-auto max-w-7xl">
+
         {/* SECTION HEADING */}
         <motion.div
           initial={
             reduceMotion
               ? false
-              : { opacity: 0, y: 32 }
+              : { opacity: 0, y: 40 }
           }
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{
             once: true,
             amount: 0.15,
           }}
           transition={{
-            duration: reduceMotion ? 0 : 0.65,
-            ease: "easeOut",
+            duration: reduceMotion ? 0 : 0.85,
+            ease: smoothEase,
           }}
           className="mb-14 text-center"
         >
@@ -145,35 +145,42 @@ export function Projects() {
                   ? false
                   : {
                       opacity: 0,
-                      y: 40,
+                      y: 50,
+                      scale: 0.97,
                     }
               }
               whileInView={{
                 opacity: 1,
                 y: 0,
+                scale: 1,
               }}
               viewport={{
                 once: true,
                 amount: 0.12,
               }}
               transition={{
-                duration: reduceMotion ? 0 : 0.6,
+                duration: reduceMotion ? 0 : 0.75,
                 delay: reduceMotion
                   ? 0
-                  : (index % 3) * 0.09,
-                ease: "easeOut",
+                  : (index % 3) * 0.12,
+                ease: smoothEase,
               }}
               whileHover={
                 reduceMotion
                   ? undefined
-                  : { y: -5 }
+                  : {
+                      y: -8,
+                      transition: {
+                        duration: 0.3,
+                      },
+                    }
               }
               className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
               {/* LOGO IMAGE */}
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7EDE8]">
                 <div className="absolute inset-0 flex items-center justify-center p-5 sm:p-7">
-                  <img
+                  <motion.img
                     src={project.cover}
                     alt={`${project.title} logo`}
                     loading="lazy"
@@ -182,11 +189,34 @@ export function Projects() {
                     onContextMenu={(event) =>
                       event.preventDefault()
                     }
+                    initial={
+                      reduceMotion
+                        ? false
+                        : {
+                            opacity: 0,
+                            scale: 1.1,
+                          }
+                    }
+                    whileInView={{
+                      opacity: 1,
+                      scale: 1,
+                    }}
+                    viewport={{
+                      once: true,
+                      amount: 0.15,
+                    }}
+                    transition={{
+                      duration: reduceMotion ? 0 : 1,
+                      delay: reduceMotion
+                        ? 0
+                        : (index % 3) * 0.12 + 0.15,
+                      ease: smoothEase,
+                    }}
                     className="block h-full w-full select-none object-contain object-center transition-transform duration-500 ease-out group-hover:scale-[1.035]"
                   />
                 </div>
 
-                {/* ONE COPYRIGHT LABEL PER LOGO */}
+                {/* COPYRIGHT WATERMARK */}
                 <span
                   data-portfolio-watermark="true"
                   aria-hidden="true"
@@ -197,7 +227,32 @@ export function Projects() {
               </div>
 
               {/* PROJECT INFORMATION */}
-              <div className="flex w-full flex-1 flex-col bg-white p-6">
+              <motion.div
+                initial={
+                  reduceMotion
+                    ? false
+                    : {
+                        opacity: 0,
+                        y: 15,
+                      }
+                }
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.1,
+                }}
+                transition={{
+                  duration: reduceMotion ? 0 : 0.65,
+                  delay: reduceMotion
+                    ? 0
+                    : (index % 3) * 0.12 + 0.2,
+                  ease: smoothEase,
+                }}
+                className="flex w-full flex-1 flex-col bg-white p-6"
+              >
                 <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                   {project.category}
                 </p>
@@ -219,7 +274,7 @@ export function Projects() {
                     aria-hidden="true"
                   />
                 </p>
-              </div>
+              </motion.div>
             </motion.article>
           ))}
         </div>
