@@ -101,6 +101,13 @@ export function FeaturedProject({
     setOpen(false);
   };
 
+  const reveal = (delay = 0) => ({
+    initial: reduceMotion ? false : { opacity: 0, y: 28 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.12 },
+    transition: { duration: 0.7, delay, ease: "easeOut" as const },
+  });
+
   const copyrightClass =
     "pointer-events-none absolute bottom-3 right-3 z-10 rounded-md bg-[#210C12]/45 px-2.5 py-1 text-[10px] font-medium tracking-wide text-white/90";
 
@@ -112,7 +119,7 @@ export function FeaturedProject({
         className="scroll-mt-28 bg-[#FFF7F2] px-4 py-16 sm:px-6 sm:py-24"
       >
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 text-center">
+          <motion.div {...reveal()} className="mb-10 text-center">
             <h2
               className="text-5xl italic text-[#850F25] sm:text-7xl"
               style={{
@@ -127,26 +134,13 @@ export function FeaturedProject({
             <p className="mx-auto mt-5 max-w-xl text-[#704B50]">
               {description}
             </p>
-          </div>
+          </motion.div>
 
           {/* MAIN COVER */}
           <motion.button
             type="button"
             onClick={openProject}
-            initial={
-              reduceMotion
-                ? false
-                : { opacity: 0, y: 30 }
-            }
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.7,
-              ease: "easeOut",
-            }}
+            {...reveal(0.12)}
             className="group mx-auto block w-full max-w-4xl overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white text-left shadow-sm transition-shadow duration-300 hover:shadow-xl"
           >
             <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#F7EDE8]">
@@ -230,7 +224,7 @@ export function FeaturedProject({
               </button>
 
               <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-12 pt-16 sm:px-10">
-                <header className="mx-auto mb-10 max-w-4xl text-center">
+                <motion.header {...reveal()} className="mx-auto mb-10 max-w-4xl text-center">
                   <p
                     className="text-xs uppercase tracking-[0.3em]"
                     style={{
@@ -279,10 +273,11 @@ export function FeaturedProject({
                       </span>
                     </div>
                   </div>
-                </header>
+                </motion.header>
 
                 {/* CATEGORY BUTTONS */}
-                <nav
+                <motion.nav
+                  {...reveal(0.08)}
                   aria-label="Project categories"
                   className="mb-10 flex flex-wrap justify-center gap-2"
                 >
@@ -306,12 +301,16 @@ export function FeaturedProject({
                       {item.title}
                     </button>
                   ))}
-                </nav>
+                </motion.nav>
 
                 {/* CATEGORY CONTENT */}
                 {category && (
                   <div className="mx-auto max-w-5xl">
-                    <div className="mb-7 border-b border-[#D8DCC5] pb-5">
+                    <motion.div
+                      key={`${active}-heading`}
+                      {...reveal()}
+                      className="mb-7 border-b border-[#D8DCC5] pb-5"
+                    >
                       <h3
                         className="text-3xl sm:text-4xl"
                         style={{
@@ -326,7 +325,7 @@ export function FeaturedProject({
                       <p className="mt-2 text-sm text-[#667154]">
                         {category.description}
                       </p>
-                    </div>
+                    </motion.div>
 
                     <div
                       className={`grid gap-5 ${
@@ -363,18 +362,20 @@ export function FeaturedProject({
 
                         if (!allowFullscreen) {
                           return (
-                            <div
+                            <motion.div
                               key={work.src}
+                              {...reveal()}
                               className="mx-auto w-full max-w-2xl overflow-hidden rounded-xl border border-[#E3E3D4] bg-white shadow-sm"
                             >
                               {imageContent}
-                            </div>
+                            </motion.div>
                           );
                         }
 
                         return (
-                          <button
+                          <motion.button
                             key={work.src}
+                            {...reveal()}
                             type="button"
                             onClick={() =>
                               setZoomed(work)
@@ -383,7 +384,7 @@ export function FeaturedProject({
                             className="group overflow-hidden rounded-xl border border-[#E3E3D4] bg-white text-left shadow-sm transition-shadow hover:shadow-md"
                           >
                             {imageContent}
-                          </button>
+                          </motion.button>
                         );
                       })}
                     </div>
