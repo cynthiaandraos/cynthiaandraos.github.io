@@ -80,16 +80,16 @@ const projects: Project[] = [
 
 const COPYRIGHT = "© Cynthia Andraos";
 
+const smoothEase = [0.22, 1, 0.36, 1] as const;
+
 export function Projects() {
   const reduceMotion = useReducedMotion();
-
-  const smoothEase = [0.22, 1, 0.36, 1] as const;
 
   return (
     <section
       id="logo-design"
       data-local-watermarks="true"
-      className="scroll-mt-24 bg-[#FFF7F2] px-4 py-16 sm:px-6 sm:py-24"
+      className="scroll-mt-24 bg-[#FFF7F2] px-4 py-12 sm:px-6 sm:py-24"
     >
       <div className="mx-auto max-w-7xl">
 
@@ -98,7 +98,7 @@ export function Projects() {
           initial={
             reduceMotion
               ? false
-              : { opacity: 0, y: 40 }
+              : { opacity: 0, y: 24 }
           }
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{
@@ -106,17 +106,17 @@ export function Projects() {
             amount: 0.15,
           }}
           transition={{
-            duration: reduceMotion ? 0 : 0.85,
+            duration: reduceMotion ? 0 : 0.7,
             ease: smoothEase,
           }}
-          className="mb-14 text-center"
+          className="mb-9 text-center sm:mb-14"
         >
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
+          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#A45D69] sm:mb-4">
             06 /
           </p>
 
           <h2
-            className="text-4xl italic text-[#850F25] sm:text-5xl md:text-7xl"
+            className="text-[clamp(2.6rem,10vw,3rem)] italic text-[#850F25] sm:text-5xl md:text-7xl"
             style={{
               fontFamily:
                 "'Bodoni Moda', Georgia, serif",
@@ -126,7 +126,7 @@ export function Projects() {
             Logo Design
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-[#704B50]">
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#704B50] sm:mt-6 sm:text-base sm:leading-relaxed">
             A selection of original logo designs
             created for businesses and personal brands,
             combining distinctive typography,
@@ -136,7 +136,7 @@ export function Projects() {
         </motion.div>
 
         {/* LOGO GRID */}
-        <div className="grid grid-cols-1 items-stretch gap-7 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-7 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.article
               key={project.title}
@@ -145,8 +145,8 @@ export function Projects() {
                   ? false
                   : {
                       opacity: 0,
-                      y: 50,
-                      scale: 0.97,
+                      y: 22,
+                      scale: 0.98,
                     }
               }
               whileInView={{
@@ -159,10 +159,10 @@ export function Projects() {
                 amount: 0.12,
               }}
               transition={{
-                duration: reduceMotion ? 0 : 0.75,
+                duration: reduceMotion ? 0 : 0.65,
                 delay: reduceMotion
                   ? 0
-                  : (index % 3) * 0.12,
+                  : (index % 2) * 0.08,
                 ease: smoothEase,
               }}
               whileHover={
@@ -170,16 +170,19 @@ export function Projects() {
                   ? undefined
                   : {
                       y: -8,
-                      transition: {
-                        duration: 0.3,
-                      },
+                      transition: { duration: 0.3 },
                     }
+              }
+              whileTap={
+                reduceMotion
+                  ? undefined
+                  : { scale: 0.985 }
               }
               className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
               {/* LOGO IMAGE */}
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7EDE8]">
-                <div className="absolute inset-0 flex items-center justify-center p-5 sm:p-7">
+                <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-7">
                   <motion.img
                     src={project.cover}
                     alt={`${project.title} logo`}
@@ -194,7 +197,7 @@ export function Projects() {
                         ? false
                         : {
                             opacity: 0,
-                            scale: 1.1,
+                            scale: 1.04,
                           }
                     }
                     whileInView={{
@@ -206,10 +209,10 @@ export function Projects() {
                       amount: 0.15,
                     }}
                     transition={{
-                      duration: reduceMotion ? 0 : 1,
+                      duration: reduceMotion ? 0 : 0.75,
                       delay: reduceMotion
                         ? 0
-                        : (index % 3) * 0.12 + 0.15,
+                        : (index % 2) * 0.08 + 0.1,
                       ease: smoothEase,
                     }}
                     className="block h-full w-full select-none object-contain object-center transition-transform duration-500 ease-out group-hover:scale-[1.035]"
@@ -233,7 +236,7 @@ export function Projects() {
                     ? false
                     : {
                         opacity: 0,
-                        y: 15,
+                        y: 12,
                       }
                 }
                 whileInView={{
@@ -245,20 +248,20 @@ export function Projects() {
                   amount: 0.1,
                 }}
                 transition={{
-                  duration: reduceMotion ? 0 : 0.65,
+                  duration: reduceMotion ? 0 : 0.55,
                   delay: reduceMotion
                     ? 0
-                    : (index % 3) * 0.12 + 0.2,
+                    : (index % 2) * 0.08 + 0.15,
                   ease: smoothEase,
                 }}
-                className="flex w-full flex-1 flex-col bg-white p-6"
+                className="flex w-full flex-1 flex-col bg-white p-4 sm:p-6"
               >
-                <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
+                <p className="mb-2 text-[11px] uppercase tracking-[0.15em] text-[#A45D69] sm:text-xs">
                   {project.category}
                 </p>
 
                 <h3
-                  className="text-2xl text-[#681523]"
+                  className="text-xl leading-snug text-[#681523] sm:text-2xl"
                   style={{
                     fontFamily:
                       "'Bodoni Moda', Georgia, serif",
@@ -267,7 +270,7 @@ export function Projects() {
                   {project.title}
                 </h3>
 
-                <p className="mt-auto flex items-center gap-2 pt-5 text-xs font-medium uppercase tracking-widest text-[#A45D69]">
+                <p className="mt-auto flex items-center gap-2 pt-4 text-[11px] font-medium uppercase tracking-widest text-[#A45D69] sm:pt-5 sm:text-xs">
                   Original Logo Concept
                   <ArrowUpRight
                     size={15}
