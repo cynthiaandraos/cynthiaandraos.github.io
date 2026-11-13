@@ -61,9 +61,11 @@ export function Contact() {
     "focus:border-white focus:outline-none focus:ring-2 focus:ring-white/25 " +
     "transition-colors";
 
+  const smoothEase = [0.22, 1, 0.36, 1] as const;
+
   const reveal = {
     hidden: {
-      opacity: 0,
+      opacity: reduceMotion ? 1 : 0,
       y: reduceMotion ? 0 : 35,
     },
     visible: {
@@ -90,8 +92,8 @@ export function Contact() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           transition={{
-            duration: 0.8,
-            ease: "easeOut",
+            duration: reduceMotion ? 0 : 0.85,
+            ease: smoothEase,
           }}
           className="mb-12 text-center sm:mb-16"
         >
@@ -99,7 +101,11 @@ export function Contact() {
             HAVE A PROJECT IN MIND?
           </p>
 
-          <h2
+          <motion.h2
+            initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: reduceMotion ? 0 : 0.7, delay: 0.12, ease: smoothEase }}
             className="text-4xl leading-tight sm:text-5xl md:text-7xl"
             style={{
               fontFamily: "'Bodoni Moda', Georgia, serif",
@@ -110,13 +116,18 @@ export function Contact() {
             <span className="italic text-[#F0C9CB]">
               Together
             </span>
-          </h2>
+          </motion.h2>
 
-          <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-white/80">
+          <motion.p
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: reduceMotion ? 0 : 0.65, delay: 0.22, ease: smoothEase }}
+            className="mx-auto mt-6 max-w-2xl leading-relaxed text-white/80">
             Have an idea or a creative project?
             I'd love to hear about it.
             Let's turn your vision into something beautiful.
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid min-w-0 grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-14">
@@ -124,7 +135,7 @@ export function Contact() {
           {/* Contact information */}
           <motion.div
             initial={{
-              opacity: 0,
+              opacity: reduceMotion ? 1 : 0,
               x: reduceMotion ? 0 : -40,
             }}
             whileInView={{
@@ -133,8 +144,8 @@ export function Contact() {
             }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{
-              duration: 0.85,
-              ease: "easeOut",
+              duration: reduceMotion ? 0 : 0.85,
+              ease: smoothEase,
             }}
           >
             <h3
@@ -161,10 +172,10 @@ export function Contact() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: reduceMotion ? 0 : 0.6 }}
                 className="flex min-w-0 items-center gap-3 sm:gap-5"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 sm:h-14 sm:w-14">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 transition-colors duration-300 hover:bg-white/20 sm:h-14 sm:w-14">
                   <Mail size={24} strokeWidth={1.5} />
                 </div>
 
@@ -187,10 +198,10 @@ export function Contact() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+                transition={{ duration: reduceMotion ? 0 : 0.6, delay: reduceMotion ? 0 : 0.1 }}
                 className="flex min-w-0 items-center gap-3 sm:gap-5"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 sm:h-14 sm:w-14">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 transition-colors duration-300 hover:bg-white/20 sm:h-14 sm:w-14">
                   <Mail size={24} strokeWidth={1.5} />
                 </div>
 
@@ -213,10 +224,10 @@ export function Contact() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.15 }}
+                transition={{ duration: reduceMotion ? 0 : 0.6, delay: reduceMotion ? 0 : 0.15 }}
                 className="flex min-w-0 items-center gap-3 sm:gap-5"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 sm:h-14 sm:w-14">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 transition-colors duration-300 hover:bg-white/20 sm:h-14 sm:w-14">
                   <Phone size={24} strokeWidth={1.5} />
                 </div>
 
@@ -239,10 +250,10 @@ export function Contact() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: reduceMotion ? 0 : 0.6, delay: reduceMotion ? 0 : 0.2 }}
                 className="flex min-w-0 items-center gap-3 sm:gap-5"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 sm:h-14 sm:w-14">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 transition-colors duration-300 hover:bg-white/20 sm:h-14 sm:w-14">
                   <MapPin size={24} strokeWidth={1.5} />
                 </div>
 
@@ -263,7 +274,7 @@ export function Contact() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: reduceMotion ? 0 : 0.7 }}
               className="mt-10"
             >
               <p className="mb-4 text-sm text-white/70">
@@ -309,7 +320,7 @@ export function Contact() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: reduceMotion ? 0 : 0.7 }}
               className="mt-10"
             >
               <motion.a
@@ -330,7 +341,7 @@ export function Contact() {
           {/* Contact form */}
           <motion.div
             initial={{
-              opacity: 0,
+              opacity: reduceMotion ? 1 : 0,
               x: reduceMotion ? 0 : 40,
             }}
             whileInView={{
@@ -339,9 +350,9 @@ export function Contact() {
             }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{
-              duration: 0.85,
-              delay: 0.1,
-              ease: "easeOut",
+              duration: reduceMotion ? 0 : 0.85,
+              delay: reduceMotion ? 0 : 0.1,
+              ease: smoothEase,
             }}
             className="min-w-0 rounded-3xl border border-white/20 bg-white/5 p-4 sm:p-6 md:p-9"
           >
@@ -359,9 +370,15 @@ export function Contact() {
               onSubmit={handleSubmit}
               className="min-w-0 space-y-5"
             >
-              <input
-                type="text"
-                name="name"
+              <motion.div
+                initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.08, ease: smoothEase }}
+              >
+                <input
+                  type="text"
+                  name="name"
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Your Name"
@@ -369,10 +386,17 @@ export function Contact() {
                 required
                 className={inputStyle}
               />
+              </motion.div>
 
-              <input
-                type="email"
-                name="email"
+              <motion.div
+                initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.16, ease: smoothEase }}
+              >
+                <input
+                  type="email"
+                  name="email"
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Your Email"
@@ -380,10 +404,17 @@ export function Contact() {
                 required
                 className={inputStyle}
               />
+              </motion.div>
 
-              <input
-                type="text"
-                name="subject"
+              <motion.div
+                initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.24, ease: smoothEase }}
+              >
+                <input
+                  type="text"
+                  name="subject"
                 value={formData.subject}
                 onChange={handleChange}
                 placeholder="Subject"
@@ -391,9 +422,16 @@ export function Contact() {
                 required
                 className={inputStyle}
               />
+              </motion.div>
 
-              <textarea
-                name="message"
+              <motion.div
+                initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.32, ease: smoothEase }}
+              >
+                <textarea
+                  name="message"
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Tell me about your project..."
@@ -402,6 +440,7 @@ export function Contact() {
                 rows={5}
                 className={`${inputStyle} resize-none`}
               />
+              </motion.div>
 
               {/* Choose email recipient */}
               <div>
