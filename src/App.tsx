@@ -19,13 +19,19 @@ import { Reels } from "./components/Reels";
 
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
+
 import { PortfolioProtection } from "./components/PortfolioProtection";
+import { PortfolioEffects } from "./components/PortfolioEffects";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#FFF7F2] text-[#2B1717]">
+    <div className="portfolio-page min-h-screen bg-[#FFF7F2] text-[#2B1717]">
+
       {/* IMAGE PROTECTION */}
       <PortfolioProtection />
+
+      {/* INTERACTIVE ANIMATIONS */}
+      <PortfolioEffects />
 
       {/* HOME */}
       <Hero />
@@ -64,28 +70,40 @@ export default function App() {
         </div>
       </section>
 
-      {/* FEATURED PROJECTS */}
+      {/* FEATURED PROJECT 01 - OLIV-IA */}
       <OliviaProject />
+
+      {/* FEATURED PROJECT 02 - 5 BEANS */}
       <FiveBeansProject />
+
+      {/* FEATURED PROJECT 03 - GOLDEN MARK */}
       <GoldenMarkProject />
+
+      {/* FEATURED PROJECT 04 - AURELLE */}
       <AurelleProject />
+
+      {/* FEATURED PROJECT 05 - LITTLE BLOOM */}
       <LittleBloomProject />
+
+      {/* FEATURED PROJECT 06 - HOUSE OF BEAUTY */}
       <HouseOfBeautyProject />
+
+      {/* FEATURED PROJECT 07 - MY FITNESS */}
       <MyFitnessProject />
 
       {/* SOCIAL MEDIA DESIGN */}
       <SocialMedia />
 
-      {/* BUSINESS CARDS */}
+      {/* BUSINESS CARDS DESIGN */}
       <BusinessCards />
 
-      {/* PRINT DESIGN */}
+      {/* PRINT & STATIONERY DESIGN */}
       <PrintDesign />
 
       {/* LOGO DESIGN */}
       <Projects />
 
-      {/* REELS */}
+      {/* REELS & VIDEO EDITING */}
       <Reels />
 
       {/* CONTACT */}
@@ -93,6 +111,7 @@ export default function App() {
 
       {/* FOOTER */}
       <Footer />
+
     </div>
   );
 }
