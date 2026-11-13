@@ -37,7 +37,10 @@ export function PortfolioEffects() {
 
   // DESKTOP MOUSE-FOLLOWING LENS
   useEffect(() => {
-    if (reduceMotion) return;
+    if (reduceMotion) {
+      setShowLens(false);
+      return;
+    }
 
     const canHover = window.matchMedia(
       "(hover: hover) and (pointer: fine)"
@@ -54,7 +57,15 @@ export function PortfolioEffects() {
       setShowLens(true);
     };
 
-    const hideLens = () => setShowLens(false);
+    const hideLens = () => {
+      setShowLens(false);
+    };
+
+    const handleHoverChange = () => {
+      if (!canHover.matches) {
+        setShowLens(false);
+      }
+    };
 
     window.addEventListener(
       "pointermove",
@@ -64,16 +75,42 @@ export function PortfolioEffects() {
 
     window.addEventListener("pointercancel", hideLens);
     window.addEventListener("blur", hideLens);
-    document.addEventListener("pointerleave", hideLens);
+
+    document.addEventListener(
+      "pointerleave",
+      hideLens
+    );
+
+    canHover.addEventListener(
+      "change",
+      handleHoverChange
+    );
 
     return () => {
       window.removeEventListener(
         "pointermove",
         handlePointerMove
       );
-      window.removeEventListener("pointercancel", hideLens);
-      window.removeEventListener("blur", hideLens);
-      document.removeEventListener("pointerleave", hideLens);
+
+      window.removeEventListener(
+        "pointercancel",
+        hideLens
+      );
+
+      window.removeEventListener(
+        "blur",
+        hideLens
+      );
+
+      document.removeEventListener(
+        "pointerleave",
+        hideLens
+      );
+
+      canHover.removeEventListener(
+        "change",
+        handleHoverChange
+      );
     };
   }, [reduceMotion, mouseX, mouseY]);
 
@@ -84,7 +121,7 @@ export function PortfolioEffects() {
           overflow-x: clip;
         }
 
-        /* DESKTOP IMAGE HOVER */
+        /* IMAGE HOVER EFFECTS */
         .portfolio-page img {
           transition:
             filter 450ms ease,
@@ -111,7 +148,7 @@ export function PortfolioEffects() {
           }
         }
 
-        /* RESPECT REDUCED MOTION */
+        /* ACCESSIBLE REDUCED MOTION */
         @media (prefers-reduced-motion: reduce) {
           .portfolio-page img {
             transition: none !important;
@@ -119,7 +156,6 @@ export function PortfolioEffects() {
 
           .portfolio-page button,
           .portfolio-page a {
-            animation: none !important;
             transition: none !important;
           }
         }
@@ -136,7 +172,7 @@ export function PortfolioEffects() {
         />
       )}
 
-      {/* DESKTOP BURGUNDY LENS */}
+      {/* DESKTOP BURGUNDY MOUSE LENS */}
       {!reduceMotion && (
         <motion.div
           aria-hidden="true"
@@ -157,8 +193,12 @@ export function PortfolioEffects() {
             scale: showLens ? 1 : 0.85,
           }}
           transition={{
-            opacity: { duration: 0.25 },
-            scale: { duration: 0.35 },
+            opacity: {
+              duration: 0.25,
+            },
+            scale: {
+              duration: 0.35,
+            },
           }}
         />
       )}
