@@ -1,4 +1,6 @@
 
+import { motion, useReducedMotion } from "motion/react";
+
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
 import { Skills } from "./components/Skills";
@@ -23,7 +25,11 @@ import { Footer } from "./components/Footer";
 import { PortfolioProtection } from "./components/PortfolioProtection";
 import { PortfolioEffects } from "./components/PortfolioEffects";
 
+const smoothEase = [0.22, 1, 0.36, 1] as const;
+
 export default function App() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div className="portfolio-page min-h-screen bg-[#FFF7F2] text-[#2B1717]">
 
@@ -47,7 +53,26 @@ export default function App() {
         id="portfolio"
         className="scroll-mt-24 bg-[#FFF7F2] px-5 pb-2 pt-20 text-center sm:pt-24"
       >
-        <div className="mx-auto max-w-4xl">
+        <motion.div
+          initial={
+            reduceMotion
+              ? false
+              : { opacity: 0, y: 35 }
+          }
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.15,
+          }}
+          transition={{
+            duration: reduceMotion ? 0 : 0.85,
+            ease: smoothEase,
+          }}
+          className="mx-auto max-w-4xl"
+        >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
             02 /
           </p>
@@ -55,7 +80,8 @@ export default function App() {
           <h2
             className="text-5xl italic text-[#850F25] sm:text-6xl"
             style={{
-              fontFamily: "'Bodoni Moda', Georgia, serif",
+              fontFamily:
+                "'Bodoni Moda', Georgia, serif",
               fontWeight: 700,
             }}
           >
@@ -67,7 +93,7 @@ export default function App() {
             packaging, advertising, and creative
             design projects.
           </p>
-        </div>
+        </motion.div>
       </section>
 
       {/* FEATURED PROJECT 01 - OLIV-IA */}
