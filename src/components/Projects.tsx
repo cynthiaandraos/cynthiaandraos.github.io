@@ -1,5 +1,5 @@
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 
 import domina from "../assets/domina-transparent.png";
@@ -83,8 +83,6 @@ const COPYRIGHT = "© Cynthia Andraos";
 const smoothEase = [0.22, 1, 0.36, 1] as const;
 
 export function Projects() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section
       id="logo-design"
@@ -95,18 +93,20 @@ export function Projects() {
 
         {/* SECTION HEADING */}
         <motion.div
-          initial={
-            reduceMotion
-              ? false
-              : { opacity: 0, y: 24 }
-          }
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            y: 35,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
           viewport={{
             once: true,
             amount: 0.15,
           }}
           transition={{
-            duration: reduceMotion ? 0 : 0.7,
+            duration: 0.85,
             ease: smoothEase,
           }}
           className="mb-9 text-center sm:mb-14"
@@ -137,149 +137,148 @@ export function Projects() {
 
         {/* LOGO GRID */}
         <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-7 lg:grid-cols-3">
-          {projects.map((project, index) => (
-            <motion.article
-              key={project.title}
-              initial={
-                reduceMotion
-                  ? false
-                  : {
-                      opacity: 0,
-                      y: 22,
-                      scale: 0.98,
-                    }
-              }
-              whileInView={{
-                opacity: 1,
-                y: 0,
-                scale: 1,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.12,
-              }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.65,
-                delay: reduceMotion
-                  ? 0
-                  : (index % 2) * 0.08,
-                ease: smoothEase,
-              }}
-              whileHover={
-                reduceMotion
-                  ? undefined
-                  : {
-                      y: -8,
-                      transition: { duration: 0.3 },
-                    }
-              }
-              whileTap={
-                reduceMotion
-                  ? undefined
-                  : { scale: 0.985 }
-              }
-              className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
-            >
-              {/* LOGO IMAGE */}
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7EDE8]">
-                <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-7">
-                  <motion.img
-                    src={project.cover}
-                    alt={`${project.title} logo`}
-                    loading="lazy"
-                    decoding="async"
-                    draggable={false}
-                    onContextMenu={(event) =>
-                      event.preventDefault()
-                    }
-                    initial={
-                      reduceMotion
-                        ? false
-                        : {
-                            opacity: 0,
-                            scale: 1.04,
-                          }
-                    }
-                    whileInView={{
-                      opacity: 1,
-                      scale: 1,
-                    }}
-                    viewport={{
-                      once: true,
-                      amount: 0.15,
-                    }}
-                    transition={{
-                      duration: reduceMotion ? 0 : 0.75,
-                      delay: reduceMotion
-                        ? 0
-                        : (index % 2) * 0.08 + 0.1,
-                      ease: smoothEase,
-                    }}
-                    className="block h-full w-full select-none object-contain object-center transition-transform duration-500 ease-out group-hover:scale-[1.035]"
-                  />
-                </div>
 
-                {/* COPYRIGHT WATERMARK */}
-                <span
-                  data-portfolio-watermark="true"
-                  aria-hidden="true"
-                  className="pointer-events-none absolute bottom-3 right-3 z-10 rounded-md bg-[#210C12]/45 px-2.5 py-1 text-[10px] font-medium tracking-wide text-white/90"
-                >
-                  {COPYRIGHT}
-                </span>
-              </div>
+          {projects.map((project, index) => {
+            const isMyFitness =
+              project.title === "MY Fitness by Myriam";
 
-              {/* PROJECT INFORMATION */}
-              <motion.div
-                initial={
-                  reduceMotion
-                    ? false
-                    : {
-                        opacity: 0,
-                        y: 12,
-                      }
-                }
+            return (
+              <motion.article
+                key={project.title}
+                initial={{
+                  opacity: 0,
+                  y: 45,
+                  scale: 0.96,
+                }}
                 whileInView={{
                   opacity: 1,
                   y: 0,
+                  scale: 1,
                 }}
                 viewport={{
                   once: true,
-                  amount: 0.1,
+                  amount: 0.12,
                 }}
                 transition={{
-                  duration: reduceMotion ? 0 : 0.55,
-                  delay: reduceMotion
-                    ? 0
-                    : (index % 2) * 0.08 + 0.15,
+                  duration: 0.75,
+                  delay: (index % 3) * 0.12,
                   ease: smoothEase,
                 }}
-                className="flex w-full flex-1 flex-col bg-white p-4 sm:p-6"
+                whileHover={{
+                  y: -8,
+                  transition: {
+                    duration: 0.3,
+                  },
+                }}
+                whileTap={{
+                  scale: 0.985,
+                }}
+                className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
               >
-                <p className="mb-2 text-[11px] uppercase tracking-[0.15em] text-[#A45D69] sm:text-xs">
-                  {project.category}
-                </p>
 
-                <h3
-                  className="text-xl leading-snug text-[#681523] sm:text-2xl"
-                  style={{
-                    fontFamily:
-                      "'Bodoni Moda', Georgia, serif",
-                  }}
-                >
-                  {project.title}
-                </h3>
+                {/* LOGO IMAGE */}
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7EDE8]">
 
-                <p className="mt-auto flex items-center gap-2 pt-4 text-[11px] font-medium uppercase tracking-widest text-[#A45D69] sm:pt-5 sm:text-xs">
-                  Original Logo Concept
-                  <ArrowUpRight
-                    size={15}
+                  <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-7">
+
+                    <motion.img
+                      src={project.cover}
+                      alt={`${project.title} logo`}
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                      onContextMenu={(event) =>
+                        event.preventDefault()
+                      }
+                      initial={{
+                        opacity: 0,
+                        scale: isMyFitness ? 1.22 : 1.04,
+                      }}
+                      whileInView={{
+                        opacity: 1,
+                        scale: isMyFitness ? 1.3 : 1,
+                      }}
+                      whileHover={{
+                        scale: isMyFitness ? 1.38 : 1.035,
+                      }}
+                      viewport={{
+                        once: true,
+                        amount: 0.15,
+                      }}
+                      transition={{
+                        duration: 0.8,
+                        delay:
+                          (index % 3) * 0.08 + 0.1,
+                        ease: smoothEase,
+                      }}
+                      className="block h-full w-full select-none object-contain object-center"
+                    />
+
+                  </div>
+
+                  {/* COPYRIGHT WATERMARK */}
+                  <span
+                    data-portfolio-watermark="true"
                     aria-hidden="true"
-                  />
-                </p>
-              </motion.div>
-            </motion.article>
-          ))}
+                    className="pointer-events-none absolute bottom-3 right-3 z-10 rounded-md bg-[#210C12]/45 px-2.5 py-1 text-[10px] font-medium tracking-wide text-white/90"
+                  >
+                    {COPYRIGHT}
+                  </span>
+
+                </div>
+
+                {/* PROJECT INFORMATION */}
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    y: 18,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  viewport={{
+                    once: true,
+                    amount: 0.1,
+                  }}
+                  transition={{
+                    duration: 0.65,
+                    delay:
+                      (index % 3) * 0.08 + 0.15,
+                    ease: smoothEase,
+                  }}
+                  className="flex w-full flex-1 flex-col bg-white p-4 sm:p-6"
+                >
+
+                  <p className="mb-2 text-[11px] uppercase tracking-[0.15em] text-[#A45D69] sm:text-xs">
+                    {project.category}
+                  </p>
+
+                  <h3
+                    className="text-xl leading-snug text-[#681523] sm:text-2xl"
+                    style={{
+                      fontFamily:
+                        "'Bodoni Moda', Georgia, serif",
+                    }}
+                  >
+                    {project.title}
+                  </h3>
+
+                  <p className="mt-auto flex items-center gap-2 pt-4 text-[11px] font-medium uppercase tracking-widest text-[#A45D69] sm:pt-5 sm:text-xs">
+                    Original Logo Concept
+
+                    <ArrowUpRight
+                      size={15}
+                      aria-hidden="true"
+                    />
+                  </p>
+
+                </motion.div>
+
+              </motion.article>
+            );
+          })}
+
         </div>
       </div>
     </section>
