@@ -35,9 +35,11 @@ export function PortfolioEffects() {
     restDelta: 0.001,
   });
 
-  // MAGNIFYING LENS ACROSS THE ENTIRE WEBSITE
+  // MOUSE-FOLLOWING BURGUNDY LENS
   useEffect(() => {
-    if (reduceMotion) return;
+    if (reduceMotion) {
+      return;
+    }
 
     const canHover = window.matchMedia(
       "(hover: hover) and (pointer: fine)"
@@ -63,10 +65,19 @@ export function PortfolioEffects() {
       setShowLens(false);
     };
 
+    const handlePointerCancel = () => {
+      setShowLens(false);
+    };
+
     window.addEventListener(
       "pointermove",
       handlePointerMove,
       { passive: true }
+    );
+
+    window.addEventListener(
+      "pointercancel",
+      handlePointerCancel
     );
 
     document.addEventListener(
@@ -85,6 +96,11 @@ export function PortfolioEffects() {
         handlePointerMove
       );
 
+      window.removeEventListener(
+        "pointercancel",
+        handlePointerCancel
+      );
+
       document.removeEventListener(
         "pointerleave",
         handlePointerLeave
@@ -97,67 +113,6 @@ export function PortfolioEffects() {
     };
   }, [reduceMotion, mouseX, mouseY]);
 
-  // SCROLL REVEAL ANIMATIONS
-  useEffect(() => {
-    if (
-      reduceMotion ||
-      !("IntersectionObserver" in window)
-    ) {
-      return;
-    }
-
-    const sections = Array.from(
-      document.querySelectorAll<HTMLElement>(
-        ".portfolio-page section:not(#home)"
-      )
-    );
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add(
-              "portfolio-visible"
-            );
-
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.08,
-        rootMargin: "0px 0px -25px 0px",
-      }
-    );
-
-    sections.forEach((section) => {
-      const rect = section.getBoundingClientRect();
-
-      if (rect.top < window.innerHeight) {
-        section.classList.add(
-          "portfolio-visible"
-        );
-      } else {
-        section.classList.add(
-          "portfolio-reveal"
-        );
-
-        observer.observe(section);
-      }
-    });
-
-    return () => {
-      observer.disconnect();
-
-      sections.forEach((section) => {
-        section.classList.remove(
-          "portfolio-reveal",
-          "portfolio-visible"
-        );
-      });
-    };
-  }, [reduceMotion]);
-
   return (
     <>
       <style>{`
@@ -165,15 +120,7 @@ export function PortfolioEffects() {
           overflow-x: clip;
         }
 
-        .portfolio-reveal {
-          opacity: 0;
-          transition: opacity 850ms ease;
-        }
-
-        .portfolio-reveal.portfolio-visible {
-          opacity: 1;
-        }
-
+        /* Preserve the existing image hover styling */
         .portfolio-page img {
           transition:
             filter 450ms ease,
@@ -187,11 +134,6 @@ export function PortfolioEffects() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .portfolio-reveal {
-            opacity: 1 !important;
-            transition: none !important;
-          }
-
           .portfolio-page img {
             transition: none !important;
           }
@@ -209,7 +151,7 @@ export function PortfolioEffects() {
         />
       )}
 
-      {/* MAGNIFYING GLASS - ENTIRE PORTFOLIO */}
+      {/* MOUSE-FOLLOWING BURGUNDY LENS */}
       {!reduceMotion && (
         <motion.div
           aria-hidden="true"
