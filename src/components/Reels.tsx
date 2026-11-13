@@ -103,6 +103,8 @@ const COPYRIGHT = "© Cynthia Andraos";
 const watermarkClass =
   "pointer-events-none absolute bottom-3 right-3 z-20 rounded-md bg-[#210C12]/55 px-2.5 py-1 text-[10px] font-medium tracking-wide text-white/90";
 
+const smoothEase = [0.22, 1, 0.36, 1] as const;
+
 export function Reels() {
   const [activeCategory, setActiveCategory] =
     useState("All");
@@ -111,7 +113,6 @@ export function Reels() {
     useState<Reel | null>(null);
 
   const reduceMotion = useReducedMotion();
-  const smoothEase = [0.22, 1, 0.36, 1] as const;
 
   const filtered =
     activeCategory === "All"
@@ -121,6 +122,7 @@ export function Reels() {
             reel.category === activeCategory
         );
 
+  // Lock page scrolling while the video is open.
   useEffect(() => {
     if (!selected) return;
 
@@ -156,15 +158,16 @@ export function Reels() {
   return (
     <section
       id="reels"
-      className="scroll-mt-24 overflow-hidden bg-[#FFF7F2] px-4 py-16 text-[#2B1717] sm:px-6 sm:py-24"
+      className="scroll-mt-24 overflow-hidden bg-[#FFF7F2] px-4 py-12 text-[#2B1717] sm:px-6 sm:py-24"
     >
       <div className="mx-auto max-w-7xl">
+
         {/* SECTION HEADING */}
         <motion.div
           initial={
             reduceMotion
               ? false
-              : { opacity: 0, y: 35 }
+              : { opacity: 0, y: 24 }
           }
           whileInView={{
             opacity: 1,
@@ -175,17 +178,17 @@ export function Reels() {
             amount: 0.2,
           }}
           transition={{
-            duration: reduceMotion ? 0 : 0.85,
+            duration: reduceMotion ? 0 : 0.7,
             ease: smoothEase,
           }}
-          className="mb-10 text-center"
+          className="mb-8 text-center sm:mb-10"
         >
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
+          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#A45D69] sm:mb-4">
             07 /
           </p>
 
           <h2
-            className="text-4xl italic text-[#850F25] sm:text-5xl md:text-7xl"
+            className="text-[clamp(2.2rem,8.5vw,3rem)] leading-tight italic text-[#850F25] sm:text-5xl md:text-7xl"
             style={{
               fontFamily:
                 "'Bodoni Moda', Georgia, serif",
@@ -195,7 +198,7 @@ export function Reels() {
             Reels &amp; Video Editing
           </h2>
 
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#765A59] sm:text-base">
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#765A59] sm:mt-5 sm:text-base">
             Creative storytelling through video,
             motion, branding, and social media content.
           </p>
@@ -206,7 +209,7 @@ export function Reels() {
           initial={
             reduceMotion
               ? false
-              : { opacity: 0, y: 20 }
+              : { opacity: 0, y: 16 }
           }
           whileInView={{
             opacity: 1,
@@ -214,11 +217,11 @@ export function Reels() {
           }}
           viewport={{ once: true }}
           transition={{
-            duration: reduceMotion ? 0 : 0.7,
-            delay: reduceMotion ? 0 : 0.15,
+            duration: reduceMotion ? 0 : 0.6,
+            delay: reduceMotion ? 0 : 0.1,
             ease: smoothEase,
           }}
-          className="mb-10 flex flex-wrap justify-center gap-2"
+          className="mb-8 flex flex-wrap justify-center gap-2 sm:mb-10"
         >
           {categories.map((category) => {
             const isActive =
@@ -242,7 +245,7 @@ export function Reels() {
                     ? undefined
                     : { scale: 0.96 }
                 }
-                className={`relative min-h-10 overflow-hidden rounded-full border px-4 py-2 text-xs transition-colors sm:text-sm ${
+                className={`relative min-h-11 overflow-hidden rounded-full border px-4 py-2 text-xs transition-colors sm:min-h-10 sm:text-sm ${
                   isActive
                     ? "border-[#681523] text-white"
                     : "border-[#D9BFC1] bg-white text-[#681523] hover:bg-[#F0E3E3]"
@@ -270,8 +273,8 @@ export function Reels() {
 
         {/* REELS GRID */}
         <motion.div
-          layout
-          className="grid grid-cols-2 gap-x-3 gap-y-7 sm:gap-x-6 sm:gap-y-9 md:grid-cols-3 lg:grid-cols-4"
+          layout={!reduceMotion}
+          className="grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-6 sm:gap-y-9 md:grid-cols-3 lg:grid-cols-4"
         >
           <AnimatePresence
             mode="popLayout"
@@ -280,14 +283,14 @@ export function Reels() {
             {filtered.map((reel, index) => (
               <motion.div
                 key={reel.id}
-                layout
+                layout={!reduceMotion}
                 initial={
                   reduceMotion
                     ? false
                     : {
                         opacity: 0,
-                        y: 55,
-                        scale: 0.93,
+                        y: 24,
+                        scale: 0.98,
                       }
                 }
                 whileInView={{
@@ -304,17 +307,17 @@ export function Reels() {
                     ? { opacity: 0 }
                     : {
                         opacity: 0,
-                        y: -15,
-                        scale: 0.95,
+                        y: -12,
+                        scale: 0.97,
                       }
                 }
                 transition={{
                   duration: reduceMotion
                     ? 0.01
-                    : 0.75,
+                    : 0.6,
                   delay: reduceMotion
                     ? 0
-                    : Math.min(index % 4, 3) * 0.12,
+                    : Math.min(index % 2, 1) * 0.08,
                   ease: smoothEase,
                   layout: {
                     duration: 0.35,
@@ -322,6 +325,7 @@ export function Reels() {
                 }}
                 className="min-w-0"
               >
+                {/* REEL COVER BUTTON */}
                 <motion.button
                   type="button"
                   onClick={() =>
@@ -339,7 +343,7 @@ export function Reels() {
                   whileTap={
                     reduceMotion
                       ? undefined
-                      : { scale: 0.98 }
+                      : { scale: 0.97 }
                   }
                   transition={{
                     type: "spring",
@@ -348,17 +352,30 @@ export function Reels() {
                   }}
                   className="group relative block aspect-[9/16] w-full overflow-hidden rounded-2xl bg-[#EAD9D5] shadow-md transition-shadow duration-300 hover:shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#842E3D]"
                 >
-                  {/* ANIMATED COVER IMAGE */}
+                  {/* COVER IMAGE */}
                   <motion.img
                     src={reel.coverSrc}
                     alt={`${reel.title} cover`}
                     loading="lazy"
                     decoding="async"
                     draggable={false}
-                    initial={reduceMotion ? false : { opacity: 0, scale: 1.1 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, amount: 0.15 }}
-                    transition={{ duration: reduceMotion ? 0 : 0.9, ease: smoothEase }}
+                    initial={
+                      reduceMotion
+                        ? false
+                        : { opacity: 0, scale: 1.05 }
+                    }
+                    whileInView={{
+                      opacity: 1,
+                      scale: 1,
+                    }}
+                    viewport={{
+                      once: true,
+                      amount: 0.15,
+                    }}
+                    transition={{
+                      duration: reduceMotion ? 0 : 0.7,
+                      ease: smoothEase,
+                    }}
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-110"
                   />
 
@@ -369,21 +386,13 @@ export function Reels() {
                   <span className="absolute inset-0 flex items-center justify-center">
                     <span className="relative flex items-center justify-center">
                       <motion.span
-                        className="absolute h-12 w-12 rounded-full border border-white/60 sm:h-14 sm:w-14"
+                        className="absolute h-11 w-11 rounded-full border border-white/60 sm:h-14 sm:w-14"
                         animate={
                           reduceMotion
                             ? undefined
                             : {
-                                scale: [
-                                  1,
-                                  1.45,
-                                  1.75,
-                                ],
-                                opacity: [
-                                  0.6,
-                                  0.25,
-                                  0,
-                                ],
+                                scale: [1, 1.4, 1.65],
+                                opacity: [0.6, 0.25, 0],
                               }
                         }
                         transition={{
@@ -393,17 +402,17 @@ export function Reels() {
                         }}
                       />
 
-                      <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-[#681523] shadow-lg transition-transform duration-300 group-hover:scale-110 sm:h-14 sm:w-14">
+                      <span className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-[#681523] shadow-lg transition-transform duration-300 group-hover:scale-110 sm:h-14 sm:w-14">
                         <Play
-                          size={22}
+                          size={20}
                           fill="currentColor"
-                          className="ml-0.5"
+                          className="ml-0.5 sm:h-[22px] sm:w-[22px]"
                         />
                       </span>
                     </span>
                   </span>
 
-                  {/* ONE COPYRIGHT WATERMARK */}
+                  {/* COPYRIGHT WATERMARK */}
                   <span
                     data-portfolio-watermark="true"
                     aria-hidden="true"
@@ -413,16 +422,32 @@ export function Reels() {
                   </span>
                 </motion.button>
 
+                {/* REEL TITLE */}
                 <motion.div
-                  initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.15 }}
-                  transition={{ duration: reduceMotion ? 0 : 0.65, delay: reduceMotion ? 0 : 0.15, ease: smoothEase }}
+                  initial={
+                    reduceMotion
+                      ? false
+                      : { opacity: 0, y: 10 }
+                  }
+                  whileInView={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  viewport={{
+                    once: true,
+                    amount: 0.15,
+                  }}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.55,
+                    delay: reduceMotion ? 0 : 0.1,
+                    ease: smoothEase,
+                  }}
                 >
-                  <h3 className="mt-3 text-sm font-medium leading-snug sm:text-base">
+                  <h3 className="mt-3 break-words text-[13px] font-medium leading-snug sm:text-base">
                     {reel.title}
                   </h3>
-                  <p className="mt-1 text-xs text-[#765A59] sm:text-sm">
+
+                  <p className="mt-1 break-words text-[11px] leading-5 text-[#765A59] sm:text-sm">
                     {reel.category}
                   </p>
                 </motion.div>
@@ -436,7 +461,7 @@ export function Reels() {
           initial={
             reduceMotion
               ? false
-              : { opacity: 0, y: 20 }
+              : { opacity: 0, y: 16 }
           }
           whileInView={{
             opacity: 1,
@@ -444,11 +469,9 @@ export function Reels() {
           }}
           viewport={{ once: true }}
           transition={{
-            duration: reduceMotion
-              ? 0
-              : 0.6,
+            duration: reduceMotion ? 0 : 0.6,
           }}
-          className="mt-12 text-center text-xl italic text-[#850F25] sm:mt-16 sm:text-2xl"
+          className="mt-10 text-center text-lg italic text-[#850F25] sm:mt-16 sm:text-2xl"
           style={{
             fontFamily:
               "'Bodoni Moda', Georgia, serif",
@@ -471,12 +494,11 @@ export function Reels() {
                 transition={{
                   duration: reduceMotion ? 0 : 0.25,
                 }}
-                className="fixed inset-0 z-[11000] flex items-center justify-center bg-black/95 p-4"
+                className="fixed inset-0 z-[11000] flex items-center justify-center bg-black/95 px-3 py-4 sm:p-4"
                 role="presentation"
                 onMouseDown={(event) => {
                   if (
-                    event.target ===
-                    event.currentTarget
+                    event.target === event.currentTarget
                   ) {
                     setSelected(null);
                   }
@@ -491,8 +513,8 @@ export function Reels() {
                       ? false
                       : {
                           opacity: 0,
-                          scale: 0.88,
-                          y: 30,
+                          scale: 0.94,
+                          y: 18,
                         }
                   }
                   animate={{
@@ -502,29 +524,31 @@ export function Reels() {
                   }}
                   exit={{
                     opacity: 0,
-                    scale: 0.94,
-                    y: 15,
+                    scale: 0.96,
+                    y: 10,
                   }}
                   transition={{
-                    duration: reduceMotion
-                      ? 0
-                      : 0.45,
+                    duration: reduceMotion ? 0 : 0.4,
                     ease: smoothEase,
                   }}
                   className="relative flex max-h-[95dvh] w-full max-w-5xl flex-col items-center justify-center"
                 >
+                  {/* CLOSE BUTTON */}
                   <button
                     type="button"
                     onClick={() =>
                       setSelected(null)
                     }
-                    className="absolute right-0 -top-12 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white transition hover:bg-white/30"
                     aria-label="Close video"
+                    className="absolute right-0 z-30 flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white transition hover:bg-white/30 active:scale-95 sm:-top-12 sm:h-10 sm:w-10"
+                    style={{
+                      top: "calc(-52px - env(safe-area-inset-top, 0px))",
+                    }}
                   >
                     <X size={24} />
                   </button>
 
-                  {/* VIDEO WITH COPYRIGHT OVERLAY */}
+                  {/* VIDEO PLAYER */}
                   <div className="relative w-full overflow-hidden rounded-xl bg-black">
                     <video
                       key={selected.id}
@@ -533,17 +557,19 @@ export function Reels() {
                       autoPlay
                       playsInline
                       preload="metadata"
+                      poster={selected.coverSrc}
                       controlsList="nodownload"
                       disablePictureInPicture
                       onContextMenu={(event) =>
                         event.preventDefault()
                       }
-                      className="block max-h-[80dvh] w-full object-contain"
+                      className="mx-auto block max-h-[min(78dvh,800px)] w-full object-contain sm:max-h-[80dvh]"
                     >
                       Your browser does not support
                       video playback.
                     </video>
 
+                    {/* COPYRIGHT WATERMARK */}
                     <span
                       data-portfolio-watermark="true"
                       aria-hidden="true"
@@ -553,11 +579,22 @@ export function Reels() {
                     </span>
                   </div>
 
+                  {/* VIDEO TITLE */}
                   <motion.p
-                    initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.15 }}
-                    className="mt-4 text-center text-sm text-white"
+                    initial={
+                      reduceMotion
+                        ? false
+                        : { opacity: 0, y: 10 }
+                    }
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    transition={{
+                      duration: reduceMotion ? 0 : 0.5,
+                      delay: reduceMotion ? 0 : 0.15,
+                    }}
+                    className="mt-3 text-center text-sm text-white sm:mt-4"
                   >
                     {selected.title}
                   </motion.p>
