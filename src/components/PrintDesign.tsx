@@ -201,11 +201,11 @@ export function PrintDesign() {
             }}
             viewport={{
               once: true,
-              amount: 0.2,
+              amount: 0.1,
             }}
             transition={{
-              duration: reduceMotion ? 0 : 0.7,
-              ease: "easeOut",
+              duration: reduceMotion ? 0 : 0.85,
+              ease: [0.22, 1, 0.36, 1],
             }}
             className="mb-10 text-center sm:mb-14"
           >
@@ -245,8 +245,8 @@ export function PrintDesign() {
                     ? false
                     : {
                         opacity: 0,
-                        y: 40,
-                        scale: 0.97,
+                        y: 42,
+                        scale: 0.95,
                       }
                 }
                 whileInView={{
@@ -259,7 +259,7 @@ export function PrintDesign() {
                   amount: 0.1,
                 }}
                 transition={{
-                  duration: reduceMotion ? 0 : 0.6,
+                  duration: reduceMotion ? 0 : 0.8,
                   delay: reduceMotion
                     ? 0
                     : (index % 3) * 0.1,
@@ -268,7 +268,7 @@ export function PrintDesign() {
                 whileHover={
                   reduceMotion
                     ? undefined
-                    : { y: -5 }
+                    : { y: -8, transition: { duration: 0.25 } }
                 }
                 className="group h-full overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
               >
@@ -288,7 +288,7 @@ export function PrintDesign() {
                       loading="lazy"
                       decoding="async"
                       draggable={false}
-                      className="absolute inset-0 h-full w-full select-none object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                      className="absolute inset-0 h-full w-full select-none object-cover object-center scale-[1.12] transition-transform duration-700 ease-out group-hover:scale-[1.20] motion-reduce:transition-none"
                     />
 
                     {/* SINGLE COPYRIGHT */}
