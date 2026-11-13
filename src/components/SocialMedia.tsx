@@ -359,8 +359,8 @@ export function SocialMedia() {
               opacity: 1,
               y: 0,
             }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            viewport={{ once: true, amount: 0.12 }}
+            transition={{ duration: reduceMotion ? 0 : 0.85, ease: [0.22, 1, 0.36, 1] }}
             className="mb-14 text-center"
           >
             <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
@@ -406,11 +406,13 @@ export function SocialMedia() {
                   opacity: 1,
                   y: 0,
                 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{
-                  duration: 0.6,
-                  delay: (index % 3) * 0.1,
+                  duration: reduceMotion ? 0 : 0.75,
+                  delay: reduceMotion ? 0 : (index % 3) * 0.12,
+                  ease: [0.22, 1, 0.36, 1],
                 }}
+                whileHover={reduceMotion ? undefined : { y: -8 }}
                 className="group flex flex-col overflow-hidden rounded-2xl border border-[#E8D2CF] bg-[#F7EDE8] shadow-sm transition-shadow duration-300 hover:shadow-xl"
               >
                 <button
@@ -424,19 +426,32 @@ export function SocialMedia() {
                   {/* COVER IMAGE */}
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7EDE8]">
                     <motion.img
-                      initial={reduceMotion ? false : { opacity: 0, scale: 1.08 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true, amount: 0.15 }}
-                      transition={{ duration: 0.9, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
                       src={project.cover}
                       alt={`${project.title} cover`}
                       loading="lazy"
+                      decoding="async"
                       draggable={false}
-                      className={
-                        project.id === 1
-                          ? "absolute inset-0 h-full w-full select-none object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
-                          : "absolute inset-0 h-full w-full select-none object-contain object-center transition-transform duration-500 ease-out group-hover:scale-[1.025]"
+                      initial={
+                        reduceMotion
+                          ? false
+                          : { opacity: 0, scale: 1.04 }
                       }
+                      whileInView={{
+                        opacity: 1,
+                        scale: 1.12,
+                      }}
+                      whileHover={
+                        reduceMotion
+                          ? undefined
+                          : { scale: 1.2 }
+                      }
+                      viewport={{ once: true, amount: 0.1 }}
+                      transition={{
+                        duration: reduceMotion ? 0 : 0.8,
+                        delay: reduceMotion ? 0 : index * 0.1,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="absolute inset-0 h-full w-full select-none object-cover object-center"
                     />
 
                     <span
@@ -457,7 +472,7 @@ export function SocialMedia() {
                     initial={reduceMotion ? false : { opacity: 0, y: 22 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.1 }}
-                    transition={{ duration: 0.7, delay: 0.15 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: reduceMotion ? 0 : 0.7, delay: reduceMotion ? 0 : 0.15 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
                     className="flex-1 p-5 sm:p-6"
                   >
                     <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
