@@ -11,7 +11,6 @@ import {
 
 export function PortfolioEffects() {
   const reduceMotion = useReducedMotion();
-
   const [showLens, setShowLens] = useState(false);
 
   const mouseX = useMotionValue(-300);
@@ -97,10 +96,7 @@ export function PortfolioEffects() {
         hideLens
       );
 
-      window.removeEventListener(
-        "blur",
-        hideLens
-      );
+      window.removeEventListener("blur", hideLens);
 
       document.removeEventListener(
         "pointerleave",
