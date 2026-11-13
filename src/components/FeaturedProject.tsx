@@ -164,10 +164,12 @@ export function FeaturedProject({
             type="button"
             onClick={openProject}
             {...reveal(0.12)}
+            whileHover={reduceMotion ? undefined : { y: -7 }}
+            whileTap={reduceMotion ? undefined : { scale: 0.99 }}
             aria-label={`Explore ${name} project`}
             className="group mx-auto block w-full max-w-4xl overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white text-left shadow-sm transition-shadow duration-300 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#850F25]"
           >
-            {/* IMAGE */}
+            {/* IMAGE: zoomed cover, clipped to the original card size */}
             <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#F7EDE8] sm:aspect-[16/9]">
               <img
                 src={cover}
@@ -175,7 +177,7 @@ export function FeaturedProject({
                 loading="lazy"
                 decoding="async"
                 draggable={false}
-                className="absolute inset-0 h-full w-full select-none object-contain object-center transition-transform duration-700 ease-out group-hover:scale-105 sm:object-cover"
+                className="absolute inset-0 h-full w-full select-none object-cover object-center scale-[1.12] transition-transform duration-700 ease-out group-hover:scale-[1.2] motion-reduce:transition-none"
               />
 
               {/* OPEN PROJECT ICON */}
