@@ -1,4 +1,7 @@
 
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+
 import {
   motion,
   AnimatePresence,
@@ -6,8 +9,6 @@ import {
 } from "motion/react";
 
 import { Menu, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 
 import caLogo from "../assets/CA-logo.png";
 import cynthiaPhoto from "../assets/cynthia.png";
@@ -29,9 +30,12 @@ const specialties = [
   "Visual Identity",
 ];
 
+const easeOut = [0.22, 1, 0.36, 1] as const;
+
 export function Hero() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const reduceMotion = useReducedMotion();
 
@@ -40,6 +44,24 @@ export function Hero() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  // DETECT MOBILE SCREEN SIZE
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 767px)");
+
+    const updateMobile = () => {
+      setIsMobile(media.matches);
+    };
+
+    updateMobile();
+
+    media.addEventListener("change", updateMobile);
+
+    return () => {
+      media.removeEventListener("change", updateMobile);
+    };
+  }, []);
+
+  // HEADER SCROLL EFFECT
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -56,6 +78,7 @@ export function Hero() {
     };
   }, []);
 
+  // CLOSE MOBILE MENU WHEN SWITCHING TO DESKTOP
   useEffect(() => {
     const media = window.matchMedia("(min-width: 1024px)");
 
@@ -65,6 +88,8 @@ export function Hero() {
       }
     };
 
+    handleDesktop();
+
     media.addEventListener("change", handleDesktop);
 
     return () => {
@@ -72,6 +97,7 @@ export function Hero() {
     };
   }, []);
 
+  // MOBILE MENU ACCESSIBILITY
   useEffect(() => {
     if (!menuOpen) return;
 
@@ -100,17 +126,19 @@ export function Hero() {
     );
 
     return () => {
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
-
+      window.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener(
         "pointerdown",
         handleOutsideClick
       );
     };
   }, [menuOpen]);
+
+  // KEEP DESKTOP ANIMATIONS AS BEFORE
+  // USE SMALLER, SMOOTHER MOVEMENT ON PHONES
+  const nameDistance = isMobile ? -24 : -65;
+  const photoDistance = isMobile ? 0 : 65;
+  const signatureDistance = isMobile ? 16 : 35;
 
   const header = (
     <header
@@ -124,8 +152,7 @@ export function Hero() {
       }}
     >
       <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-3 px-5 py-3 md:px-6">
-
-        {/* CA LOGO ONLY */}
+        {/* CA LOGO */}
         <a
           href="#home"
           aria-label="Cynthia Andraos home"
@@ -141,7 +168,7 @@ export function Hero() {
           />
         </a>
 
-        {/* DESKTOP NAVIGATION */}
+        {/* DESKTOP NAVIGATION - UNCHANGED */}
         <nav
           aria-label="Main navigation"
           className="hidden items-center justify-center gap-4 text-sm font-medium text-[#681523] lg:flex xl:gap-7"
@@ -168,25 +195,42 @@ export function Hero() {
         </a>
 
         {/* MOBILE MENU BUTTON */}
-        <button
+        <motion.button
           ref={menuButtonRef}
           type="button"
-          onClick={() =>
-            setMenuOpen((current) => !current)
-          }
-          aria-label={
-            menuOpen ? "Close menu" : "Open menu"
-          }
+          onClick={() => setMenuOpen((current) => !current)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#850F25]/30 bg-[#FFF7F2] text-[#850F25] transition hover:bg-[#F3D9D9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#850F25] lg:hidden"
+          whileTap={reduceMotion ? undefined : { scale: 0.94 }}
+          transition={{ duration: 0.15 }}
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#850F25]/30 bg-[#FFF7F2] text-[#850F25] transition-colors hover:bg-[#F3D9D9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#850F25] lg:hidden"
         >
-          {menuOpen ? (
-            <X size={24} />
-          ) : (
-            <Menu size={24} />
-          )}
-        </button>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={menuOpen ? "close" : "open"}
+              initial={
+                reduceMotion
+                  ? false
+                  : { opacity: 0, rotate: -45, scale: 0.8 }
+              }
+              animate={{
+                opacity: 1,
+                rotate: 0,
+                scale: 1,
+              }}
+              exit={
+                reduceMotion
+                  ? undefined
+                  : { opacity: 0, rotate: 45, scale: 0.8 }
+              }
+              transition={{ duration: 0.16 }}
+              className="flex items-center justify-center"
+            >
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            </motion.span>
+          </AnimatePresence>
+        </motion.button>
       </div>
 
       {/* MOBILE NAVIGATION */}
@@ -196,33 +240,67 @@ export function Hero() {
             ref={mobileNavRef}
             id="mobile-navigation"
             aria-label="Mobile navigation"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+            initial={
+              reduceMotion
+                ? false
+                : { opacity: 0, y: -12, scale: 0.98 }
+            }
+            animate={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+            }}
+            exit={
+              reduceMotion
+                ? undefined
+                : { opacity: 0, y: -8, scale: 0.98 }
+            }
+            transition={{
+              duration: reduceMotion ? 0 : 0.28,
+              ease: easeOut,
+            }}
             className="mx-3 mb-3 max-h-[calc(100dvh-110px-env(safe-area-inset-top,0px))] overflow-y-auto overscroll-contain rounded-2xl border border-[#E8D2CF] bg-[#FFF7F2] p-3 shadow-xl sm:mx-4 sm:mb-4 sm:p-4 lg:hidden"
           >
             <div className="flex flex-col gap-1">
-              {navigation.map((item) => (
-                <a
+              {navigation.map((item, index) => (
+                <motion.a
                   key={item.href}
                   href={item.href}
                   onClick={closeMenu}
-                  className="rounded-xl px-4 py-3 text-sm font-medium text-[#681523] transition hover:bg-[#F3D9D9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#850F25]"
+                  initial={
+                    reduceMotion
+                      ? false
+                      : { opacity: 0, x: -10 }
+                  }
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                  }}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.25,
+                    delay: reduceMotion ? 0 : index * 0.035,
+                  }}
+                  whileTap={
+                    reduceMotion ? undefined : { scale: 0.98 }
+                  }
+                  className="rounded-xl px-4 py-3 text-sm font-medium text-[#681523] transition-colors hover:bg-[#F3D9D9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#850F25]"
                 >
                   {item.label}
-                </a>
+                </motion.a>
               ))}
             </div>
 
-            <a
+            <motion.a
               href="#contact"
               onClick={closeMenu}
-              className="mt-4 flex items-center justify-center gap-2 rounded-full bg-[#850F25] px-5 py-3 text-center text-sm font-medium text-white transition hover:bg-[#65101E]"
+              whileTap={
+                reduceMotion ? undefined : { scale: 0.97 }
+              }
+              className="mt-4 flex items-center justify-center gap-2 rounded-full bg-[#850F25] px-5 py-3 text-center text-sm font-medium text-white transition-colors hover:bg-[#65101E]"
             >
               <span className="h-2 w-2 rounded-full bg-[#F0C9CB]" />
               Available for Projects
-            </a>
+            </motion.a>
           </motion.nav>
         )}
       </AnimatePresence>
@@ -231,7 +309,7 @@ export function Hero() {
 
   return (
     <>
-      {/* CUSTOM FONTS */}
+      {/* ORIGINAL CUSTOM FONTS */}
       <style>{`
         @font-face {
           font-family: "Gabriola Portfolio";
@@ -260,6 +338,28 @@ export function Hero() {
             scroll-behavior: smooth;
           }
         }
+
+        /* MOBILE-ONLY TYPOGRAPHY ADJUSTMENTS */
+        @media (max-width: 767px) {
+          .hero-mobile-name {
+            font-size: clamp(4.8rem, 16.5vw, 8rem);
+          }
+
+          .hero-mobile-signature {
+            font-size: clamp(2.45rem, 9vw, 5rem);
+            max-width: 100%;
+          }
+        }
+
+        @media (max-width: 359px) {
+          .hero-mobile-name {
+            font-size: 15vw;
+          }
+
+          .hero-mobile-signature {
+            font-size: 8.5vw;
+          }
+        }
       `}</style>
 
       {createPortal(header, document.body)}
@@ -269,32 +369,27 @@ export function Hero() {
         id="home"
         className="relative min-h-screen overflow-hidden bg-[#FFF7F2] pt-[calc(96px+env(safe-area-inset-top,0px))] text-[#681523] md:pt-[calc(112px+env(safe-area-inset-top,0px))]"
       >
-        {/* BACKGROUND DECORATION */}
+        {/* BACKGROUND DECORATION - UNCHANGED */}
         <div className="pointer-events-none absolute -left-32 top-40 h-96 w-96 rounded-full bg-[#F4C9C9]/40 blur-3xl" />
         <div className="pointer-events-none absolute -right-24 top-20 h-96 w-96 rounded-full bg-[#F2B9BC]/40 blur-3xl" />
 
         <div className="relative mx-auto flex min-h-[min(600px,calc(100svh-96px))] max-w-7xl flex-col justify-center px-5 pb-12 pt-8 sm:min-h-[600px] sm:px-6 sm:pb-20 md:min-h-[730px] md:pb-24 md:pt-12">
-
-          {/* MAIN NAME AND SIGNATURE */}
+          {/* NAME AND SIGNATURE */}
           <div className="relative z-20 w-full md:w-[65%]">
             <div className="relative w-full max-w-[650px]">
-              <div className="relative h-[255px] min-[400px]:h-[310px] sm:h-[390px] md:h-[420px]">
-
-                {/* CYNTHIA - SLIDES IN FROM LEFT */}
+              <div className="relative h-[210px] min-[400px]:h-[255px] sm:h-[390px] md:h-[420px]">
+                {/* CYNTHIA */}
                 <motion.h1
                   initial={
                     reduceMotion
                       ? false
-                      : { opacity: 0, x: -65 }
+                      : { opacity: 0, x: nameDistance }
                   }
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                  }}
+                  animate={{ opacity: 1, x: 0 }}
                   transition={{
-                    duration: 1,
+                    duration: isMobile ? 0.75 : 1,
                     delay: 0.15,
-                    ease: [0.22, 1, 0.36, 1],
+                    ease: easeOut,
                   }}
                   style={{
                     fontFamily:
@@ -302,26 +397,23 @@ export function Hero() {
                     fontWeight: 400,
                     letterSpacing: "-0.035em",
                   }}
-                  className="absolute left-0 top-0 z-10 whitespace-nowrap text-[clamp(5.5rem,17vw,11rem)] leading-none text-[#850F25]"
+                  className="hero-mobile-name absolute left-0 top-0 z-10 whitespace-nowrap text-[clamp(5.5rem,17vw,11rem)] leading-none text-[#850F25]"
                 >
                   Cynthia
                 </motion.h1>
 
-                {/* ANDRAOS - FOLLOWS CYNTHIA */}
+                {/* ANDRAOS */}
                 <motion.span
                   initial={
                     reduceMotion
                       ? false
-                      : { opacity: 0, x: -65 }
+                      : { opacity: 0, x: nameDistance }
                   }
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                  }}
+                  animate={{ opacity: 1, x: 0 }}
                   transition={{
-                    duration: 1.1,
-                    delay: 0.4,
-                    ease: [0.22, 1, 0.36, 1],
+                    duration: isMobile ? 0.8 : 1.1,
+                    delay: isMobile ? 0.3 : 0.4,
+                    ease: easeOut,
                   }}
                   style={{
                     fontFamily:
@@ -329,7 +421,7 @@ export function Hero() {
                     fontWeight: 400,
                     letterSpacing: "-0.035em",
                   }}
-                  className="absolute left-0 top-[26%] z-10 whitespace-nowrap text-[clamp(5.5rem,17vw,11rem)] leading-none text-[#850F25]"
+                  className="hero-mobile-name absolute left-0 top-[26%] z-10 whitespace-nowrap text-[clamp(5.5rem,17vw,11rem)] leading-none text-[#850F25]"
                 >
                   Andraos
                 </motion.span>
@@ -339,16 +431,16 @@ export function Hero() {
                   initial={
                     reduceMotion
                       ? false
-                      : { opacity: 0, y: 35 }
+                      : {
+                          opacity: 0,
+                          y: signatureDistance,
+                        }
                   }
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    duration: 1.2,
-                    delay: 0.8,
-                    ease: [0.22, 1, 0.36, 1],
+                    duration: isMobile ? 0.85 : 1.2,
+                    delay: isMobile ? 0.55 : 0.8,
+                    ease: easeOut,
                   }}
                   style={{
                     fontFamily:
@@ -357,32 +449,36 @@ export function Hero() {
                     fontStyle: "italic",
                     letterSpacing: "-0.025em",
                   }}
-                  className="absolute left-[2%] top-[47%] z-20 whitespace-nowrap text-[clamp(4rem,13vw,8rem)] leading-none text-[#2D020B] md:top-[49%]"
+                  className="hero-mobile-signature absolute left-[2%] top-[47%] z-20 whitespace-nowrap text-[clamp(4rem,13vw,8rem)] leading-none text-[#2D020B] md:top-[49%]"
                 >
                   Graphic Designer
                 </motion.span>
-
               </div>
             </div>
           </div>
 
-          {/* PROFILE PHOTO - SLIDES FROM RIGHT */}
+          {/* PORTRAIT */}
           <motion.div
             initial={
               reduceMotion
                 ? false
-                : { opacity: 0, x: 65 }
+                : {
+                    opacity: 0,
+                    x: photoDistance,
+                    y: isMobile ? 22 : 0,
+                  }
             }
             animate={{
               opacity: 1,
               x: 0,
+              y: 0,
             }}
             transition={{
-              duration: 1.2,
-              delay: 0.5,
-              ease: [0.22, 1, 0.36, 1],
+              duration: isMobile ? 0.9 : 1.2,
+              delay: isMobile ? 0.6 : 0.5,
+              ease: easeOut,
             }}
-            className="relative z-10 mt-10 w-full sm:mt-12 md:absolute md:bottom-0 md:right-6 md:mt-0 md:w-[46%]"
+            className="relative z-10 mt-5 w-full min-[400px]:mt-7 sm:mt-12 md:absolute md:bottom-0 md:right-6 md:mt-0 md:w-[46%]"
           >
             <div className="pointer-events-none absolute inset-8 rounded-full bg-[#E9B7B7]/50 blur-3xl" />
 
@@ -395,10 +491,9 @@ export function Hero() {
               className="relative mx-auto h-[min(320px,85vw)] w-full max-w-[340px] rounded-t-full object-cover object-top shadow-2xl sm:h-[380px] sm:max-w-md md:h-[550px]"
             />
           </motion.div>
-
         </div>
 
-        {/* DESIGN SPECIALTIES - STAGGERED ANIMATION */}
+        {/* DESIGN SPECIALTIES */}
         <div className="relative z-20 border-t border-[#850F25]/15 bg-[#FFF7F2]/95">
           <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-5 gap-y-4 px-5 py-7 text-sm font-medium sm:justify-between sm:px-6 md:text-base">
             {specialties.map((specialty, index) => (
@@ -407,15 +502,17 @@ export function Hero() {
                 initial={
                   reduceMotion
                     ? false
-                    : { opacity: 0, y: 20 }
+                    : { opacity: 0, y: isMobile ? 12 : 20 }
                 }
                 animate={{
                   opacity: 1,
                   y: 0,
                 }}
                 transition={{
-                  duration: 0.65,
-                  delay: 1.05 + index * 0.13,
+                  duration: isMobile ? 0.5 : 0.65,
+                  delay: isMobile
+                    ? 0.8 + index * 0.08
+                    : 1.05 + index * 0.13,
                   ease: "easeOut",
                 }}
               >
