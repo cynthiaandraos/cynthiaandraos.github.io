@@ -131,7 +131,7 @@ export function BusinessCards() {
             initial={
               reduceMotion
                 ? false
-                : { opacity: 0, y: 35 }
+                : { opacity: 0, y: 42 }
             }
             whileInView={{
               opacity: 1,
@@ -139,10 +139,10 @@ export function BusinessCards() {
             }}
             viewport={{
               once: true,
-              amount: 0.2,
+              amount: 0.1,
             }}
             transition={{
-              duration: reduceMotion ? 0 : 0.7,
+              duration: reduceMotion ? 0 : 0.85,
               ease: "easeOut",
             }}
             className="mb-10 text-center sm:mb-14"
@@ -182,26 +182,28 @@ export function BusinessCards() {
                     ? false
                     : {
                         opacity: 0,
-                        y: 40,
+                        y: 48,
+                        scale: 0.96,
                       }
                 }
                 whileInView={{
                   opacity: 1,
                   y: 0,
+                  scale: 1,
                 }}
                 viewport={{
                   once: true,
                   amount: 0.1,
                 }}
                 transition={{
-                  duration: reduceMotion ? 0 : 0.75,
-                  delay: reduceMotion ? 0 : index * 0.14,
+                  duration: reduceMotion ? 0 : 0.85,
+                  delay: reduceMotion ? 0 : index * 0.16,
                   ease: [0.22, 1, 0.36, 1],
                 }}
                 whileHover={
                   reduceMotion
                     ? undefined
-                    : { y: -5 }
+                    : { y: -8, scale: 1.015 }
                 }
                 className="group h-full overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
               >
@@ -215,17 +217,13 @@ export function BusinessCards() {
                 >
                   {/* ORIGINAL COVER */}
                   <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#F7EDE8]">
-                    <motion.img
-                      initial={reduceMotion ? false : { opacity: 0, scale: 1.08 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true, amount: 0.15 }}
-                      transition={{ duration: 0.9, delay: index * 0.14, ease: "easeOut" }}
+                    <img
                       src={design.cover}
                       alt={`${design.title} portfolio cover`}
                       loading="lazy"
                       decoding="async"
                       draggable={false}
-                      className="absolute inset-0 h-full w-full select-none object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                      className="absolute inset-0 h-full w-full select-none object-cover object-center scale-[1.12] transition-transform duration-700 ease-out group-hover:scale-[1.20] motion-reduce:transition-none"
                     />
 
                     {/* SINGLE COPYRIGHT */}
