@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+
 import {
   motion,
   useMotionValue,
@@ -10,6 +11,7 @@ import {
 
 export function PortfolioEffects() {
   const reduceMotion = useReducedMotion();
+
   const [showLens, setShowLens] = useState(false);
 
   const mouseX = useMotionValue(-300);
@@ -33,8 +35,7 @@ export function PortfolioEffects() {
     restDelta: 0.001,
   });
 
-  // Interactive lens follows the mouse
-  // only over the homepage.
+  // MAGNIFYING LENS ACROSS THE ENTIRE WEBSITE
   useEffect(() => {
     if (reduceMotion) return;
 
@@ -48,25 +49,17 @@ export function PortfolioEffects() {
         return;
       }
 
-      const target = event.target;
-
-      if (!(target instanceof Element)) {
-        setShowLens(false);
-        return;
-      }
-
-      const isHome = Boolean(target.closest("#home"));
-      const isInteractive = Boolean(
-        target.closest("a, button, input, textarea")
-      );
-
-      setShowLens(isHome && !isInteractive);
-
       mouseX.set(event.clientX - 110);
       mouseY.set(event.clientY - 110);
+
+      setShowLens(true);
     };
 
     const handlePointerLeave = () => {
+      setShowLens(false);
+    };
+
+    const handleWindowBlur = () => {
       setShowLens(false);
     };
 
@@ -81,6 +74,11 @@ export function PortfolioEffects() {
       handlePointerLeave
     );
 
+    window.addEventListener(
+      "blur",
+      handleWindowBlur
+    );
+
     return () => {
       window.removeEventListener(
         "pointermove",
@@ -91,10 +89,15 @@ export function PortfolioEffects() {
         "pointerleave",
         handlePointerLeave
       );
+
+      window.removeEventListener(
+        "blur",
+        handleWindowBlur
+      );
     };
   }, [reduceMotion, mouseX, mouseY]);
 
-  // Reveal sections as the visitor scrolls.
+  // SCROLL REVEAL ANIMATIONS
   useEffect(() => {
     if (
       reduceMotion ||
@@ -130,12 +133,15 @@ export function PortfolioEffects() {
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();
 
-      // Never hide a section that is
-      // already visible when the page loads.
       if (rect.top < window.innerHeight) {
-        section.classList.add("portfolio-visible");
+        section.classList.add(
+          "portfolio-visible"
+        );
       } else {
-        section.classList.add("portfolio-reveal");
+        section.classList.add(
+          "portfolio-reveal"
+        );
+
         observer.observe(section);
       }
     });
@@ -192,7 +198,7 @@ export function PortfolioEffects() {
         }
       `}</style>
 
-      {/* VERTICAL SCROLL PROGRESS */}
+      {/* VERTICAL BURGUNDY SCROLL PROGRESS */}
       {!reduceMotion && (
         <motion.div
           aria-hidden="true"
@@ -203,7 +209,7 @@ export function PortfolioEffects() {
         />
       )}
 
-      {/* INTERACTIVE MAGNIFYING LENS */}
+      {/* MAGNIFYING GLASS - ENTIRE PORTFOLIO */}
       {!reduceMotion && (
         <motion.div
           aria-hidden="true"
@@ -215,7 +221,10 @@ export function PortfolioEffects() {
               "radial-gradient(circle at 35% 35%, rgba(255,255,255,0.65), rgba(240,201,203,0.38) 45%, rgba(133,15,37,0.14) 80%, rgba(133,15,37,0.06))",
             backdropFilter: "blur(1.5px)",
           }}
-          initial={{ opacity: 0, scale: 0.85 }}
+          initial={{
+            opacity: 0,
+            scale: 0.85,
+          }}
           animate={{
             opacity: showLens ? 1 : 0,
             scale: showLens ? 1 : 0.85,
@@ -229,4 +238,3 @@ export function PortfolioEffects() {
     </>
   );
 }
-
