@@ -126,6 +126,18 @@ export function FeaturedProject({
     },
   });
 
+  // Modal content is mounted inside its own scroll container. Animate it
+  // on mount instead of relying on the page viewport observer.
+  const modalReveal = (delay = 0) => ({
+    initial: reduceMotion ? false : { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0 },
+    transition: {
+      duration: reduceMotion ? 0 : 0.7,
+      delay: reduceMotion ? 0 : delay,
+      ease: "easeOut" as const,
+    },
+  });
+
   const copyrightClass =
     "pointer-events-none absolute bottom-3 right-3 z-10 rounded-md bg-[#210C12]/45 px-2.5 py-1 text-[10px] font-medium tracking-wide text-white/90";
 
@@ -273,7 +285,7 @@ export function FeaturedProject({
               >
                 {/* MODAL HEADER */}
                 <motion.header
-                  {...reveal()}
+                  {...modalReveal()}
                   className="mx-auto mb-7 max-w-4xl text-center sm:mb-10"
                 >
                   <p
@@ -329,7 +341,7 @@ export function FeaturedProject({
 
                 {/* CATEGORY BUTTONS */}
                 <motion.nav
-                  {...reveal(0.08)}
+                  {...modalReveal(0.08)}
                   aria-label="Project categories"
                   className="mb-7 flex flex-wrap justify-center gap-2 sm:mb-10"
                 >
@@ -360,7 +372,7 @@ export function FeaturedProject({
                     {/* CATEGORY HEADING */}
                     <motion.div
                       key={`${active}-heading`}
-                      {...reveal()}
+                      {...modalReveal()}
                       className="mb-5 border-b border-[#D8DCC5] pb-4 sm:mb-7 sm:pb-5"
                     >
                       <h3
