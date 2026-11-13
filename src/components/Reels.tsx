@@ -169,13 +169,9 @@ export function Reels() {
               ? false
               : { opacity: 0, y: 24 }
           }
-          whileInView={{
+          animate={{
             opacity: 1,
             y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.2,
           }}
           transition={{
             duration: reduceMotion ? 0 : 0.7,
@@ -211,11 +207,10 @@ export function Reels() {
               ? false
               : { opacity: 0, y: 16 }
           }
-          whileInView={{
+          animate={{
             opacity: 1,
             y: 0,
           }}
-          viewport={{ once: true, amount: 0.1 }}
           transition={{
             duration: reduceMotion ? 0 : 0.6,
             delay: reduceMotion ? 0 : 0.1,
@@ -293,14 +288,10 @@ export function Reels() {
                         scale: 0.98,
                       }
                 }
-                whileInView={{
+                animate={{
                   opacity: 1,
                   y: 0,
                   scale: 1,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.1,
                 }}
                 exit={
                   reduceMotion
@@ -412,13 +403,9 @@ export function Reels() {
                       ? false
                       : { opacity: 0, y: 10 }
                   }
-                  whileInView={{
+                  animate={{
                     opacity: 1,
                     y: 0,
-                  }}
-                  viewport={{
-                    once: true,
-                    amount: 0.15,
                   }}
                   transition={{
                     duration: reduceMotion ? 0 : 0.55,
@@ -446,11 +433,10 @@ export function Reels() {
               ? false
               : { opacity: 0, y: 16 }
           }
-          whileInView={{
+          animate={{
             opacity: 1,
             y: 0,
           }}
-          viewport={{ once: true, amount: 0.1 }}
           transition={{
             duration: reduceMotion ? 0 : 0.6,
           }}
