@@ -1,50 +1,122 @@
 
-import { motion } from "motion/react";
+import {
+  motion,
+  useReducedMotion,
+} from "motion/react";
 
 export function About() {
+  const reduceMotion = useReducedMotion();
+
+  const reveal = {
+    hidden: {
+      opacity: 0,
+      y: reduceMotion ? 0 : 35,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
+  const transition = {
+    duration: 0.85,
+    ease: [0.22, 1, 0.36, 1] as [
+      number,
+      number,
+      number,
+      number
+    ],
+  };
+
   return (
     <section
       id="about"
       className="scroll-mt-24 bg-[#FFF7F2] px-5 py-20 text-[#681523] sm:px-6 sm:py-24"
     >
       <div className="mx-auto max-w-5xl text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7 }}
+
+        {/* SECTION NUMBER */}
+        <motion.p
+          variants={reveal}
+          initial={reduceMotion ? false : "hidden"}
+          whileInView="visible"
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            ...transition,
+            delay: 0,
+          }}
+          className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]"
         >
-          {/* SECTION NUMBER */}
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
-            01 /
-          </p>
+          01 /
+        </motion.p>
 
-          {/* ABOUT ME TITLE */}
-          <h2
-            className="mb-10 text-5xl italic text-[#850F25] sm:text-6xl"
-            style={{
-              fontFamily: "'Bodoni Moda', Georgia, serif",
-              fontWeight: 400,
-            }}
-          >
-            A Little About Me
-          </h2>
+        {/* ABOUT ME TITLE */}
+        <motion.h2
+          variants={reveal}
+          initial={reduceMotion ? false : "hidden"}
+          whileInView="visible"
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            ...transition,
+            delay: 0.15,
+          }}
+          className="mb-10 text-5xl italic text-[#850F25] sm:text-6xl"
+          style={{
+            fontFamily:
+              "'Bodoni Moda', Georgia, serif",
+            fontWeight: 400,
+          }}
+        >
+          A Little About Me
+        </motion.h2>
 
-          {/* INTRODUCTION */}
-          <p className="mx-auto max-w-4xl text-xl leading-relaxed text-[#850F25] sm:text-2xl">
-            I'm Cynthia Andraos, a graphic designer with 5+ years
-            of experience creating distinctive and meaningful
-            visual experiences.
-          </p>
+        {/* INTRODUCTION */}
+        <motion.p
+          variants={reveal}
+          initial={reduceMotion ? false : "hidden"}
+          whileInView="visible"
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            ...transition,
+            delay: 0.3,
+          }}
+          className="mx-auto max-w-4xl text-xl leading-relaxed text-[#850F25] sm:text-2xl"
+        >
+          I'm Cynthia Andraos, a graphic designer with 5+ years
+          of experience creating distinctive and meaningful
+          visual experiences.
+        </motion.p>
 
-          {/* DESCRIPTION */}
-          <p className="mx-auto mt-7 max-w-4xl text-base leading-8 text-[#850F25]/85">
-            I specialize in brand identity, packaging, social media
-            design, and visual storytelling. My approach combines
-            creativity, attention to detail, and clear communication
-            to bring every idea to life.
-          </p>
-        </motion.div>
+        {/* DESCRIPTION */}
+        <motion.p
+          variants={reveal}
+          initial={reduceMotion ? false : "hidden"}
+          whileInView="visible"
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            ...transition,
+            delay: 0.45,
+          }}
+          className="mx-auto mt-7 max-w-4xl text-base leading-8 text-[#850F25]/85"
+        >
+          I specialize in brand identity, packaging, social media
+          design, and visual storytelling. My approach combines
+          creativity, attention to detail, and clear communication
+          to bring every idea to life.
+        </motion.p>
+
       </div>
     </section>
   );
