@@ -22,64 +22,42 @@ const skills = [
   { name: "CapCut", icon: Scissors },
 ];
 
+const easeOut = [0.22, 1, 0.36, 1] as const;
+
 export function Skills() {
   const reduceMotion = useReducedMotion();
-
-  const headingVariants = {
-    hidden: {
-      opacity: 0,
-      y: reduceMotion ? 0 : 45,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-    },
-  };
 
   return (
     <section
       id="skills"
-      className="scroll-mt-24 bg-[#FFF7F2] px-6 py-20"
+      className="scroll-mt-24 bg-[#FFF7F2] px-5 py-14 sm:px-6 sm:py-20"
     >
       <div className="mx-auto max-w-7xl">
 
-        {/* ANIMATED SKILLS HEADING */}
+        {/* SKILLS HEADING */}
         <motion.div
-          variants={headingVariants}
-          initial="hidden"
-          whileInView="visible"
+          initial={
+            reduceMotion
+              ? false
+              : { opacity: 0, y: 24 }
+          }
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{
             once: true,
             amount: 0.2,
           }}
           transition={{
-            duration: 0.9,
-            ease: [0.22, 1, 0.36, 1],
+            duration: reduceMotion ? 0 : 0.75,
+            ease: easeOut,
           }}
-          className="mb-12 text-center"
+          className="mb-9 text-center sm:mb-12"
         >
-          <motion.p
-            initial={
-              reduceMotion
-                ? false
-                : { opacity: 0, y: 15 }
-            }
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.6,
-              delay: 0.1,
-            }}
-            className="mb-3 text-xs uppercase tracking-[0.3em] text-[#A45D69]"
-          >
+          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
             CREATIVE TOOLKIT
-          </motion.p>
+          </p>
 
           <h2
-            className="text-5xl italic text-[#850F25] md:text-7xl"
+            className="text-[clamp(2.8rem,11vw,3rem)] italic text-[#850F25] sm:text-5xl md:text-7xl"
             style={{
               fontFamily:
                 "'Bodoni Moda', Georgia, serif",
@@ -89,14 +67,13 @@ export function Skills() {
             My Skills
           </h2>
 
-          <p className="mx-auto mt-5 max-w-xl text-[#704B50]">
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-[#704B50] sm:mt-5 sm:text-base">
             The creative tools I use to bring ideas to life.
           </p>
         </motion.div>
 
-        {/* ANIMATED SKILLS CARDS */}
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-
+        {/* SKILLS GRID */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-6">
           {skills.map((skill, index) => {
             const Icon = skill.icon;
 
@@ -108,8 +85,8 @@ export function Skills() {
                     ? false
                     : {
                         opacity: 0,
-                        y: 55,
-                        scale: 0.9,
+                        y: 22,
+                        scale: 0.97,
                       }
                 }
                 whileInView={{
@@ -122,11 +99,11 @@ export function Skills() {
                   amount: 0.15,
                 }}
                 transition={{
-                  duration: 0.8,
+                  duration: reduceMotion ? 0 : 0.6,
                   delay: reduceMotion
                     ? 0
-                    : index * 0.12,
-                  ease: [0.22, 1, 0.36, 1],
+                    : (index % 2) * 0.1,
+                  ease: easeOut,
                 }}
                 whileHover={
                   reduceMotion
@@ -139,17 +116,14 @@ export function Skills() {
                 whileTap={
                   reduceMotion
                     ? undefined
-                    : {
-                        scale: 0.97,
-                      }
+                    : { scale: 0.97 }
                 }
-                className="group relative flex flex-col items-center overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white px-3 py-8 text-center shadow-sm transition-shadow duration-300 hover:shadow-xl"
+                className="group relative flex min-h-[150px] flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white px-2 py-5 text-center shadow-sm transition-shadow duration-300 hover:shadow-xl sm:min-h-0 sm:px-3 sm:py-8"
               >
-
                 {/* SOFT HOVER GLOW */}
                 <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#F0C9CB]/0 blur-2xl transition-colors duration-500 group-hover:bg-[#F0C9CB]/60" />
 
-                {/* ANIMATED ICON */}
+                {/* ICON */}
                 <motion.div
                   whileHover={
                     reduceMotion
@@ -164,26 +138,24 @@ export function Skills() {
                     stiffness: 260,
                     damping: 16,
                   }}
-                  className="relative mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F6E6E1] text-[#850F25] transition-colors duration-300 group-hover:bg-[#850F25] group-hover:text-white"
+                  className="relative mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F6E6E1] text-[#850F25] transition-colors duration-300 group-hover:bg-[#850F25] group-hover:text-white sm:mb-5 sm:h-16 sm:w-16"
                 >
                   <Icon
-                    size={30}
+                    className="h-7 w-7 sm:h-[30px] sm:w-[30px]"
                     strokeWidth={1.5}
                   />
                 </motion.div>
 
                 {/* SKILL NAME */}
-                <h3 className="relative text-sm font-medium text-[#681523]">
+                <h3 className="relative max-w-full text-[13px] font-medium leading-5 text-[#681523] sm:text-sm">
                   {skill.name}
                 </h3>
 
                 {/* BOTTOM ACCENT LINE */}
                 <div className="absolute bottom-0 left-1/2 h-[3px] w-0 -translate-x-1/2 rounded-full bg-[#850F25] transition-all duration-500 group-hover:w-3/4" />
-
               </motion.div>
             );
           })}
-
         </div>
       </div>
     </section>
