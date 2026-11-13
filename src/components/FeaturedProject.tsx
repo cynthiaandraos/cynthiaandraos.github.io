@@ -43,9 +43,11 @@ export function FeaturedProject({
   const reduceMotion = useReducedMotion();
 
   const [open, setOpen] = useState(false);
+
   const [active, setActive] = useState(
     categories[0]?.id ?? ""
   );
+
   const [zoomed, setZoomed] =
     useState<FeaturedWork | null>(null);
 
@@ -56,6 +58,7 @@ export function FeaturedProject({
   const allowFullscreen =
     (category?.works.length ?? 0) > 1;
 
+  // Prevent background scrolling while the project is open.
   useEffect(() => {
     if (!open) return;
 
@@ -102,10 +105,25 @@ export function FeaturedProject({
   };
 
   const reveal = (delay = 0) => ({
-    initial: reduceMotion ? false : { opacity: 0, y: 28 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.12 },
-    transition: { duration: 0.7, delay, ease: "easeOut" as const },
+    initial: reduceMotion
+      ? false
+      : { opacity: 0, y: 28 },
+
+    whileInView: {
+      opacity: 1,
+      y: 0,
+    },
+
+    viewport: {
+      once: true,
+      amount: 0.12,
+    },
+
+    transition: {
+      duration: reduceMotion ? 0 : 0.7,
+      delay: reduceMotion ? 0 : delay,
+      ease: "easeOut" as const,
+    },
   });
 
   const copyrightClass =
@@ -116,12 +134,17 @@ export function FeaturedProject({
       {/* FEATURED PROJECT */}
       <section
         id={id}
-        className="scroll-mt-28 bg-[#FFF7F2] px-4 py-16 sm:px-6 sm:py-24"
+        className="scroll-mt-28 bg-[#FFF7F2] px-4 py-12 sm:px-6 sm:py-24"
       >
         <div className="mx-auto max-w-7xl">
-          <motion.div {...reveal()} className="mb-10 text-center">
+
+          {/* SECTION HEADING */}
+          <motion.div
+            {...reveal()}
+            className="mb-8 text-center sm:mb-10"
+          >
             <h2
-              className="text-5xl italic text-[#850F25] sm:text-7xl"
+              className="break-words text-[clamp(2.5rem,10vw,3rem)] leading-tight italic text-[#850F25] sm:text-7xl"
               style={{
                 fontFamily:
                   "'Bodoni Moda', Georgia, serif",
@@ -131,34 +154,42 @@ export function FeaturedProject({
               {name}
             </h2>
 
-            <p className="mx-auto mt-5 max-w-xl text-[#704B50]">
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#704B50] sm:mt-5 sm:text-base sm:leading-normal">
               {description}
             </p>
           </motion.div>
 
-          {/* MAIN COVER */}
+          {/* MAIN PROJECT COVER */}
           <motion.button
             type="button"
             onClick={openProject}
             {...reveal(0.12)}
-            className="group mx-auto block w-full max-w-4xl overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white text-left shadow-sm transition-shadow duration-300 hover:shadow-xl"
+            aria-label={`Explore ${name} project`}
+            className="group mx-auto block w-full max-w-4xl overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white text-left shadow-sm transition-shadow duration-300 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#850F25]"
           >
-            <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#F7EDE8]">
+            {/* IMAGE */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#F7EDE8] sm:aspect-[16/9]">
               <img
                 src={cover}
                 alt={`${name} brand cover`}
                 loading="lazy"
+                decoding="async"
                 draggable={false}
-                className="absolute inset-0 h-full w-full select-none object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                className="absolute inset-0 h-full w-full select-none object-contain object-center transition-transform duration-700 ease-out group-hover:scale-105 sm:object-cover"
               />
 
+              {/* OPEN PROJECT ICON */}
               <span
                 aria-hidden="true"
-                className="absolute right-5 top-5 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#681523] shadow-md"
+                className="absolute right-3 top-3 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#681523] shadow-md sm:right-5 sm:top-5 sm:h-12 sm:w-12"
               >
-                <ArrowUpRight size={22} />
+                <ArrowUpRight
+                  size={20}
+                  className="sm:h-[22px] sm:w-[22px]"
+                />
               </span>
 
+              {/* COPYRIGHT WATERMARK */}
               <span
                 data-portfolio-watermark="true"
                 aria-hidden="true"
@@ -168,14 +199,15 @@ export function FeaturedProject({
               </span>
             </div>
 
-            <div className="flex items-center justify-between gap-4 bg-white p-6">
-              <div>
-                <p className="text-xs uppercase tracking-widest text-[#A45D69]">
+            {/* PROJECT INFORMATION */}
+            <div className="flex items-center justify-between gap-3 bg-white p-4 sm:gap-4 sm:p-6">
+              <div className="min-w-0 flex-1">
+                <p className="text-[10px] uppercase tracking-widest text-[#A45D69] sm:text-xs">
                   Complete Brand Project
                 </p>
 
                 <h3
-                  className="mt-2 text-2xl text-[#681523]"
+                  className="mt-2 break-words text-xl leading-snug text-[#681523] sm:text-2xl"
                   style={{
                     fontFamily:
                       "'Bodoni Moda', Georgia, serif",
@@ -185,7 +217,7 @@ export function FeaturedProject({
                 </h3>
               </div>
 
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#850F25]">
+              <span className="shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[#850F25] sm:text-xs sm:tracking-widest">
                 View Project
               </span>
             </div>
@@ -201,8 +233,7 @@ export function FeaturedProject({
             className="fixed inset-0 z-[10020] flex items-center justify-center bg-[#210C12]/90 p-0 sm:p-5"
             onMouseDown={(event) => {
               if (
-                event.target ===
-                event.currentTarget
+                event.target === event.currentTarget
               ) {
                 closeProject();
               }
@@ -214,19 +245,37 @@ export function FeaturedProject({
               aria-label={`${name} project`}
               className="relative flex h-[100dvh] w-full max-w-6xl flex-col overflow-hidden bg-[#FFF9F0] sm:h-[94dvh] sm:rounded-2xl"
             >
+              {/* CLOSE PROJECT BUTTON */}
               <button
                 type="button"
                 onClick={closeProject}
                 aria-label="Close project"
-                className="absolute right-4 top-4 z-30 rounded-full bg-[#681523] p-3 text-white"
+                className="absolute right-4 z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#681523] text-white shadow-md transition-transform active:scale-95 sm:top-4 sm:h-11 sm:w-11"
+                style={{
+                  top: "calc(16px + env(safe-area-inset-top, 0px))",
+                }}
               >
                 <X size={20} />
               </button>
 
-              <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-12 pt-16 sm:px-10">
-                <motion.header {...reveal()} className="mx-auto mb-10 max-w-4xl text-center">
+              {/* SCROLLABLE PROJECT CONTENT */}
+              <div
+                className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-12 pt-16 sm:px-10"
+                style={{
+                  paddingTop:
+                    "calc(64px + env(safe-area-inset-top, 0px))",
+                  paddingBottom:
+                    "calc(48px + env(safe-area-inset-bottom, 0px))",
+                  WebkitOverflowScrolling: "touch",
+                }}
+              >
+                {/* MODAL HEADER */}
+                <motion.header
+                  {...reveal()}
+                  className="mx-auto mb-7 max-w-4xl text-center sm:mb-10"
+                >
                   <p
-                    className="text-xs uppercase tracking-[0.3em]"
+                    className="text-[10px] uppercase tracking-[0.2em] sm:text-xs sm:tracking-[0.3em]"
                     style={{
                       color: accentMuted,
                     }}
@@ -235,7 +284,7 @@ export function FeaturedProject({
                   </p>
 
                   <h2
-                    className="mt-3 text-5xl sm:text-7xl"
+                    className="mt-3 break-words text-[clamp(2.3rem,10vw,3rem)] leading-tight sm:text-7xl"
                     style={{
                       fontFamily:
                         "'Bodoni Moda', Georgia, serif",
@@ -246,7 +295,7 @@ export function FeaturedProject({
                   </h2>
 
                   <p
-                    className="mt-3 text-sm"
+                    className="mt-3 text-sm leading-6"
                     style={{
                       color: accentMuted,
                     }}
@@ -255,12 +304,13 @@ export function FeaturedProject({
                   </p>
 
                   {/* PROJECT COVER INSIDE MODAL */}
-                  <div className="mx-auto mt-7 max-w-3xl">
+                  <div className="mx-auto mt-5 max-w-3xl sm:mt-7">
                     <div className="relative overflow-hidden rounded-xl">
                       <img
                         src={cover}
                         alt={`${name} cover`}
                         draggable={false}
+                        decoding="async"
                         className="mx-auto block h-auto max-h-[360px] max-w-full select-none object-contain"
                       />
 
@@ -279,7 +329,7 @@ export function FeaturedProject({
                 <motion.nav
                   {...reveal(0.08)}
                   aria-label="Project categories"
-                  className="mb-10 flex flex-wrap justify-center gap-2"
+                  className="mb-7 flex flex-wrap justify-center gap-2 sm:mb-10"
                 >
                   {categories.map((item) => (
                     <button
@@ -289,10 +339,8 @@ export function FeaturedProject({
                         setActive(item.id);
                         setZoomed(null);
                       }}
-                      aria-pressed={
-                        active === item.id
-                      }
-                      className={`rounded-full border px-4 py-2 text-xs transition-colors ${
+                      aria-pressed={active === item.id}
+                      className={`min-h-11 rounded-full border px-4 py-2 text-xs transition-colors sm:min-h-0 ${
                         active === item.id
                           ? "border-[#35452B] bg-[#35452B] text-white"
                           : "border-[#C5C8AE] text-[#35452B] hover:bg-[#E7E9D7]"
@@ -306,13 +354,15 @@ export function FeaturedProject({
                 {/* CATEGORY CONTENT */}
                 {category && (
                   <div className="mx-auto max-w-5xl">
+
+                    {/* CATEGORY HEADING */}
                     <motion.div
                       key={`${active}-heading`}
                       {...reveal()}
-                      className="mb-7 border-b border-[#D8DCC5] pb-5"
+                      className="mb-5 border-b border-[#D8DCC5] pb-4 sm:mb-7 sm:pb-5"
                     >
                       <h3
-                        className="text-3xl sm:text-4xl"
+                        className="break-words text-2xl leading-snug sm:text-4xl"
                         style={{
                           fontFamily:
                             "'Bodoni Moda', Georgia, serif",
@@ -322,27 +372,31 @@ export function FeaturedProject({
                         {category.title}
                       </h3>
 
-                      <p className="mt-2 text-sm text-[#667154]">
+                      <p className="mt-2 text-sm leading-6 text-[#667154]">
                         {category.description}
                       </p>
                     </motion.div>
 
+                    {/* VERTICAL GALLERY ON MOBILE */}
                     <div
-                      className={`grid gap-5 ${
+                      className={`grid grid-cols-1 gap-4 sm:gap-5 ${
                         category.works.length === 1
-                          ? "grid-cols-1"
-                          : "grid-cols-1 sm:grid-cols-2"
+                          ? ""
+                          : "sm:grid-cols-2"
                       }`}
                     >
                       {category.works.map((work) => {
                         const imageContent = (
-                          <div className="relative flex h-[260px] w-full items-center justify-center overflow-hidden bg-[#F7F5ED] p-4 sm:h-[340px] sm:p-6">
+                          <div className="relative flex min-h-[220px] w-full items-center justify-center overflow-hidden bg-[#F7F5ED] p-3 sm:h-[340px] sm:min-h-0 sm:p-6">
+
+                            {/* MOBILE: SHOW COMPLETE IMAGE */}
                             <img
                               src={work.src}
                               alt={work.title}
                               loading="lazy"
+                              decoding="async"
                               draggable={false}
-                              className={`block h-full w-full select-none object-contain ${
+                              className={`block h-auto max-h-[min(75svh,520px)] w-full select-none object-contain sm:h-full sm:max-h-none ${
                                 allowFullscreen &&
                                 !reduceMotion
                                   ? "transition-transform duration-500 ease-out group-hover:scale-[1.035]"
@@ -350,6 +404,7 @@ export function FeaturedProject({
                               }`}
                             />
 
+                            {/* COPYRIGHT WATERMARK */}
                             <span
                               data-portfolio-watermark="true"
                               aria-hidden="true"
@@ -360,6 +415,7 @@ export function FeaturedProject({
                           </div>
                         );
 
+                        // One image: display without fullscreen.
                         if (!allowFullscreen) {
                           return (
                             <motion.div
@@ -372,6 +428,7 @@ export function FeaturedProject({
                           );
                         }
 
+                        // Multiple images: tap to enlarge.
                         return (
                           <motion.button
                             key={work.src}
@@ -381,7 +438,12 @@ export function FeaturedProject({
                               setZoomed(work)
                             }
                             aria-label={`View ${work.title}`}
-                            className="group overflow-hidden rounded-xl border border-[#E3E3D4] bg-white text-left shadow-sm transition-shadow hover:shadow-md"
+                            whileTap={
+                              reduceMotion
+                                ? undefined
+                                : { scale: 0.985 }
+                            }
+                            className="group w-full overflow-hidden rounded-xl border border-[#E3E3D4] bg-white text-left shadow-sm transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#850F25]"
                           >
                             {imageContent}
                           </motion.button>
@@ -399,24 +461,29 @@ export function FeaturedProject({
                 role="dialog"
                 aria-modal="true"
                 aria-label={zoomed.title}
-                className="absolute inset-0 z-40 flex items-center justify-center bg-[#210C12]/95 p-4 sm:p-8"
+                className="absolute inset-0 z-40 flex items-center justify-center bg-[#210C12]/95 p-3 sm:p-8"
                 onClick={() =>
                   setZoomed(null)
                 }
               >
+                {/* CLOSE FULLSCREEN IMAGE */}
                 <button
                   type="button"
                   aria-label="Close image"
                   onClick={() =>
                     setZoomed(null)
                   }
-                  className="absolute right-4 top-4 z-50 rounded-full bg-white p-3 text-[#681523] shadow-lg"
+                  className="absolute right-4 z-50 flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#681523] shadow-lg transition-transform active:scale-95 sm:top-4"
+                  style={{
+                    top: "calc(16px + env(safe-area-inset-top, 0px))",
+                  }}
                 >
                   <X size={20} />
                 </button>
 
+                {/* FULLSCREEN IMAGE */}
                 <div
-                  className="relative flex max-h-[85dvh] max-w-[90vw] items-center justify-center"
+                  className="relative flex max-h-[85dvh] max-w-[94vw] items-center justify-center sm:max-w-[90vw]"
                   onClick={(event) =>
                     event.stopPropagation()
                   }
@@ -425,9 +492,10 @@ export function FeaturedProject({
                     src={zoomed.src}
                     alt={zoomed.title}
                     draggable={false}
-                    className="block max-h-[85dvh] max-w-[90vw] select-none object-contain"
+                    className="block max-h-[85dvh] max-w-[94vw] select-none object-contain sm:max-w-[90vw]"
                   />
 
+                  {/* COPYRIGHT WATERMARK */}
                   <span
                     data-portfolio-watermark="true"
                     aria-hidden="true"
