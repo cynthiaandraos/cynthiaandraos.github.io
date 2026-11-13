@@ -423,7 +423,11 @@ export function SocialMedia() {
                 >
                   {/* COVER IMAGE */}
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F7EDE8]">
-                    <img
+                    <motion.img
+                      initial={reduceMotion ? false : { opacity: 0, scale: 1.08 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true, amount: 0.15 }}
+                      transition={{ duration: 0.9, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
                       src={project.cover}
                       alt={`${project.title} cover`}
                       loading="lazy"
@@ -449,7 +453,13 @@ export function SocialMedia() {
                   </div>
 
                   {/* CAMPAIGN INFORMATION */}
-                  <div className="flex-1 p-5 sm:p-6">
+                  <motion.div
+                    initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    transition={{ duration: 0.7, delay: 0.15 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                    className="flex-1 p-5 sm:p-6"
+                  >
                     <p className="mb-2 text-xs uppercase tracking-[0.15em] text-[#A45D69]">
                       {project.category}
                     </p>
@@ -476,7 +486,7 @@ export function SocialMedia() {
                       View Campaign
                       <ArrowUpRight size={16} />
                     </p>
-                  </div>
+                  </motion.div>
                 </button>
               </motion.article>
             ))}
@@ -579,6 +589,7 @@ export function SocialMedia() {
                         animate={{
                           opacity: 1,
                           x: 0,
+                          scale: 1,
                         }}
                         exit={{
                           opacity: 0,
