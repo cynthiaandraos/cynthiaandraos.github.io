@@ -111,6 +111,7 @@ export function Reels() {
     useState<Reel | null>(null);
 
   const reduceMotion = useReducedMotion();
+  const smoothEase = [0.22, 1, 0.36, 1] as const;
 
   const filtered =
     activeCategory === "All"
@@ -174,8 +175,8 @@ export function Reels() {
             amount: 0.2,
           }}
           transition={{
-            duration: 0.7,
-            ease: "easeOut",
+            duration: reduceMotion ? 0 : 0.85,
+            ease: smoothEase,
           }}
           className="mb-10 text-center"
         >
@@ -213,8 +214,9 @@ export function Reels() {
           }}
           viewport={{ once: true }}
           transition={{
-            duration: 0.5,
-            delay: 0.15,
+            duration: reduceMotion ? 0 : 0.7,
+            delay: reduceMotion ? 0 : 0.15,
+            ease: smoothEase,
           }}
           className="mb-10 flex flex-wrap justify-center gap-2"
         >
@@ -284,8 +286,8 @@ export function Reels() {
                     ? false
                     : {
                         opacity: 0,
-                        y: 45,
-                        scale: 0.94,
+                        y: 55,
+                        scale: 0.93,
                       }
                 }
                 whileInView={{
@@ -309,11 +311,11 @@ export function Reels() {
                 transition={{
                   duration: reduceMotion
                     ? 0.01
-                    : 0.55,
+                    : 0.75,
                   delay: reduceMotion
                     ? 0
-                    : Math.min(index % 4, 3) * 0.08,
-                  ease: "easeOut",
+                    : Math.min(index % 4, 3) * 0.12,
+                  ease: smoothEase,
                   layout: {
                     duration: 0.35,
                   },
@@ -346,13 +348,17 @@ export function Reels() {
                   }}
                   className="group relative block aspect-[9/16] w-full overflow-hidden rounded-2xl bg-[#EAD9D5] shadow-md transition-shadow duration-300 hover:shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#842E3D]"
                 >
-                  {/* COVER IMAGE */}
-                  <img
+                  {/* ANIMATED COVER IMAGE */}
+                  <motion.img
                     src={reel.coverSrc}
                     alt={`${reel.title} cover`}
                     loading="lazy"
                     decoding="async"
                     draggable={false}
+                    initial={reduceMotion ? false : { opacity: 0, scale: 1.1 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.9, ease: smoothEase }}
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-110"
                   />
 
@@ -407,13 +413,19 @@ export function Reels() {
                   </span>
                 </motion.button>
 
-                <h3 className="mt-3 text-sm font-medium leading-snug sm:text-base">
-                  {reel.title}
-                </h3>
-
-                <p className="mt-1 text-xs text-[#765A59] sm:text-sm">
-                  {reel.category}
-                </p>
+                <motion.div
+                  initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.65, delay: reduceMotion ? 0 : 0.15, ease: smoothEase }}
+                >
+                  <h3 className="mt-3 text-sm font-medium leading-snug sm:text-base">
+                    {reel.title}
+                  </h3>
+                  <p className="mt-1 text-xs text-[#765A59] sm:text-sm">
+                    {reel.category}
+                  </p>
+                </motion.div>
               </motion.div>
             ))}
           </AnimatePresence>
@@ -457,7 +469,7 @@ export function Reels() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{
-                  duration: 0.25,
+                  duration: reduceMotion ? 0 : 0.25,
                 }}
                 className="fixed inset-0 z-[11000] flex items-center justify-center bg-black/95 p-4"
                 role="presentation"
@@ -495,9 +507,9 @@ export function Reels() {
                   }}
                   transition={{
                     duration: reduceMotion
-                      ? 0.01
-                      : 0.35,
-                    ease: "easeOut",
+                      ? 0
+                      : 0.45,
+                    ease: smoothEase,
                   }}
                   className="relative flex max-h-[95dvh] w-full max-w-5xl flex-col items-center justify-center"
                 >
@@ -541,9 +553,14 @@ export function Reels() {
                     </span>
                   </div>
 
-                  <p className="mt-4 text-center text-sm text-white">
+                  <motion.p
+                    initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.15 }}
+                    className="mt-4 text-center text-sm text-white"
+                  >
                     {selected.title}
-                  </p>
+                  </motion.p>
                 </motion.div>
               </motion.div>
             )}
