@@ -324,7 +324,7 @@ export function Hero() {
         /*
           PHONE ONLY:
           Keep two name lines and bring the photo closer.
-          All desktop styles remain untouched.
+          Desktop styles remain untouched.
         */
         @media (max-width: 639px) {
           .hero-mobile-layout {
@@ -454,7 +454,7 @@ export function Hero() {
                     fontStyle: "italic",
                     letterSpacing: "-0.025em",
                   }}
-                  className="hero-mobile-signature absolute left-[2%] top-[47%] z-20 whitespace-nowrap text-[clamp(4rem,13vw,8rem)] leading-none text-[#2D020B] md:top-[49%]"
+                  className="hero-mobile-signature absolute left-[2%] top-[47%] z-20 whitespace-nowrap text-[clamp(4rem,13vw,8rem)] leading-none text-[#2D020B] md:top-[43%]"
                 >
                   Graphic Designer
                 </motion.span>
