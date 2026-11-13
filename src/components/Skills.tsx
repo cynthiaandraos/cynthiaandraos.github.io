@@ -27,6 +27,29 @@ const easeOut = [0.22, 1, 0.36, 1] as const;
 export function Skills() {
   const reduceMotion = useReducedMotion();
 
+  const reveal = (delay = 0) => ({
+    initial: {
+      opacity: reduceMotion ? 1 : 0,
+      y: reduceMotion ? 0 : 35,
+    },
+
+    whileInView: {
+      opacity: 1,
+      y: 0,
+    },
+
+    viewport: {
+      once: true,
+      amount: 0.1,
+    },
+
+    transition: {
+      duration: reduceMotion ? 0 : 0.85,
+      delay: reduceMotion ? 0 : delay,
+      ease: easeOut,
+    },
+  });
+
   return (
     <section
       id="skills"
@@ -36,20 +59,7 @@ export function Skills() {
 
         {/* SKILLS HEADING */}
         <motion.div
-          initial={
-            reduceMotion
-              ? false
-              : { opacity: 0, y: 24 }
-          }
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{
-            once: true,
-            amount: 0.2,
-          }}
-          transition={{
-            duration: reduceMotion ? 0 : 0.75,
-            ease: easeOut,
-          }}
+          {...reveal()}
           className="mb-9 text-center sm:mb-12"
         >
           <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#A45D69]">
@@ -74,21 +84,18 @@ export function Skills() {
 
         {/* SKILLS GRID */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-6">
+
           {skills.map((skill, index) => {
             const Icon = skill.icon;
 
             return (
               <motion.div
                 key={skill.name}
-                initial={
-                  reduceMotion
-                    ? false
-                    : {
-                        opacity: 0,
-                        y: 22,
-                        scale: 0.97,
-                      }
-                }
+                initial={{
+                  opacity: reduceMotion ? 1 : 0,
+                  y: reduceMotion ? 0 : 40,
+                  scale: reduceMotion ? 1 : 0.94,
+                }}
                 whileInView={{
                   opacity: 1,
                   y: 0,
@@ -96,13 +103,13 @@ export function Skills() {
                 }}
                 viewport={{
                   once: true,
-                  amount: 0.15,
+                  amount: 0.1,
                 }}
                 transition={{
-                  duration: reduceMotion ? 0 : 0.6,
+                  duration: reduceMotion ? 0 : 0.75,
                   delay: reduceMotion
                     ? 0
-                    : (index % 2) * 0.1,
+                    : (index % 3) * 0.12,
                   ease: easeOut,
                 }}
                 whileHover={
@@ -111,6 +118,9 @@ export function Skills() {
                     : {
                         y: -10,
                         scale: 1.04,
+                        transition: {
+                          duration: 0.3,
+                        },
                       }
                 }
                 whileTap={
@@ -120,6 +130,7 @@ export function Skills() {
                 }
                 className="group relative flex min-h-[150px] flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#E8D2CF] bg-white px-2 py-5 text-center shadow-sm transition-shadow duration-300 hover:shadow-xl sm:min-h-0 sm:px-3 sm:py-8"
               >
+
                 {/* SOFT HOVER GLOW */}
                 <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#F0C9CB]/0 blur-2xl transition-colors duration-500 group-hover:bg-[#F0C9CB]/60" />
 
@@ -153,9 +164,11 @@ export function Skills() {
 
                 {/* BOTTOM ACCENT LINE */}
                 <div className="absolute bottom-0 left-1/2 h-[3px] w-0 -translate-x-1/2 rounded-full bg-[#850F25] transition-all duration-500 group-hover:w-3/4" />
+
               </motion.div>
             );
           })}
+
         </div>
       </div>
     </section>
